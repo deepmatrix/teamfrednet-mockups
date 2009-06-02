@@ -60,8 +60,6 @@ public class Main
             return 0f;
         }
         public void invalidateLayout(Container parent){
-            if (0 < parent.countComponents())
-                this.layout(parent,parent.getComponent(0));
         }
     }
 
