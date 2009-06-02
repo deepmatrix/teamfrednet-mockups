@@ -1,3 +1,13 @@
 
 See http://wiki.xprize.frednet.org/index.php/User:Jdp/Mockup_Projects#PicoRover.wrl
 
+To run this locally, install and use http://j3d-core.dev.java.net/ 
+
+ 1. Shared libraries' directory is mapped into path environment "LD_LIBRARY_PATH" (unixen) or "PATH" (windlen)
+
+ 2. The 'jar' files are mapped into a path style environment variable named "CLASSPATH"
+
+ 3. Then in this directory, run
+
+   java PicoRover
+
