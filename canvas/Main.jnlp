@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0+">
+  <information>
+    <title>Canvas</title>
+    <vendor>Team FREDNET</vendor>
+    <homepage href="http://www.teamfrednet.org/"/>
+    <description>Canvas</description>
+    <description kind="short">Simple AWT Test</description>
+  </information>
+  <resources>
+    <j2se version="1.6+"/>
+  </resources>
+  <application-desc main-class="Main"/>
+</jnlp>
