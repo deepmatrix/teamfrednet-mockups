@@ -1,0 +1,7 @@
+
+See http://wiki.xprize.frednet.org/index.php/User:Jdp/Mockup_Projects#Canvas_over_Canvas
+
+In this directory, run
+
+  java Main
+
