@@ -79,7 +79,9 @@ public class Main
         Insets insets = this.getInsets();
         size.width -= (insets.left+insets.right);
         size.height -= (insets.top+insets.bottom);
-
+        /*
+         * Z = 0
+         */
         this.fg = new Canvas();
         this.fg.setBackground(Color.white);
         this.fg.setForeground(Color.white);
@@ -91,8 +93,10 @@ public class Main
             this.fg.setSize(w,h);
             this.fg.setLocation(x,y);
         }
-
         this.add(fg);
+        /*
+         * Z = 1
+         */
         this.bg = new Canvas();
         this.bg.setBackground(Color.black);
         this.bg.setForeground(Color.black);
@@ -101,6 +105,7 @@ public class Main
             this.bg.setLocation(insets.left,insets.top);
         }
         this.add(bg);
+
         this.doLayout();
     }
     @Override
