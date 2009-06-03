@@ -2,15 +2,27 @@
   <head>
     <title>Team FREDNET PicoRover VRML</title>
   </head>
-  <body>
-    <p> See <a href="http://wiki.xprize.frednet.org/index.php/User:Jdp/Mockup_Projects#PicoRover.wrl">User:Jdp/Mockup_Projects#PicoRover.wrl</a>. </p>
-
+  <body bgcolor="#000">
     <center>
-      <applet width="90%" height="80%" code="PicoRoverApplet">
+      <applet code="org.jdesktop.applet.util.JNLPAppletLauncher"
+              width="90%" height="80%"
+              archive="http://teamfrednet-mockups.googlecode.com/files/PicoRover-1.0.2.jar,
+                       http://download.java.net/media/applet-launcher/applet-launcher.jar,
+                       http://download.java.net/media/java3d/webstart/release/j3d/latest/j3dcore.jar,
+                       http://download.java.net/media/java3d/webstart/release/j3d/latest/j3dutils.jar,
+                       http://download.java.net/media/jogl/builds/archive/jsr-231-webstart-current/jogl.jar,
+                       http://download.java.net/media/gluegen/webstart/gluegen-rt.jar,
+                       http://download.java.net/media/java3d/webstart/release/vecmath/latest/vecmath.jar,
+                       http://teamfrednet-mockups.googlecode.com/files/j3d-vrml-1.5.2.jar">
         <param name="java_version" value="1.6" />
-        <param name="jnlp_href" value="PicoRoverApplet.jnlp" />
+        <param name="codebase_lookup" value="false">
+        <param name="subapplet.classname" value="PicoRoverApplet">
+        <param name="subapplet.displayname" value="Team FREDNET PicoRover VRML J3D">
+        <param name="jnlpNumExtensions" value="1">
+        <param name="jnlpExtension1" value="http://download.java.net/media/java3d/webstart/release/java3d-latest.jnlp">
+        <param name="progressbar" value="true">
+        <param name="noddraw.check" value="true">
       </applet>
     </center>
-
   </body>
 </html>
