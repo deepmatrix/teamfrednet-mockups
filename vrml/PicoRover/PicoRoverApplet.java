@@ -39,10 +39,11 @@ public class PicoRoverApplet
     extends java.applet.Applet
 {
     public final static GraphicsConfiguration PreferredConfiguration(java.awt.Component component){
-        /*
-         * See also PicoRover . PreferredConfiguration()
-         */
-        return component.getGraphicsConfiguration();
+        GraphicsConfiguration cgc = component.getGraphicsConfiguration();
+        GraphicsDevice gd = cgc.getDevice();
+        GraphicsConfigTemplate3D gc3d = new GraphicsConfigTemplate3D();
+        gc3d.setSceneAntialiasing(GraphicsConfigTemplate.PREFERRED);
+        return gd.getBestConfiguration(gc3d);
     }
 
     private SimpleUniverse universe;
