@@ -38,10 +38,11 @@ import org.jdesktop.j3d.loaders.vrml97.VrmlLoader;
 public class PicoRoverApplet
     extends java.applet.Applet
 {
-    public final static GraphicsConfiguration PreferredConfiguration(){
-        GraphicsConfigTemplate3D gc3D = new GraphicsConfigTemplate3D();
-        gc3D.setSceneAntialiasing(GraphicsConfigTemplate.PREFERRED);
-        return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getBestConfiguration(gc3D);
+    public final static GraphicsConfiguration PreferredConfiguration(java.awt.Component component){
+        /*
+         * See also PicoRover . PreferredConfiguration()
+         */
+        return component.getGraphicsConfiguration();
     }
 
     private SimpleUniverse universe;
@@ -89,7 +90,7 @@ public class PicoRoverApplet
 
                 root.addChild(bgNode);
             }
-            this.canvas = new Canvas3D(PreferredConfiguration());
+            this.canvas = new Canvas3D(PreferredConfiguration(this));
             this.universe = new SimpleUniverse(this.canvas);
             ViewingPlatform viewingPlatform = this.universe.getViewingPlatform();
             {
