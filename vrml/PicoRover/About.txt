@@ -1,13 +1,15 @@
 
 See http://wiki.xprize.frednet.org/index.php/User:Jdp/Mockup_Projects#PicoRover.wrl
 
-To run this locally, install and use http://j3d-core.dev.java.net/ 
+To run this locally, install and use http://j3d-core.dev.java.net/ for your platform
 
- 1. Shared libraries' directory is mapped into path environment "LD_LIBRARY_PATH" (unixen) or "PATH" (windlen)
+ 0. Copies to be found in project subversion repo under /svn/j3d/152
 
- 2. The 'jar' files are mapped into a path style environment variable named "CLASSPATH"
+ 1. Copy shared lib to './lib'
 
- 3. Then in this directory, run
+ 2. Then in this directory, run
 
-   java PicoRover
+    ./run.sh
+
+
 
