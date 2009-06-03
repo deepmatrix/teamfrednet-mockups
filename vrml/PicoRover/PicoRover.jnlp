@@ -7,10 +7,15 @@
     <description>PicoRover</description>
     <description kind="short">Simple 3D Viewer</description>
   </information>
+
+  <security>
+    <all-permissions/>
+  </security>
+
   <resources>
     <j2se version="1.6+"/>
     <extension href="http://teamfrednet-mockups.googlecode.com/files/j3d-vrml-1.5.2.jnlp"/>
-    <jar href="http://teamfrednet-mockups.googlecode.com/files/PicoRover-1.0.2.jar"/>
+    <jar href="http://teamfrednet-mockups.googlecode.com/files/PicoRover-1.0.2.jar" main="true"/>
   </resources>
   <application-desc main-class="PicoRover"/>
 </jnlp>
