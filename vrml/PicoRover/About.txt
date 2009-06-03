@@ -1,15 +1,7 @@
 
 See http://wiki.xprize.frednet.org/index.php/User:Jdp/Mockup_Projects#PicoRover.wrl
 
-To run this locally, install and use http://j3d-core.dev.java.net/ for your platform
-
- 0. Copies to be found in project subversion repo under /svn/j3d/152
-
- 1. Copy shared lib to './lib'
-
- 2. Then in this directory, run
+ In this directory, run
 
     ./run.sh
-
-
 
