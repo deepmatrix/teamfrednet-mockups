@@ -17,6 +17,8 @@ EOF
  fi
  cd bin
  jar cvmf ../mf.txt ../PicoRover-${version}.jar $(find . -type f | egrep -v '\.svn')
+ cd ..
+ ./clean.sh
 else
  cat<<EOF>&2
 usage
