@@ -31,7 +31,7 @@
     <jar href="http://downloads.xj3d.org/webstart/jars/aviatrix3d-all_2.0.0.jar"  main="false" />
     <jar href="http://downloads.xj3d.org/webstart/jars/uri.jar"  main="false" />
     <jar href="http://downloads.xj3d.org/webstart/jars/vlc_uri.jar"  main="false" />
-
+    <jar href="http://download.java.net/media/java3d/webstart/release/vecmath/latest/vecmath.jar" main="false"/>
     <extension name="jogl" href="http://download.java.net/media/jogl/builds/archive/jsr-231-webstart-current/jogl.jnlp" />
 
   </resources>
