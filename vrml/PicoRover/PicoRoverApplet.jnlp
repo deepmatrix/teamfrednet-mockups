@@ -20,5 +20,5 @@
     <jar href="j3d-vrml-1.5.2.jar" main="false"/>
     <extension href="http://download.java.net/media/java3d/webstart/release/java3d-latest.jnlp"/>
   </resources>
-  <applet-desc main-class="PicoRoverApplet" />
+  <applet-desc main-class="org.teamfrednet.mockups.PicoRoverApplet" />
 </jnlp>

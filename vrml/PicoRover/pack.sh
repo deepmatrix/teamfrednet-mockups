@@ -1,9 +1,10 @@
 #!/bin/bash
 
-if [ "$1" ]
+if [ "$1" ]&&[ -d bin ]
 then
  version="$1"
- jar cvmf mf.txt PicoRover-${version}.jar PicoRover.* PicoRoverApplet.* 
+ cd bin
+ jar cvmf ../mf.txt ../PicoRover-${version}.jar $(find . -type f | egrep -v '\.svn')
 else
  cat<<EOF
 usage

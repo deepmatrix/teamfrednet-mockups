@@ -1,4 +1,4 @@
-
+package org.teamfrednet.mockups;
 
 
 import com.sun.j3d.loaders.Loader;
@@ -84,7 +84,7 @@ public class PicoRover
                 }
                 {
                     VrmlLoader loader = new VrmlLoader();
-                    URL model = this.getClass().getResource("PicoRover.wrl");
+                    URL model = this.getClass().getResource("/PicoRover.wrl");
                     Scene scene = loader.load(model);
                     xlate.addChild(scene.getSceneGroup());
                 }
