@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<jnlp spec="1.0+">
+<jnlp spec="1.0+" codebase="http://teamfrednet-mockups.googlecode.com/files/" href="PicoRover.jnlp">
   <information>
     <title>PicoRover</title>
     <vendor>Team FREDNET</vendor>
     <homepage href="http://www.teamfrednet.org/"/>
-    <description>PicoRover</description>
+    <description>PicoRover VRML Application</description>
     <description kind="short">Simple 3D Viewer</description>
+    <icon href="tfx-32x32.gif"/>
+    <offline-allowed/>
   </information>
 
   <security>
@@ -14,8 +16,9 @@
 
   <resources>
     <j2se version="1.6+"/>
-    <extension href="http://teamfrednet-mockups.googlecode.com/files/j3d-vrml-1.5.2.jnlp"/>
-    <jar href="http://teamfrednet-mockups.googlecode.com/files/PicoRover-1.0.2.jar" main="true"/>
+    <jar href="PicoRover-1.0.2.jar" main="true"/>
+    <jar href="j3d-vrml-1.5.2.jar" main="false"/>
+    <extension href="http://download.java.net/media/java3d/webstart/release/java3d-latest.jnlp"/>
   </resources>
   <application-desc main-class="PicoRover"/>
 </jnlp>
