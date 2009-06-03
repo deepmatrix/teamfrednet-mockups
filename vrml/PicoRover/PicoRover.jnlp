@@ -16,7 +16,7 @@
 
   <resources>
     <j2se version="1.6+"/>
-    <jar href="PicoRover-1.0.2.jar" main="true"/>
+    <jar href="PicoRover-1.0.3.jar" main="true"/>
     <jar href="j3d-vrml-1.5.2.jar" main="false"/>
     <extension href="http://download.java.net/media/java3d/webstart/release/java3d-latest.jnlp"/>
   </resources>
