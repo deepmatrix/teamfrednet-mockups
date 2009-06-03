@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0+">
+  <information>
+    <title>PicoRover</title>
+    <vendor>Team FREDNET</vendor>
+    <homepage href="http://www.teamfrednet.org/"/>
+    <description>PicoRover</description>
+    <description kind="short">Simple 3D Viewer</description>
+  </information>
+  <resources>
+    <j2se href="http://java.sun.com/products/autodl/j2se" version="1.6+"/>
+    <jar href="j3d-vrml97.jar" download="eager"/>
+    <extension href="http://download.java.net/media/java3d/webstart/release/java3d-latest.jnlp"/>
+  </resources>
+  <resources os="Windows">
+    <property name="sun.java2d.noddraw" value="true"/>
+  </resources>
+  <applet-desc main-class="PicoRoverApplet" />
+</jnlp>
