@@ -9,8 +9,8 @@
   </information>
   <resources>
     <j2se version="1.6+"/>
-    <jar href="j3d-vrml97.jar" download="eager"/>
-    <extension href="http://download.java.net/media/java3d/webstart/release/java3d-latest.jnlp"/>
+    <extension href="http://teamfrednet-mockups.googlecode.com/files/j3d-vrml-1.5.2.jnlp"/>
+    <jar href="http://teamfrednet-mockups.googlecode.com/files/PicoRover-1.0.2.jar"/>
   </resources>
   <application-desc main-class="PicoRover"/>
 </jnlp>
