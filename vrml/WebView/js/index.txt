@@ -1,5 +1,0 @@
-http://cic.nist.gov/vrml/vb_WebDetect.js
-http://cic.nist.gov/vrml/vb_VRMLDetect.js
-http://cic.nist.gov/vrml/vb_Web3Detect.js
-http://cic.nist.gov/vrml/vb_Debug.js
-http://cic.nist.gov/vrml/vb_Embed.js
