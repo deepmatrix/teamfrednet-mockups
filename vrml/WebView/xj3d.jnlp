@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0+" codebase="http://teamfrednet-mockups.googlecode.com/svn/vrml/WebView/" href="xj3d.jnlp"> 
+  <information>
+    <title>PicoRover</title>
+    <vendor>Team FREDNET</vendor>
+    <homepage href="http://www.teamfrednet.org/"/>
+    <description>PicoRover VRML Application</description>
+    <description kind="short">Simple 3D Viewer</description>
+    <icon href="tfx-32x32.gif"/>
+    <offline-allowed/>
+  </information>
+
+  <security>
+    <all-permissions/>
+  </security>
+
+  <resources>    
+ 	<j2se version="1.5+" java-vm-args="-Xmx512M -XX:MaxDirectMemorySize=256M -Dsun.java2d.noddraw=true" href="http://java.sun.com/products/autodl/j2se" />
+    <jar href="http://downloads.xj3d.org/webstart/jars/xj3d-common.jar"  main="false" />
+    <jar href="http://downloads.xj3d.org/webstart/jars/xj3d-render.jar"  main="false" />
+    <jar href="http://downloads.xj3d.org/webstart/jars/xj3d-parser.jar"  main="false" />
+    <jar href="http://downloads.xj3d.org/webstart/jars/xj3d-runtime.jar"  main="false" />
+    <jar href="http://downloads.xj3d.org/webstart/jars/xj3d-script-base.jar"  main="false" />
+    <jar href="http://downloads.xj3d.org/webstart/jars/xj3d-ecmascript.jar"  main="false" />
+    <jar href="http://downloads.xj3d.org/webstart/jars/xj3d-jsai.jar"  main="false" />
+    <jar href="http://downloads.xj3d.org/webstart/jars/xj3d-core.jar"  main="false" />
+    <jar href="http://downloads.xj3d.org/webstart/jars/xj3d-sav.jar"  main="false" />
+    <jar href="http://downloads.xj3d.org/webstart/jars/uri.jar"  main="false" />
+    <jar href="http://downloads.xj3d.org/webstart/jars/vlc_uri.jar"  main="false" />
+    <jar href="http://downloads.xj3d.org/webstart/jars/j3d-org.jar"  main="false" />
+    <jar href="http://downloads.xj3d.org/webstart/jars/xj3d-j3d.jar"  main="false" />
+    
+   	<jar href="http://downloads.xj3d.org/webstart/jars/jars/xj3d_browser_2.0.0.jar" main="true"/>
+
+  </resources>
+  <resources>
+	<extension name="jogl" href="https://jogl.dev.java.net/webstart/jogl.jnlp" />
+  </resources>	   	  
+  <application-desc main-class="xj3d.browser.Xj3DBrowser">
+   	<argument>-noredirect</argument>
+   	<argument>http://teamfrednet-mockups.googlecode.com/svn/vrml/PicoRover/PicoRover.wrl</argument>
+  </application-desc> 
+</jnlp> 
