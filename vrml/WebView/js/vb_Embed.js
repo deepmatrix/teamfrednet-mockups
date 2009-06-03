@@ -1,6 +1,6 @@
 // display VRML and/or X3D model, requires vb_VRMLDetect.js to be run first so the variables are set
 
-var x3dshow = x3dok;
+var x3dshow = (x3dok && x3dfile);
 if (vrmlPlugin == x3dPlugin) {x3dshow = 0;}
 
 var wid = 400;
@@ -10,12 +10,14 @@ if (vrmlok && x3dshow) {
   hgt = 225;
 }
 
-var wrlfile = "nistlogo.wrl";
-if (live3d && vrmlPlugin == 'Live3D Plugin DLL') {wrlfile  = "nistlogo_v1.wrl";}
 
-var x3dfile = "nistlogo.x3d";
+//if (live3d && vrmlPlugin == 'Live3D Plugin DLL') {wrlfile  = "nistlogo_v1.wrl";}
+
 if (vrmlok) {
-  document.write('<EMBED SRC="./' + wrlfile + '" WIDTH=' + wid + ' HEIGHT=' + hgt + '>');
+    if (vrmlMimetype)
+        document.write('<EMBED TYPE="'+vrmlMimetype+'" SRC="' + wrlfile + '" WIDTH=' + wid + ' HEIGHT=' + hgt + '>');
+    else
+        document.write('<EMBED SRC="./' + wrlfile + '" WIDTH=' + wid + ' HEIGHT=' + hgt + '>');
 }
 
 if (vrmlok && x3dshow) {
@@ -27,7 +29,10 @@ if (vrmlok && x3dshow) {
 }
 
 if (x3dshow) {
-  document.write('<EMBED SRC="./' + x3dfile + '" WIDTH=' + wid + ' HEIGHT=' + hgt + '>');
+    if (x3dMimetype)
+        document.write('<EMBED TYPE="'+x3dMimetype+'" SRC="' + x3dfile + '" WIDTH=' + wid + ' HEIGHT=' + hgt + '>');
+    else
+        document.write('<EMBED SRC="./' + x3dfile + '" WIDTH=' + wid + ' HEIGHT=' + hgt + '>');
 }
 
 if (vrmlok || x3dshow) {

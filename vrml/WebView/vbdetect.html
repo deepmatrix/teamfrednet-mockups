@@ -1,0 +1,440 @@
+<HTML>
+<HEAD>
+<TITLE>VRML Plugin and Browser Detector</TITLE>
+<BASE TARGET="_blank">
+<META NAME="last updated" CONTENT="April 22, 2009">
+<META NAME="description" CONTENT="The VRML Plugin and Browser Detector determines which VRML or X3D plugin,
+viewer, browser, or player is configured to work with Internet Explorer, Firefox, Opera, Google Chrome, or
+Safari on any Windows, Linux, or Macintosh computer.  VRML is the Virtual Reality Modeling Language, a
+standard file format to display 3D models on the web.">
+<META NAME="keywords" CONTENT="VRML, VRML97, VRLM, wrl, X3D, Web3D, 3D, browser, plugin, plug-in, player, viewer,
+add-on, addon, reader, software, view, client, detector, detect, detection, applet, toolkit, ActiveX, download,
+install, editor, edit, model, world, file, example, sample, Cosmo Player, Cortona, Vivaty, Flux Player, FreeWRL,
+OpenVRML, Octaga, BS Contact, InstantPlayer, Firefox, Opera, Linux, Mozilla, Mac, Safari, Google Chrome">
+<META HTTP-EQUIV="cache-control" CONTENT="no-cache, must-revalidate">
+<META HTTP-EQUIV="pragma" CONTENT="no-cache">
+</HEAD>
+
+<BODY BGCOLOR="#ffffff">
+<FONT FACE="Arial,Helvetica">
+
+<TABLE WIDTH=100% CELLPADDING=5 BORDER=0><TR>
+
+<TD ALIGN=LEFT WIDTH=25% NOWRAP>
+<A HREF="http://en.wikipedia.org/wiki/VRML">
+<IMG SRC="vrml.gif" WIDTH="64" HEIGHT="64" ALT="[Link to VRML Wikipedia]" BORDER=0></A>
+&nbsp;&nbsp;
+<A HREF="http://www.web3d.org/">
+<IMG SRC="x3d.gif" WIDTH="64" HEIGHT="64" ALT="[Link to Web3D Consortium]" BORDER=0></A>
+</TD>
+
+<TD ALIGN=CENTER WIDTH=50%>
+<H2><FONT FACE="Arial,Helvetica"><NOBR>VRML Plugin and Browser Detector</NOBR></FONT></H2>
+</TD>
+
+<TD ALIGN=RIGHT WIDTH=25%>
+<A HREF="http://www.nist.gov"><IMG SRC="nist_small.gif" BORDER=0 ALT="[Link to NIST]" WIDTH=136 HEIGHT=56></A>
+</TD>
+</TR></TABLE>
+<HR NOSHADE>
+
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=10 CELLSPACING=10>
+<TR WIDTH=100%><TD ALIGN=LEFT VALIGN=TOP BGCOLOR="#ffffff">
+<!-- Reports Web Browser //-->
+<SCRIPT TYPE="text/javascript" LANGUAGE="JavaScript" SRC="./vb_WebDetect.js"></SCRIPT>
+<!-- Reports VRML Plugins //-->
+<SCRIPT TYPE="text/javascript" LANGUAGE="JavaScript" SRC="./vb_VRMLDetect.js"></SCRIPT>
+<!-- Reports Other Plugins //-->
+<SCRIPT TYPE="text/javascript" LANGUAGE="JavaScript" SRC="./vb_Web3Detect.js"></SCRIPT>
+<!-- Debug Messages //-->
+<SCRIPT TYPE="text/javascript" LANGUAGE="JavaScript" SRC="./vb_Debug.js"></SCRIPT>
+</TD>
+
+<TD VALIGN=CENTER ALIGN=MIDDLE BGCOLOR="#e9eaec" NOWRAP>
+<!-- Embed a VRML file //-->
+<SCRIPT TYPE="text/javascript" LANGUAGE="JavaScript" SRC="./vb_Embed.js"></SCRIPT>
+</TD></TR></TABLE>
+
+<NOSCRIPT>
+  The VRML Plugin and Browser Detector determines which free VRML or X3D plugin, browser, viewer, player,
+  reader, software, or addon is configured to work with Internet Explorer, Firefox, Opera, Safari, Google Chrome, Camino,
+  SeaMonkey, Mozilla, Netscape, Konqueror, and others on any Windows (7, Vista, XP, 2000, NT, ME, 98, 95), Linux (Ubuntu, Debian,
+  Fedora, Red Hat, Suse), Macintosh (OS X, OS 9), or Unix (BSD, FreeBSD, Solaris, SunOS, AIX, HP-UX, IRIX) computer.  Most X3D and
+  VRML plugins are detected.  VRML is the Virtual Reality Modeling Language, a standard file format to display 3D models on
+  the web.
+  <P>
+  <B>JavaScript and/or ActiveX must be enabled in the web browser for VRML Plugin and Browser Detector to work.</B>
+  <UL>
+  <LI>In Internet Explorer, try the following:
+  <OL>
+  <LI>Go to Tools > Internet Options > Advanced > scroll down to Security and select "Allow active content to run in files on My Computer"
+  <LI>Go to Tools > Internet Options > Security > Custom Level > Active Scripting > Enable > OK
+  <LI>Go to Tools > Internet Options > Security > Custom Level > Run ActiveX controls and plug-ins > Enable > OK
+  </OL>
+  <P>
+  <FONT COLOR="#ff0000">Some computers have Internet Explorer security restrictions such that the user will always be prompted, when a VRML file is displayed,
+  that there are restrictions on running scripts or ActiveX controls.  Changing the settings above might not work or are disabled.  To view a
+  VRML file, the blocked content must be allowed by clicking on the security popup above and selecting Allow Blocked Content.</FONT>
+  <P>
+  <LI>In Firefox, go to Tools > Options > Content > check "Enable JavaScript" > OK
+  <LI>In Opera, go to Tools > Preferences > Advanced > Content > check "Enable JavaScript" > OK
+  <LI>In Safari, go to Edit > Preferences > Security > check "Enable JavaScript"
+  </UL>
+  After fixing the JavaScript issue or Windows security issue, close this window and reload the web page for the VRML Plugin and Browser Detector.
+  <P>
+  If a VRML plugin is installed, then try displaying the <A HREF="./nistlogo.wrl">VRML model</A>.
+</NOSCRIPT>
+
+<HR NOSHADE>
+
+<TABLE BORDER=0 CELLPADDING=5 CELLSPACING=10 WIDTH=100%>
+<TR>
+<TD VALIGN=TOP BACKGROUND="tbg.jpg">
+<FONT FACE="Arial,Helvetica"><B>VRML Plugins</B></FONT>
+</TD>
+
+<TD ROWSPAN=7 VALIGN=CENTER ALIGN=MIDDLE BGCOLOR="#e9eaec">
+<TABLE CELLPADDING=2 BORDER=1 BGCOLOR="#ffffff">
+<TR>
+<TD ALIGN=MIDDLE VALIGN=TOP ROWSPAN=2><FONT FACE="Arial,Helvetica"><B>Software</B></FONT>
+</TD>
+<TD ALIGN=MIDDLE VALIGN=TOP ROWSPAN=2><FONT FACE="Arial,Helvetica"><B>Type</B></FONT></TD>
+<TD ALIGN=MIDDLE COLSPAN=3><FONT FACE="Arial,Helvetica"><B>OS</B></FONT></TD>
+<TD ALIGN=MIDDLE COLSPAN=2><FONT FACE="Arial,Helvetica"><B>Browser</B></FONT></TD>
+<TD ALIGN=MIDDLE VALIGN=TOP ROWSPAN=2><FONT FACE="Arial,Helvetica"><B>X3D</B></FONT></TD>
+</TR>
+
+<TR>
+<TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">Win</FONT></TD>
+<TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">Linux</FONT></TD>
+<TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">Mac</FONT></TD>
+<TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">&nbsp;IE&nbsp;</FONT></TD>
+<TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">Firefox</FONT></TD>
+</TR>
+
+<TR>
+<TD NOWRAP><FONT SIZE=-1 FACE="Arial,Helvetica"><A HREF="./cosmoplayer.html">Cosmo Player</A></FONT></TD>
+<TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">P</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">&nbsp;</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">&nbsp;</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD><FONT SIZE=-1 FACE="Arial,Helvetica">&nbsp;</FONT></TD>
+</TR>
+<TR>
+<TD NOWRAP><FONT SIZE=-1 FACE="Arial,Helvetica"><A HREF="http://www.octaga.com/">Octaga Player</A><A HREF="http://www.octaga.com/joomla/index.php?page=shop.product_details&flypage=shop.flypage&product_id=4&category_id=1&manufacturer_id=0&option=com_virtuemart&Itemid=66">*</A></FONT></TD>
+<TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">P,S</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD>
+</TR>
+<TR>
+<TD NOWRAP><FONT SIZE=-1 FACE="Arial,Helvetica"><A HREF="http://www.cortona3d.com/cortona">Cortona3D Viewer</A><A HREF="http://www.cortona3d.com/stuff/contentmgr/files/3dd8030a9eb4a4386bec79ee32895a34/doc/cortona_licensing_options_1_.pdf">*</A></FONT></TD>
+<TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">P</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD><FONT SIZE=-1 FACE="Arial,Helvetica">&nbsp;</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">&nbsp;</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD><FONT SIZE=-1 FACE="Arial,Helvetica">&nbsp;</FONT></TD>
+</TR>
+<TR>
+<TD NOWRAP><FONT SIZE=-1 FACE="Arial,Helvetica"><A HREF="http://www.bitmanagement.com/">BS Contact</A><A HREF="http://www.bitmanagement.com/products/licensing.en.html">*</A></FONT></TD>
+<TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">P,S</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD><FONT SIZE=-1 FACE="Arial,Helvetica">&nbsp;</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD>
+</TR>
+<TR>
+<TD><FONT SIZE=-1 FACE="Arial,Helvetica"><A HREF="http://www.pinecoast.com/">SwirlX3D</A></FONT></TD>
+<TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">P,S</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">&nbsp;</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">&nbsp;</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD>
+</TR>
+<TR>
+<TD><FONT SIZE=-1 FACE="Arial,Helvetica"><A HREF="http://freewrl.sourceforge.net/">FreeWRL</A></FONT></TD>
+<TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">P,S,T</FONT></TD><TD><FONT SIZE=-1 FACE="Arial,Helvetica">&nbsp;</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD><FONT SIZE=-1 FACE="Arial,Helvetica">&nbsp;</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD>
+</TR>
+<TR>
+<TD><FONT SIZE=-1 FACE="Arial,Helvetica"><A HREF="http://www.openvrml.org/">OpenVRML</A></FONT></TD>
+<TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">P,S,T</FONT></TD><TD><FONT SIZE=-1 FACE="Arial,Helvetica">&nbsp;</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD><FONT SIZE=-1 FACE="Arial,Helvetica">&nbsp;</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD>
+</TR>
+<TR>
+<TD><FONT SIZE=-1 FACE="Arial,Helvetica"><A HREF="http://www.instantreality.org/">InstantPlayer</A></FONT></TD>
+<TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">S</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD><FONT SIZE=-1 FACE="Arial,Helvetica">&nbsp;</FONT></TD><TD><FONT SIZE=-1 FACE="Arial,Helvetica">&nbsp;</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD>
+</TR>
+<TR>
+<TD><FONT SIZE=-1 FACE="Arial,Helvetica"><A HREF="http://www.web3d.org/x3d/xj3d/">Xj3D</A></FONT></TD>
+<TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">S,T</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD><FONT SIZE=-1 FACE="Arial,Helvetica">&nbsp;</FONT></TD><TD><FONT SIZE=-1 FACE="Arial,Helvetica">&nbsp;</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD>
+</TR>
+<TR>
+<TD><FONT SIZE=-1 FACE="Arial,Helvetica"><A HREF="http://vrmlengine.sourceforge.net/view3dscene.php">view3dscene</A></FONT></TD>
+<TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">S</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD><FONT SIZE=-1 FACE="Arial,Helvetica">&nbsp;</FONT></TD><TD><FONT SIZE=-1 FACE="Arial,Helvetica">&nbsp;</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD>
+</TR>
+<TR>
+<TD><FONT SIZE=-1 FACE="Arial,Helvetica"><A HREF="http://www.orbisnap.com/">Orbisnap</A></FONT></TD>
+<TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">S</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD><FONT SIZE=-1 FACE="Arial,Helvetica">&nbsp;</FONT></TD><TD><FONT SIZE=-1 FACE="Arial,Helvetica">&nbsp;</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">&nbsp;</FONT></TD>
+</TR>
+<TR>
+<TD NOWRAP><FONT SIZE=-1 FACE="Arial,Helvetica"><A HREF="http://www.bitmanagement.com/products/bs_contact_j.en.html">BS Contact J</A><A HREF="http://www.bitmanagement.com/products/licensing.en.html">*</A></FONT></TD>
+<TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">A</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD><TD ALIGN=MIDDLE><FONT SIZE=-1 FACE="Arial,Helvetica">X</FONT></TD>
+</TR>
+<TR><TD COLSPAN=8></TD></TR>
+<TR>
+<TD COLSPAN=8 ALIGN=CENTER>
+<FONT SIZE=-1 FACE="Arial,Helvetica"><B>Types:</B> P-plugin, S-standalone program, T-toolkit, A-applet<BR>
+(* - Purchasing a license removes the product logo)
+<P>
+<B>Disclaimer:</B> NIST does not review of any of the plugins and<BR>software, nor does their mention on these web pages
+imply a recommendation or endorsement.
+</FONT>
+</TD></TR>
+</TABLE>
+
+</TD>
+</TR>
+
+<TR>
+<TD VALIGN=TOP>
+<FONT SIZE=-1 FACE="Arial,Helvetica">
+VRML is the <A HREF="http://en.wikipedia.org/wiki/VRML">Virtual Reality Modeling Language</A>, a standard
+file format to display 3D models on the web.  The most common way to display, show, browse, play,
+or view VRML files, models, or worlds (.wrl file extension) is with a VRML
+plugin, also known as a browser, player, viewer, reader,
+add-on, client, toolkit, program, software, or ActiveX control.  You must download and install the VRML plugin
+in Internet Explorer, Firefox, or other browser.  Some of the VRML plugins can also display
+<A HREF="http://en.wikipedia.org/wiki/X3D">X3D</A> files.  The current version of VRML is referred to as VRML 2.0 or VRML97.
+<P>
+<B>Windows:</B>
+<A HREF="./cosmoplayer.html">Cosmo Player</A>,
+<A HREF="http://www.octaga.com/">Octaga Player</A><A HREF="http://www.octaga.com/joomla/index.php?page=shop.product_details&flypage=shop.flypage&product_id=4&category_id=1&manufacturer_id=0&option=com_virtuemart&Itemid=66">*</A>,
+<A HREF="http://www.cortona3d.com/cortona">Cortona3D Viewer</A><A HREF="http://www.cortona3d.com/stuff/contentmgr/files/3dd8030a9eb4a4386bec79ee32895a34/doc/cortona_licensing_options_1_.pdf">*</A>,
+<A HREF="http://www.bitmanagement.com/products/bs_contact_vrml.en.html">BS Contact</A><A HREF="http://www.bitmanagement.com/products/licensing.en.html">*</A>,
+<A HREF="http://www.pinecoast.com/plugindownload.htm">SwirlX3D</A>,
+<A HREF="http://www.web3d.org/x3d/vrml/tools/viewers_and_browsers/">more</A>
+<BR>
+<B>Linux:</B>
+<A HREF="http://www.octaga.com/">Octaga Player</A>,
+<A HREF="http://www.bitmanagement.com/developer/index.html">BS Contact</A>,
+<A HREF="http://freewrl.sourceforge.net/">FreeWRL</A>,
+<A HREF="http://www.openvrml.org/">OpenVRML</A>
+<BR>
+<B>Macintosh:</B>
+<A HREF="http://www.octaga.com/">Octaga Player</A>,
+<A HREF="http://freewrl.sourceforge.net/">FreeWRL</A>,
+<A HREF="http://www.openvrml.org/">OpenVRML</A>
+<BR>
+<B>Windows Mobile:</B>
+<A HREF="http://www.bitmanagement.com/products/bs_contact_mobile.en.html">BS Contact Mobile</A>,
+<A HREF="http://www.parallelgraphics.com/products/cortonace/">Pocket Cortona</A><A HREF="http://www.parallelgraphics.com/products/pricelist/">*</A>
+<BR>
+<B>VRML examples:</B>
+<A HREF="http://cic.nist.gov/vrml/cis2.html#VRML">Structural Steel</A>,
+<A HREF="http://cic.nist.gov/vrml/equip.html">User-Controlled Construction Equipment</A>,
+<A HREF="http://cic.nist.gov/vrml/vcbt/vcbtsim.html">Virtual Cybernetic Building Testbed</A>
+</FONT>
+</TD>
+
+<TR>
+<TD VALIGN=TOP BACKGROUND="tbg.jpg">
+<FONT FACE="Arial,Helvetica"><B>X3D Plugins</B></FONT>
+</TD>
+</TR>
+
+<TR>
+<TD VALIGN=TOP>
+<FONT SIZE=-1 FACE="Arial,Helvetica">
+<A HREF="http://www.web3d.org/about/overview/">X3D</A> is an open standards file format and run-time architecture to
+represent and communicate 3D scenes and objects using XML.  It can be thought of as the next generation of VRML.  X3D files
+can be displayed with an <A HREF="http://www.web3d.org/x3d/wiki/index.php/Player_support_for_X3D_components">X3D plugin</A>, program, or toolkit.  Most of the X3D plugins also display
+VRML files.
+<P>
+<B>Plugins and software:</B>
+<A HREF="http://www.octaga.com/">Octaga Player</A><A HREF="http://www.octaga.com/joomla/index.php?page=shop.product_details&flypage=shop.flypage&product_id=4&category_id=1&manufacturer_id=0&option=com_virtuemart&Itemid=66">*</A>,
+<A HREF="http://www.bitmanagement.com/products/bs_contact_vrml.en.html">BS Contact</A><A HREF="http://www.bitmanagement.com/products/licensing.en.html">*</A>,
+<A HREF="http://www.instantreality.org/">InstantPlayer</A>,
+<A HREF="http://freewrl.sourceforge.net/">FreeWRL</A>,
+<A HREF="http://www.openvrml.org/">OpenVRML</A>,
+<A HREF="http://www.pinecoast.com/plugindownload.htm">SwirlX3D</A>,
+<A HREF="http://www.web3d.org/x3d/xj3d/">Xj3D</A>,
+<A HREF="http://www.web3d.org/x3d/content/examples/X3dResources.html#Applications">more</A>
+<BR>
+<B>X3D examples:</B>
+<A HREF="./nistlogo.x3d">nistlogo.x3d</A>,
+<A HREF="./nistlogo.x3dz">nistlogo.x3dz</A> (gzipped),
+<A HREF="./nistlogo.x3dv">nistlogo.x3dv</A> (Classic VRML),
+<A HREF="http://cic.nist.gov/vrml/cis2.html#X3D">Structural Steel</A>,
+<A HREF="http://www.web3d.org/community/models/">more</A>
+</FONT>
+</TD></TR>
+
+<TR>
+<TD VALIGN=TOP BACKGROUND="tbg.jpg">
+<FONT FACE="Arial,Helvetica"><B>VRML and X3D Standalone Programs, Toolkits, and Applets</B></FONT>
+</TD>
+</TR>
+<TD VALIGN=TOP>
+<FONT SIZE=-1 FACE="Arial,Helvetica">
+VRML and X3D files can also be displayed without a plugin with the following standalone programs, toolkits and applets written in C++,
+<A HREF="http://java.sun.com/">Java</A>,
+<A HREF="https://java3d.dev.java.net/">Java3D</A>,
+and <A HREF="http://en.wikipedia.org/wiki/Java_OpenGL">JOGL</A>.
+<P>
+<A HREF="http://www.instantreality.org/">InstantPlayer</A> (Multi-platform),
+<A HREF="http://www.octaga.com/">Octaga Player</A> (Windows, Linux),
+<A HREF="http://www.bitmanagement.com/">BS Contact</A> (Windows),
+<A HREF="http://www.bitmanagement.com/products/bs_contact_j.en.html">BS Contact J</A><A HREF="http://www.bitmanagement.com/products/licensing.en.html">*</A> (Applet),
+<A HREF="http://www.pinecoast.com/swvdownload.htm">SwirlX3D</A> (Windows),
+<A HREF="http://freewrl.sourceforge.net/">FreeWRL</A> (Linux, Mac),
+<A HREF="http://www.openvrml.org/">OpenVRML</A> (Linux, Mac, toolkit),
+<A HREF="http://www.adobe.com/products/acrobatproextended/">Adobe Acrobat Pro Extended and Adobe 3D Reviewer</A> (Windows),
+<A HREF="http://www.web3d.org/x3d/xj3d/">Xj3D</A> (Multi-platform, toolkit),
+<A HREF="http://vrmlengine.sourceforge.net/view3dscene.php">view3dscene</A> (Multi-platform),
+<A HREF="https://j3d-vrml97.dev.java.net/">Java 3D VRML Loader</A> (Toolkit),
+<A HREF="http://www.orbisnap.com/">Orbisnap</A> (Multi-platform),
+<A HREF="http://www.righthemisphere.com/products/deeppub/DeepPub_View/index.html">Deep View</A> (Windows),
+<A HREF="http://www.myriadviewer.com/myriadreader.htm">Myriad 3D Reader</A> (Windows),
+<A HREF="http://www.demotride.com/about.html">Demotride</A> (Windows),
+<A HREF="http://www.lighttek.com/alteros/index.htm">Alteros 3D</A> (Windows),
+<A HREF="http://sourceforge.net/projects/x3dtoolkit/">X3D Tool Kit</A> (Toolkit),
+<A HREF="http://open-activewrl.sourceforge.net/">Open ActiveWrl</A> (Toolkit),
+<A HREF="http://www.cybergarage.org/vrml/">CyberX3D</A> (Toolkit),
+<A HREF="http://www.niallmoody.com/heilan/">Heilan X3D Browser</A> (Windows, Linux, toolkit),
+<A HREF="http://sourceforge.net/projects/simvrml/">SimVRML</A> (Mac),
+<A HREF="http://www.mobile3d.it/products.aspx?p=mobix3d">MobiX3D</A> (PDA)
+<P>Other plugins and software:
+<A HREF="http://www.vivaty.com/downloads/player/">Vivaty Player</A> (formerly <A HREF="http://web.archive.org/web/20070605231300/http://www.mediamachines.com/">Flux Player</A>),
+<A HREF="http://code.google.com/apis/o3d/">Google O3D Plugin</A>,
+<A HREF="http://www.blaxxun.com/">blaxxun Contact</A>,
+<A HREF="http://www.rbg.vic.gov.au/rbg_melbourne/mapping/3d_model/the_model ">Pivoron Player</A>,
+<A HREF="http://www.exitreality.com/">ExitReality</A>,
+<A HREF="http://www.simcreator.com/newsandevents.htm#firefox">RTI 3D Model Viewer</A>,
+<A HREF="http://www.openworlds.com/">OpenWorlds</A>,
+<A HREF="http://www.km.kongsberg.com/KS/WEB/NOKBG0237.nsf/AllWeb/E1DB099B3F91AC26C12572DB004D4EE1?OpenDocument">VRMLView</A>,
+<A HREF="http://www.3d-online.com/">3D-Online</A>,
+<A HREF="http://www.xvrml.net/">xVRML</A>,
+<A HREF="http://www.shout3d.com/">Shout3D</A>,
+Vcom3D Venues, WorldView, GLView
+</FONT>
+</TD>
+</TR>
+</TABLE>
+
+<TABLE BORDER=0 CELLPADDING=5 CELLSPACING=10 WIDTH=100%>
+
+<TR WIDTH=100%>
+<TD VALIGN=TOP BACKGROUND="tbg.jpg" WIDTH=65%><FONT FACE="Arial,Helvetica"><B>VRML and X3D Links</B></FONT></TD>
+<TD VALIGN=TOP BACKGROUND="tbg.jpg" WIDTH=35%><FONT FACE="Arial,Helvetica"><B>Detector Information</B></FONT></TD>
+<TR>
+
+<TD VALIGN=TOP>
+<FONT SIZE=-1 FACE="Arial,Helvetica">
+<LI><A HREF="http://www.web3d.org/">Web3D Consortium</A>,
+<A HREF="http://en.wikipedia.org/wiki/VRML">VRML Wikipedia</A>,
+<A HREF="http://www.web3d.org/x3d/vrml/index.html">VRML Archives</A>,
+<A HREF="http://en.wikipedia.org/wiki/X3D">X3D Wikipedia</A>,
+<A HREF="http://www.macweb3d.org/">MacWeb3D</A>,
+<A HREF="http://www.web3d2009.org/">Web3D 2009<A>
+
+<LI><A HREF="http://accad.osu.edu/~pgerstma/class/vnv/resources/info/AnnotatedVrmlRef/Book.html">VRML Reference Manual</A>,
+<A HREF="http://www.sdsc.edu/~moreland/courses/Siggraph98/vrml97/vrml97.htm">Introduction to VRML</A>,
+<A HREF="http://www.wiley.com/legacy/compbooks/vrml2sbk/cover/cover.htm">VRML Sourcebook</A>,
+<A HREF="http://tecfa.unige.ch/guides/vrml/vrmlman/">VRML Primer and Tutorials</A>,
+<A HREF="http://www.web3d.org/x3d/content/examples/X3dResources.html">X3D and VRML Resources</A>
+
+<LI><A HREF="http://ovrt.nist.gov/v2_x3d.html">VRML to X3D Translator</A>,
+<A HREF="http://www.pinecoast.com/c2x.htm">Collada to VRML/X3D Translator</A>,
+<A HREF="http://www.interocitors.com/polyhedra/vr1tovr2/index.html">VRML 1.0 to 2.0 Translator</A>
+
+<LI><A HREF="http://vrml.cip.ica.uni-stuttgart.de/dune/">White Dune VRML Editor</A>,
+<A HREF="http://create.ife.no/vr/tools/chisel/install.htm">Chisel VRML Optimizer</A>,
+<A HREF="http://www.vizup.com/">VizUp Polygon Reducer</A>,
+<A HREF="http://www.parallelgraphics.com/products/vrmlpad/">VRMLPad</A>,
+<A HREF="http://www.pinecoast.com/swirl3d.htm">SwirlX3D Editor</A>,
+<A HREF="http://www.vivaty.com/downloads/studio/">Vivaty Studio</A>,
+<A HREF="http://www.bitmanagement.com/products/bs_tools.en.html">BS Workflow Tools</A>
+
+<LI><A HREF="http://groups.google.com/group/comp.lang.vrml/topics">comp.lang.vrml Newsgroup</A>,
+<A HREF="http://www.web3d.org/message_boards/">Web3D Discussion Forum</A>,
+<A HREF="http://www.web3d.org/x3d/publiclists/">X3D and VRML Email Lists</A>
+
+<LI><A HREF="http://home.earthlink.net/~alprojects/wtc/index.html">World Trade Center</A>,
+<A HREF="http://lhcb-reconstruction.web.cern.ch/lhcb-reconstruction/Panoramix/Running_Panoramix.htm">Large Hadron Collider</A>,
+<A HREF="http://mars.jpl.nasa.gov/MPF/vrml/vrml.html">Mars Pathfinder</A>,
+<A HREF="http://dlmf.nist.gov/9/3/">Digital Library of Mathematical Functions</A>,
+<A HREF="http://www.zen32156.zen.co.uk/ISSSim.htm">ISS Simulator</A>,
+<A HREF="http://www.drycreekphoto.com/tools/printer_gamuts/">Printer Gamuts</A>,
+<A HREF="http://www.debianhelp.co.uk/nagiosinstall.htm">Debian Nagios</A>,
+<A HREF="http://www.georgehart.com/virtual-polyhedra/vrml-info.html">Virtual Polyhedra</A>,
+<A HREF="http://www.murdermystery.com/vrml/">3D Murder Mystery</A>,
+<A HREF="http://members.core.com/~jfairley/vrmlcheck.htm">VRML Browser Detector</A>,
+<A HREF="http://www.extremetech.com/article2/0,1697,2041418,00.asp">Review of VRML/X3D plugins</A>,
+<A HREF="http://www.parallelgraphics.com/products/cortona3d/best">3D Page of the Week</A>
+
+</FONT>
+</TD>
+
+<TD VALIGN=TOP>
+<FONT SIZE=-1 FACE="Arial,Helvetica">
+<LI>Most VRML and X3D plugins can be detected in
+<A HREF="http://www.mozilla.com/">Firefox</A>,
+<A HREF="http://www.microsoft.com/windows/internet-explorer/default.aspx">Internet Explorer</A>,
+<A HREF="http://www.opera.com/">Opera</A>,
+<A HREF="http://www.apple.com/safari/">Safari</A>,
+<A HREF="http://www.google.com/chrome">Google Chrome</A>, and
+other web browsers on any of these operating systems:
+Windows (7, Vista, XP, 2000, 98), Linux (Ubuntu, Debian, Fedora, Red Hat, Suse),
+Mac OS X, or Unix (FreeBSD, Solaris)
+<LI>Find links to this web page with
+<A HREF="http://www.google.com/search?q=%22VRML Plugin and Browser Detector%22&num=20&hl=xx-klingon">Google (title)</A>,
+<A HREF="http://www.google.com/search?q=%22cic.nist.gov%2Fvrml%2Fvbdetect.html%22&num=20&hl=xx-piglatin">Google (text)</A>,
+<A HREF="http://www.google.com/search?q=link:cic.nist.gov/vrml/vbdetect.html&num=20&hl=xx-hacker">Google (link)</A>, and
+<A HREF="http://search.yahoo.com/search?p=cic.nist.gov%2Fvrml%2Fvbdetect&ei=UTF-8&n=20&fl=0&x=wrt">Yahoo</A>
+<LI>The <A HREF="http://web.archive.org/index.html">Internet Archive</A> has
+<A HREF="http://web.archive.org/web/*/http://cic.nist.gov/vrml/vbdetect.html">older versions</A> of this web page
+<LI>The original URL for the detector is: <A HREF="http://cic.nist.gov/vrml/vbdetect.html">http://cic.nist.gov/vrml/vbdetect.html</A>
+</FONT>
+</TD>
+</TR></TABLE>
+
+<HR NOSHADE>
+
+<FONT SIZE=-1 FACE="Arial,Helvetica">
+This software was developed at the <A HREF="http://www.nist.gov/">National Institute of Standards and Technology</A>
+by employees of the Federal Government in the course of their official duties. Pursuant to
+<A HREF="http://www.access.gpo.gov/uscode/title17/title17.html">Title 17</A>
+Section 105 of the
+<A HREF="http://www.gpoaccess.gov/uscode/index.html">United States Code</A> this software is not subject to
+copyright protection and is in the public domain.  This software is an experimental system.  NIST assumes no
+responsibility whatsoever for its use by other parties, and makes no guarantees, expressed or implied, about its
+quality, reliability, or any other characteristic.  We would appreciate acknowledgement if the software is used.
+<P>
+This software can be redistributed and/or modified freely provided that any derivative works bear some notice
+that they are derived from it, and any modified versions bear some notice that they have been modified.
+<P>
+By selecting many of the links above, you will be leaving NIST webspace.  We have provided these links to other
+web sites because they may have information that would be of interest to you.  No inferences should be drawn on
+account of other sites being referenced, or not, from this page.  There may be other web sites that are more
+appropriate for your purpose.  NIST does not necessarily endorse the views expressed, or concur with the facts
+presented on these sites.  Further, NIST does not endorse any commercial products that may be mentioned on these
+sites.
+</FONT>
+
+<P>
+<CENTER>
+<IMG BORDER="0" ALT="[Graphic Rule]" SRC="http://www.bfrl.nist.gov/globalimages/bottomrule.jpg" WIDTH="700" HEIGHT="17">
+
+<TABLE BORDER=0 CELLPADDING=10><TR>
+<TD>
+<FONT SIZE=-1 FACE="Arial,Helvetica">
+<P>
+<A HREF="http://www.nist.gov/public_affairs/privacy.htm">Privacy Statement / Security Notice</A> |
+<A HREF="http://www.nist.gov/public_affairs/disclaim.htm">Disclaimer</A> |
+<A HREF="http://www.nist.gov/admin/foia/foia.htm">FOIA</A> |
+<A HREF="mailto:robert.lipman@nist.gov">Robert Lipman</A>
+<BR>
+<A HREF="http://www.nist.gov/">NIST</A> is an agency of the <A HREF="http://www.doc.gov/">U.S. Department of Commerce</A>
+<P>
+Date created: June 15, 1998<BR>
+Last updated: April 22, 2009 (10+ years)
+</FONT>
+</TD>
+<TD>
+<A HREF="http://www.bfrl.nist.gov/">
+<IMG BORDER="0" SRC="http://www.bfrl.nist.gov/globalimages/BFRL_LOGO.gif" ALT="[Link to BFRL]" WIDTH="110" HEIGHT="110"></A>
+</TD></TR></TABLE>
+</FONT>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-335090-5");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+</BODY>
+</HTML>

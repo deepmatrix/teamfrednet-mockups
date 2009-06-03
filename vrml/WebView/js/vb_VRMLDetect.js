@@ -16,6 +16,7 @@
 var nvrml  = 0;
 var vrmlok = 0;
 var vrmlPlugin = '';
+var vrmlMimetype = '';
 var vrml = new Array(20);
 var nenabled  = 0;
 var nenabledx = 0;
@@ -30,6 +31,7 @@ var nvrmlMime = 2;
 var nx3d  = 0;
 var x3dok = 0;
 var x3dPlugin = '';
+var x3dMimetype = '';
 var x3d = new Array(20);
 
 var x3dMime = new Array(10);
@@ -62,6 +64,7 @@ if (navigator.plugins && navigator.plugins.length > 0) {
           if (enabledPlugin && (enabledPlugin.name == plugin.name)) {
             if (plugin.name != vrmlPlugin) {
               vrmlPlugin = plugin.name;
+              vrmlMimetype = mimetype.type;
               nenabled = nenabled + 1;
             }
             if (!vrmlok) {vrmlok = 1;}
@@ -86,6 +89,7 @@ if (navigator.plugins && navigator.plugins.length > 0) {
           if (enabledPlugin && (enabledPlugin.name == plugin.name)) {
             if (plugin.name != x3dPlugin) {
               x3dPlugin = plugin.name;
+              x3dMimetype = mimetype.type;
               nenabledx = nenabledx + 1;
             }
             if (!x3dok) {x3dok = 1;}
