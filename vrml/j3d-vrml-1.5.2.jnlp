@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0+">
+  <information>
+    <vendor>Team FREDNET</vendor>
+    <homepage href="http://www.teamfrednet.org/"/>
+    <title>Java 3D VRML Package</title>
+    <description kind="short">J3D VRML97 Package</description>
+    <description>J3D VRML97 package unmodified from j3d-vrml97.dev.java.net </description>
+  </information>
+  <resources>
+    <j2se version="1.5+"/>
+    <extension href="http://download.java.net/media/java3d/webstart/release/java3d-latest.jnlp"/>
+    <jar href="http://teamfrednet-mockups.googlecode.com/files/j3d-vrml97-1.5.2.jar"/>
+  </resources>
+  <component-desc/>
+</jnlp>
