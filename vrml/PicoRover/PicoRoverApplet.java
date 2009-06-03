@@ -1,4 +1,4 @@
-
+package org.teamfrednet.mockups;
 
 
 import com.sun.j3d.loaders.Loader;
@@ -38,8 +38,6 @@ import org.jdesktop.j3d.loaders.vrml97.VrmlLoader;
 public class PicoRoverApplet
     extends java.applet.Applet
 {
-    private final static long EVENT_MASK =  (AWTEvent.WINDOW_EVENT_MASK);
-
     public final static GraphicsConfiguration PreferredConfiguration(){
         GraphicsConfigTemplate3D gc3D = new GraphicsConfigTemplate3D();
         gc3D.setSceneAntialiasing(GraphicsConfigTemplate.PREFERRED);
@@ -52,9 +50,6 @@ public class PicoRoverApplet
 
     public PicoRoverApplet(){
         super();
-        this.enableEvents(EVENT_MASK);
-        this.setFocusTraversalKeysEnabled(false);
-
     }
 
 
@@ -83,7 +78,7 @@ public class PicoRoverApplet
                 }
                 {
                     VrmlLoader loader = new VrmlLoader();
-                    URL model = this.getClass().getResource("PicoRover.wrl");
+                    URL model = this.getClass().getResource("/PicoRover.wrl");
                     Scene scene = loader.load(model);
                     xlate.addChild(scene.getSceneGroup());
                 }
