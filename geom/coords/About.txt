@@ -1,0 +1,9 @@
+
+Status: TODO
+
+Goal
+
+ 1. Draw Earth sphere wireframe with LAT/LON details in Sol centered coordinate system in foreground, not using native code libraries.
+ 2. Draw Moon sphere wireframe with LAT/LON details in correct position and orientation for a given UTC date/time. 
+
+
