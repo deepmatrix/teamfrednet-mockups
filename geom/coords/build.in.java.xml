@@ -42,6 +42,7 @@
              debug="${compiler.debug}"
              source="${compiler.source}"
              target="${compiler.target}"
+             encoding="${compiler.encoding}"
              failonerror="true">
 
         <classpath refid="@{classpath.id}"/>
