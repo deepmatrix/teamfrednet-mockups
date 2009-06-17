@@ -9,6 +9,7 @@
 
   <property name="compiler.optimize" value="false"/>
   <property name="compiler.debug" value="true"/>
+  <property name="compiler.encoding" value="utf-8"/>
 
   <property name="src" value="src"/>
 
@@ -38,9 +39,9 @@
       <include name="**/wtkx-*.jar"/>
     </fileset>
   </path>
-  <path id="lib.pack.mantissa">
+  <path id="lib.pack.commons-logging">
     <fileset dir="${lib}">
-      <include name="**/mantissa-*.jar"/>
+      <include name="**/commons-logging-*.jar"/>
     </fileset>
   </path>
 
@@ -61,7 +62,7 @@
     <archive target="${jar.file.name}" bin="${bin}" src="${src}" man.main="${main.class}" man.lib="">
       <pack>
         <zipfileset src="${toString:lib.pack.wtkx}"/>
-        <zipfileset src="${toString:lib.pack.mantissa}"/>
+        <zipfileset src="${toString:lib.pack.commons-logging}"/>
       </pack>
     </archive>
 
