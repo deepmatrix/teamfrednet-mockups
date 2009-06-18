@@ -250,6 +250,7 @@ public class UTCScale implements TimeScale {
                 tmpInstance = new UTCScale();
                 tmpInstance.setTimeSteps();
             } catch (OrekitException oe) {
+                oe.printStackTrace();
                 tmpException = oe;
             }
             INSTANCE         = tmpInstance;
