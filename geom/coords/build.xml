@@ -39,11 +39,6 @@
       <include name="**/wtkx-*.jar"/>
     </fileset>
   </path>
-  <path id="lib.pack.commons-logging">
-    <fileset dir="${lib}">
-      <include name="**/commons-logging-*.jar"/>
-    </fileset>
-  </path>
 
   <import file="build.in.java.xml"/>
   <import file="build.in.version.xml"/>
@@ -62,7 +57,6 @@
     <archive target="${jar.file.name}" bin="${bin}" src="${src}" man.main="${main.class}" man.lib="">
       <pack>
         <zipfileset src="${toString:lib.pack.wtkx}"/>
-        <zipfileset src="${toString:lib.pack.commons-logging}"/>
       </pack>
     </archive>
 

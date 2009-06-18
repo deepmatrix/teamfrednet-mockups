@@ -7,3 +7,7 @@ Goal
  2. Draw Moon sphere wireframe with LAT/LON details in correct position and orientation for a given UTC date/time. 
 
 
+
+TODO
+* Convert orekit data loader strategy from many scans to one scan
+
