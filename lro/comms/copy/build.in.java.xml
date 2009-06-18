@@ -150,6 +150,7 @@
           <include name="*.md5"/>
           <include name="*.asc"/>
           <include name="*.zip"/>
+          <include name="*.db"/>
         </fileset>
       </delete>
     </sequential>
