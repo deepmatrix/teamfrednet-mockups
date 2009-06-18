@@ -229,15 +229,45 @@ public class Database {
 
 
     /**
-     * Test / init database
+     * Test / init / bootstrap database
      */
     public static void main(String[] argv){
         try {
             Init();
-            System.out.println("ok");
-            System.exit(0);
+            System.out.println("ok initialized");
+            int argc = argv.length;
+            if (2 <= argc){
+                String username = argv[0];
+                String password = argv[1];
+                String first = null;
+                String last = null; 
+                String gmloc = null;
+                String email = null;
+                if (2 < argc){
+                    first = argv[2];
+                    if (3 < argc){
+                        last = argv[3];
+                        if (4 < argc){
+                            gmloc = argv[4];
+                            if (5 < argc){
+                                email = argv[5];
+                            }
+                        }
+                    }
+                }
+                if (Create(username,password,first,last,gmloc,email)){
+                    System.out.println("ok created user");
+                    System.exit(0);
+                }
+                else {
+                    System.out.println("err creating user");
+                    System.exit(1);
+                }
+            }
+            else
+                System.exit(0);
         }
-        catch (RuntimeException exc){
+        catch (Exception exc){
             System.out.println("err");
             exc.printStackTrace(System.err);
             System.exit(1);
