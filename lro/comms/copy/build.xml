@@ -38,10 +38,28 @@
     <fileset dir="${lib}">
       <include name="**/ps-client-*.jar"/>
     </fileset>
+    <pathelement location="${bin}"/>
+  </path>
+  <path id="lib.path.client.ps">
+    <fileset dir="${lib}">
+      <include name="**/ps-client-*.jar"/>
+    </fileset>
   </path>
   <path id="lib.path.server">
     <fileset dir="${lib}">
       <include name="**/proto-streamer-*.jar"/>
+      <include name="**/h2*.jar"/>
+    </fileset>
+    <pathelement location="${bin}"/>
+  </path>
+  <path id="lib.path.server.ps">
+    <fileset dir="${lib}">
+      <include name="**/proto-streamer-*.jar"/>
+    </fileset>
+  </path>
+  <path id="lib.path.server.db">
+    <fileset dir="${lib}">
+      <include name="**/h2*.jar"/>
     </fileset>
   </path>
 
@@ -56,31 +74,32 @@
 
   <target name="jar" description="Default target to produce client and server executable archives.">
     <archive.cleanly/>
-    <antcall target="jar-client"/>
-    <antcall target="jar-server"/>
+    <antcall target="client"/>
+    <antcall target="server"/>
   </target>
 
 
-  <target name="jar-client" depends="compile-client,version" description="Produce 'name-V-client.jar'.">
+  <target name="client" depends="compile-client,version" description="Produce 'name-V-client.jar'.">
 
     <property name="jar.file.name.client" value="${ant.project.name}-${this.version}-client.jar"/>
 
     <archive target="${jar.file.name.client}" bin="${bin}" src="${src.client}" man.main="${main.class.client}" man.lib="">
       <pack>
-        <zipfileset src="${toString:lib.path.client}"/>
+        <zipfileset src="${toString:lib.path.client.ps}"/>
       </pack>
     </archive>
 
     <flush dir="${bin}" type="class"/>
   </target>
 
-  <target name="jar-server" depends="compile-server,version" description="Produce 'name-V-server.jar'.">
+  <target name="server" depends="compile-server,version" description="Produce 'name-V-server.jar'.">
 
     <property name="jar.file.name.server" value="${ant.project.name}-${this.version}-server.jar"/>
 
     <archive target="${jar.file.name.server}" bin="${bin}" src="${src.server}" man.main="${main.class.server}" man.lib="">
       <pack>
-        <zipfileset src="${toString:lib.path.server}"/>
+        <zipfileset src="${toString:lib.path.server.ps}"/>
+        <zipfileset src="${toString:lib.path.server.db}"/>
       </pack>
     </archive>
 
@@ -90,7 +109,7 @@
   <target name="compile-client" depends="version" description="Dependecy of 'jar' to compile code from 'src' to 'bin'.">
 
     <compile src="${src.common}" ver="${ver}" bin="${bin}" classpath.id="lib.path.client"/>
-    <compile2 src="${src.server}" bin="${bin}" classpath.id="lib.path.client"/>
+    <compile2 src="${src.client}" bin="${bin}" classpath.id="lib.path.client"/>
   </target>
 
   <target name="compile-server" depends="version" description="Dependecy of 'jar' to compile code from 'src' to 'bin'.">
