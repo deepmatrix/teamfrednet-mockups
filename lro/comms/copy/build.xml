@@ -11,7 +11,11 @@
   <property name="compiler.debug" value="true"/>
   <property name="compiler.encoding" value="utf-8"/>
 
-  <property name="src" value="src"/>
+  <property name="src.client" value="src/client"/>
+
+  <property name="src.server" value="src/server"/>
+
+  <property name="src.common" value="src/common"/>
 
   <property name="ver" value="ver"/>
 
@@ -27,11 +31,17 @@
 
   <property name="main.class.client" value="org.teamfrednet.comms.copy.Client"/>
 
-  <property name="main.class.server" value="org.teamfrednet.comms.copy.Server"/>
+  <property name="main.class.server" value="ps.Server"/>
 
-  <path id="lib.path">
+
+  <path id="lib.path.client">
     <fileset dir="${lib}">
-      <include name="**/*.jar"/>
+      <include name="**/ps-client-*.jar"/>
+    </fileset>
+  </path>
+  <path id="lib.path.server">
+    <fileset dir="${lib}">
+      <include name="**/proto-streamer-*.jar"/>
     </fileset>
   </path>
 
@@ -44,19 +54,49 @@
     <clean bin="${bin}" this="."/>
   </target>
 
-  <target name="jar" depends="compile,version,main" description="Produce 'name-V*.jar' and 'name-V*.jar.md5'.  See 'version'.">
+  <target name="jar" description="Default target to produce client and server executable archives.">
     <archive.cleanly/>
+    <antcall target="jar-client"/>
+    <antcall target="jar-server"/>
+  </target>
 
-    <property name="jar.file.name" value="${ant.project.name}-${this.version}.jar"/>
 
-    <archive target="${jar.file.name}" bin="${bin}" src="${src}" man.main="${main.class}" man.lib="" />
+  <target name="jar-client" depends="compile-client,version" description="Produce 'name-V-client.jar'.">
+
+    <property name="jar.file.name.client" value="${ant.project.name}-${this.version}-client.jar"/>
+
+    <archive target="${jar.file.name.client}" bin="${bin}" src="${src.client}" man.main="${main.class.client}" man.lib="">
+      <pack>
+        <zipfileset src="${toString:lib.path.client}"/>
+      </pack>
+    </archive>
 
     <flush dir="${bin}" type="class"/>
   </target>
 
-  <target name="compile" depends="version" description="Dependecy of 'jar' to compile code from 'src' to 'bin'.">
+  <target name="jar-server" depends="compile-server,version" description="Produce 'name-V-server.jar'.">
 
-    <compile src="${src}" ver="${ver}" bin="${bin}" classpath.id="lib.path"/>
+    <property name="jar.file.name.server" value="${ant.project.name}-${this.version}-server.jar"/>
+
+    <archive target="${jar.file.name.server}" bin="${bin}" src="${src.server}" man.main="${main.class.server}" man.lib="">
+      <pack>
+        <zipfileset src="${toString:lib.path.server}"/>
+      </pack>
+    </archive>
+
+    <flush dir="${bin}" type="class"/>
+  </target>
+
+  <target name="compile-client" depends="version" description="Dependecy of 'jar' to compile code from 'src' to 'bin'.">
+
+    <compile src="${src.common}" ver="${ver}" bin="${bin}" classpath.id="lib.path.client"/>
+    <compile2 src="${src.server}" bin="${bin}" classpath.id="lib.path.client"/>
+  </target>
+
+  <target name="compile-server" depends="version" description="Dependecy of 'jar' to compile code from 'src' to 'bin'.">
+
+    <compile src="${src.common}" ver="${ver}" bin="${bin}" classpath.id="lib.path.server"/>
+    <compile2 src="${src.server}" bin="${bin}" classpath.id="lib.path.server"/>
   </target>
 
   <target name="version" description="Report current version.">
@@ -76,15 +116,6 @@
   <target name="minor" description="Increment version minor number and report result.">
     <version-minor/>
     <version/>
-  </target>
-
-  <target name="main" description="Default dependency to set jar main class to full screen.">
-    <property name="main.class" value="${main.class.client}"/>
-  </target>
-
-  <target name="server" description="Optionally build the jar with main class 'Server'.">
-    <property name="main.class" value="${main.class.server}"/>
-    <antcall target="jar"/>
   </target>
 
 </project>

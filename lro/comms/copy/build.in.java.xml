@@ -20,6 +20,7 @@
     <attribute name="ver"/>
     <attribute name="bin"/>
     <attribute name="classpath.id"/>
+    <element name="src" optional="true"/>
     <sequential>
       <mkdir dir="@{bin}"/>
 
@@ -34,6 +35,29 @@
           <include name="**/*.java"/>
         </fileset>
       </copy>
+
+      <javac srcdir="@{src}"
+             destDir="@{bin}"
+             optimize="${compiler.optimize}"
+             deprecation="${compiler.deprecation}"
+             debug="${compiler.debug}"
+             source="${compiler.source}"
+             target="${compiler.target}"
+             encoding="${compiler.encoding}"
+             failonerror="true">
+
+        <classpath refid="@{classpath.id}"/>
+      </javac>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="compile2">
+    <attribute name="src"/>
+    <attribute name="bin"/>
+    <attribute name="classpath.id"/>
+    <element name="src" optional="true"/>
+    <sequential>
+      <mkdir dir="@{bin}"/>
 
       <javac srcdir="@{src}"
              destDir="@{bin}"
