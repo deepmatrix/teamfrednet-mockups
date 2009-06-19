@@ -4,8 +4,8 @@
     <script src="/jshash-2.1/sha1.js" type="text/javascript"><!-- --></script>
     <script type="text/javascript"><!-- 
       function bpad(){
-        var a = Math.random()*0xffffffff;
-        var b = Math.random()*0xffffffff;
+        var a = Math.floor(Math.random()*0xffffffff);
+        var b = Math.floor(Math.random()*0xffffffff);
         this.bin = new Array(a,b);
         this.binlen = 64;
         this.hex = binb2hex(this.bin);
@@ -120,9 +120,11 @@
       }
       .success {
        color: #182;
+       font-weight: 900;
       }
       .failure {
        color: #812;
+       font-weight: 900;
       }
     // --></style>
   </head>
