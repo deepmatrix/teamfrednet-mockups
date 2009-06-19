@@ -113,6 +113,7 @@ public class Post
         String pad = request.getParameter("pad");
         String sig = request.getParameter("sig");
         if (null != usr && null != pad && null != sig){
+            usr = usr.toLowerCase().trim();
             BigInteger sigInt = new BigInteger(sig,16);
 
             if (Database.Authenticate(usr,pad,sigInt)){
@@ -120,8 +121,10 @@ public class Post
                 String username = request.getParameter("username");
                 String password = request.getParameter("password");
                 if (null != username && null != password){
+                    username = username.toLowerCase().trim();
                     if (Database.ValidateUsername(username)){
                         if (Database.ValidatePassword(password)){
+                            password = password.trim();
                             String first = request.getParameter("first");
                             String last = request.getParameter("last");
                             String gmloc = request.getParameter("gmloc");
