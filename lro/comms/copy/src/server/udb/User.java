@@ -32,7 +32,7 @@ public class User
             MessageDigest sha = MessageDigest.getInstance("SHA");
             sha.update(pad.toByteArray());
             sha.update(this.password.getBytes(UTF8));
-            BigInteger val = new BigInteger(sha.digest());
+            BigInteger val = new BigInteger(1,sha.digest());
 
             return (val.equals(sig));
         }

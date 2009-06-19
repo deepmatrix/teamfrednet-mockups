@@ -4,7 +4,6 @@ import java.io.FileReader;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
-import java.util.Properties;
 
 public class sha {
 
@@ -53,7 +52,7 @@ public class sha {
                         BigInteger vec = new BigInteger(vectorDigest,16);
                         MessageDigest sha = MessageDigest.getInstance("SHA-1");
                         sha.update(msg.toByteArray());
-                        BigInteger val = new BigInteger(sha.digest());
+                        BigInteger val = new BigInteger(1,sha.digest());
                         if (val.equals(vec)){
                             System.out.println("ok "+vectorMessage);
                         }
@@ -75,7 +74,7 @@ public class sha {
                 try {
                     MessageDigest sha = MessageDigest.getInstance("SHA");
                     sha.update(test.getBytes(UTF8));
-                    BigInteger val = new BigInteger(sha.digest());
+                    BigInteger val = new BigInteger(1,sha.digest());
                     System.out.println(val.toString(16));
                     System.exit(0);
                 }
