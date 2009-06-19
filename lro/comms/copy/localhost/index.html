@@ -15,6 +15,25 @@
       }
     //  --></script>
     <script type="text/javascript"><!-- 
+      function version(){
+          var xhr = new XMLHttpRequest();
+          xhr.onreadystatechange = function(){
+              if (4 == this.readyState){
+                  message(this.responseText);
+              }
+          };
+          xhr.open("GET","/version.txt",true);
+          xhr.send(null);
+      }
+      function message(msg){
+
+        if (msg){
+          var mel = document.getElementById('msg');
+          if (mel){
+            mel.innerHTML = '<span>'+msg+'</span>';
+          }
+        }
+      }
       function messenger(){
         
         var map = new Object();
@@ -24,12 +43,10 @@
 
         var msg = map['msg'];
 
-        if (msg){
-          var mel = document.getElementById('msg');
-          if (mel){
-            mel.innerHTML = '<span>'+msg+'</span>';
-          }
-        }
+        if (msg)
+          message(msg);
+        else
+          version();
       }
       function init(){
         document.forms.udb.usr.focus();
@@ -54,6 +71,8 @@
        background-color: #fff;
        width: 62em;
        border: 3px solid #128;
+       padding: 3px;
+       padding-left: 8px;
       }
       div#msg {
        margin: 60px;
@@ -63,6 +82,8 @@
        width: 62em;
        border: 3px solid #128;
        color: #128;
+       padding: 3px;
+       padding-left: 8px;
       }
       input {
        border: 1px solid #128;
