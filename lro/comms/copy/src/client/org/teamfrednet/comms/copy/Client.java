@@ -48,6 +48,7 @@ public class Client
                 urp += "?usr="+usr+"&pad="+pad+"&sig="+sig;
                 URL url = new URL(urp);
                 Connection connection = new Connection(url);
+                connection.setRequestMethod("POST");
                 try {
                     InputStream in = System.in;
                     OutputStream out = connection.getOutputStreamer();
