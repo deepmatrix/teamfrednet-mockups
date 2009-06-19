@@ -12,12 +12,17 @@ import java.nio.charset.Charset;
 public class Client 
     extends Object
 {
-    public static final Charset UTF8 = Charset.forName("UTF-8"); 
+    public static final Charset ASCI = Charset.forName("US-ASCII"); 
 
 
     public static void main(String[] argv){
         if (3 != argv.length){
-            System.err.println("Usage: <username> <password> <url>");
+            System.err.println("Usage:  <username> <password> <host-url>");
+            System.err.println();
+            System.err.println("For example");
+            System.err.println();
+            System.err.println("   Client  'test' 'test' 'http://uranium.applios.net:8989/'");
+            System.err.println();
             System.exit(1);
         }
         else {
@@ -25,14 +30,19 @@ public class Client
                 String usr = argv[0];
                 String pas = argv[1];
                 String urp = argv[2];
+                if (!urp.endsWith("/copy")){
+                    if ('/' == urp.charAt(urp.length()-1))
+                        urp += "copy";
+                    else
+                        urp += "/copy";
+                }
                 String pad = null, sig = null;
                 {
-                    BigInteger padInt = BigInteger.valueOf((new java.util.Random()).nextLong());
-                    pad = padInt.toString(16);
+                    pad = Long.toHexString((new java.util.Random()).nextLong());
 
                     MessageDigest sha = MessageDigest.getInstance("SHA");
-                    sha.update(padInt.toByteArray());
-                    sha.update(pas.getBytes(UTF8));
+                    sha.update(pad.getBytes(ASCI));
+                    sha.update(pas.getBytes(ASCI));
                     sig = new BigInteger(sha.digest()).toString(16);
                 }
                 urp += "?usr="+usr+"&pad="+pad+"&sig="+sig;
