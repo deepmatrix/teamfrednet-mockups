@@ -89,11 +89,12 @@ public class Post
         String pad = request.getParameter("pad");
         String sig = request.getParameter("sig");
         if (null != usr && null != pad && null != sig){
+            usr = usr.toLowerCase();
             BigInteger sigInt = new BigInteger(sig,16);
 
             if (Database.Authenticate(usr,pad,sigInt)){
                 request.disableSocketTimeout();
-                this.file = request.getLocationFile(ToString(System.currentTimeMillis()));
+                this.file = request.getLocationFile("/"+usr+"/"+ToString(System.currentTimeMillis()));
                 this.setLocation(this.file);
                 this.setStatusOk();
 
