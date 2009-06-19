@@ -1,6 +1,7 @@
 package org.teamfrednet.comms.copy;
 
 import ps.http.Connection;
+import ps.http.Response;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -52,6 +53,7 @@ public class Client
                 try {
                     InputStream in = System.in;
                     OutputStream out = connection.getOutputStreamer();
+                    System.out.println(connection.getResponse().getLocation());
                     try {
                         byte[] iob = new byte[0x200];
                         int read;

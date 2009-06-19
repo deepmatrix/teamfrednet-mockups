@@ -114,62 +114,70 @@ public class Post
         String sig = request.getParameter("sig");
         if (null != usr && null != pad && null != sig){
             usr = usr.toLowerCase().trim();
-            BigInteger sigInt = new BigInteger(sig,16);
+            try {
+                BigInteger sigInt = new BigInteger(sig,16);
 
-            if (Database.Authenticate(usr,pad,sigInt)){
+                if (Database.Authenticate(usr,pad,sigInt)){
 
-                String username = request.getParameter("username");
-                String password = request.getParameter("password");
-                if (null != username && null != password){
-                    username = username.toLowerCase().trim();
-                    if (Database.ValidateUsername(username)){
-                        if (Database.ValidatePassword(password)){
-                            password = password.trim();
-                            String first = request.getParameter("first");
-                            String last = request.getParameter("last");
-                            String gmloc = request.getParameter("gmloc");
-                            String email = request.getParameter("email");
-                            try {
-                                if (Database.Create(username,password,first,last,gmloc,email)){
-                                    if (null != success)
-                                        this.redirect(request,success+"?msg=User+successfully+created.&type=success");
+                    String username = request.getParameter("username");
+                    String password = request.getParameter("password");
+                    if (null != username && null != password){
+                        username = username.toLowerCase().trim();
+                        if (Database.ValidateUsername(username)){
+                            if (Database.ValidatePassword(password)){
+                                password = password.trim();
+                                String first = request.getParameter("first");
+                                String last = request.getParameter("last");
+                                String gmloc = request.getParameter("gmloc");
+                                String email = request.getParameter("email");
+                                try {
+                                    if (Database.Create(username,password,first,last,gmloc,email)){
+                                        if (null != success)
+                                            this.redirect(request,success+"?msg=User+successfully+created.&type=success");
+                                        else
+                                            this.setStatusOk();
+                                    }
+                                    else if (null != failure)
+                                        this.redirect(request,failure+"?msg=Database+failed+to+create+record.&type=failure");
                                     else
-                                        this.setStatusOk();
+                                        this.setStatusError();
                                 }
-                                else if (null != failure)
-                                    this.redirect(request,failure+"?msg=Database+failed+to+create+record.&type=failure");
-                                else
-                                    this.setStatusError();
-                            }
-                            catch (SQLException exc){
+                                catch (SQLException exc){
 
-                                exc.printStackTrace();
+                                    exc.printStackTrace();
 
-                                if (null != failure)
-                                    this.redirect(request,failure+"?msg="+exc.toString().replace(' ','+')+"&type=failure");
-                                else
-                                    this.setStatusError();
+                                    if (null != failure)
+                                        this.redirect(request,failure+"?msg="+exc.toString().replace(' ','+')+"&type=failure");
+                                    else
+                                        this.setStatusError();
+                                }
                             }
+                            else if (null != failure)
+                                this.redirect(request,failure+"?msg=Invalid+password+string.&type=failure");
+                            else
+                                this.setStatusBadRequest();
                         }
                         else if (null != failure)
-                            this.redirect(request,failure+"?msg=Invalid+password+string.&type=failure");
+                            this.redirect(request,failure+"?msg=Invalid+username+string.&type=failure");
                         else
                             this.setStatusBadRequest();
                     }
                     else if (null != failure)
-                        this.redirect(request,failure+"?msg=Invalid+username+string.&type=failure");
+                        this.redirect(request,failure+"?msg=Missing+required+input.&type=failure");
                     else
                         this.setStatusBadRequest();
                 }
                 else if (null != failure)
-                    this.redirect(request,failure+"?msg=Missing+required+input.&type=failure");
+                    this.redirect(request,failure+"?msg=Failed+to+authenticate.&type=failure");
+                else
+                    this.setStatusNotAuthorized();
+            }
+            catch (NumberFormatException exc){
+                if (null != failure)
+                    this.redirect(request,failure+"?msg=Missing+authentication+parameters.&type=failure");
                 else
                     this.setStatusBadRequest();
             }
-            else if (null != failure)
-                this.redirect(request,failure+"?msg=Failed+to+authenticate.&type=failure");
-            else
-                this.setStatusNotAuthorized();
         }
         else if (null != failure)
             this.redirect(request,failure+"?msg=Missing+authentication+parameters.&type=failure");
