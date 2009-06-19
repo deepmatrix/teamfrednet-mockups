@@ -129,12 +129,12 @@ public class Post
                             try {
                                 if (Database.Create(username,password,first,last,gmloc,email)){
                                     if (null != success)
-                                        this.redirect(request,success+"?msg=User+successfully+created.");
+                                        this.redirect(request,success+"?msg=User+successfully+created.&type=success");
                                     else
                                         this.setStatusOk();
                                 }
                                 else if (null != failure)
-                                    this.redirect(request,failure+"?msg=Database+failed+to+create+record.");
+                                    this.redirect(request,failure+"?msg=Database+failed+to+create+record.&type=failure");
                                 else
                                     this.setStatusError();
                             }
@@ -143,33 +143,33 @@ public class Post
                                 exc.printStackTrace();
 
                                 if (null != failure)
-                                    this.redirect(request,failure+"?msg="+exc.toString().replace(' ','+'));
+                                    this.redirect(request,failure+"?msg="+exc.toString().replace(' ','+')+"&type=failure");
                                 else
                                     this.setStatusError();
                             }
                         }
                         else if (null != failure)
-                            this.redirect(request,failure+"?msg=Invalid+password+string.");
+                            this.redirect(request,failure+"?msg=Invalid+password+string.&type=failure");
                         else
                             this.setStatusBadRequest();
                     }
                     else if (null != failure)
-                        this.redirect(request,failure+"?msg=Invalid+username+string.");
+                        this.redirect(request,failure+"?msg=Invalid+username+string.&type=failure");
                     else
                         this.setStatusBadRequest();
                 }
                 else if (null != failure)
-                    this.redirect(request,failure+"?msg=Missing+required+input.");
+                    this.redirect(request,failure+"?msg=Missing+required+input.&type=failure");
                 else
                     this.setStatusBadRequest();
             }
             else if (null != failure)
-                this.redirect(request,failure+"?msg=Failed+to+authenticate.");
+                this.redirect(request,failure+"?msg=Failed+to+authenticate.&type=failure");
             else
                 this.setStatusNotAuthorized();
         }
         else if (null != failure)
-            this.redirect(request,failure+"?msg=Missing+authentication+parameters.");
+            this.redirect(request,failure+"?msg=Missing+authentication+parameters.&type=failure");
         else
             this.setStatusBadRequest();
     }

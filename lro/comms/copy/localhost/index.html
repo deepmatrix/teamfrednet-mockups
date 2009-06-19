@@ -46,12 +46,15 @@
           xhr.open("GET","/version.txt",true);
           xhr.send(null);
       }
-      function message(msg){
+      function message(msg, type){
 
         if (msg){
           var mel = document.getElementById('msg');
           if (mel){
-            mel.innerHTML = '<span>'+msg+'</span>';
+            if (type)
+              mel.innerHTML = '<span class="'+type+'">'+msg+'</span>';
+            else
+              mel.innerHTML = '<span>'+msg+'</span>';
           }
         }
       }
@@ -65,7 +68,7 @@
         var msg = map['msg'];
 
         if (msg)
-          message(msg);
+          message(msg, map['type']);
         else
           version();
       }
@@ -114,6 +117,12 @@
        background-color: #fff;
        color: #128;
        padding: 3px;
+      }
+      .success {
+       color: #182;
+      }
+      .failure {
+       color: #812;
       }
     // --></style>
   </head>
