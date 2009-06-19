@@ -26,6 +26,7 @@
           pad.update(pas);
           var md = pad.digest();
           form.sig.value = md;
+          form.pas.value = 'xxxxxxxxxxxxxxxxxxxxxxxxx';
           message(pad.hex+' '+md);
         }
       }
