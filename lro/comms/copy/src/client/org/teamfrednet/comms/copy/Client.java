@@ -43,7 +43,7 @@ public class Client
                     MessageDigest sha = MessageDigest.getInstance("SHA");
                     sha.update(pad.getBytes(ASCI));
                     sha.update(pas.getBytes(ASCI));
-                    sig = new BigInteger(sha.digest()).toString(16);
+                    sig = new BigInteger(1,sha.digest()).toString(16);
                 }
                 urp += "?usr="+usr+"&pad="+pad+"&sig="+sig;
                 URL url = new URL(urp);

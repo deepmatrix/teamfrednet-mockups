@@ -73,6 +73,8 @@ public class Post
     }
 
 
+    private String path;
+
 
     public Post(){
         super();
@@ -94,7 +96,8 @@ public class Post
 
             if (Database.Authenticate(usr,pad,sigInt)){
                 request.disableSocketTimeout();
-                this.file = request.getLocationFile("/"+usr+"/"+ToString(System.currentTimeMillis()));
+                this.path = "/"+usr;
+                this.file = request.getLocationFile(this.path+"/"+ToString(System.currentTimeMillis()));
                 this.setLocation(this.file);
                 this.setStatusOk();
 
@@ -110,8 +113,16 @@ public class Post
     public void tail(Request request, Output out)
         throws IOException
     {
-        if (this.isOk())
+        if (this.isOk()){
             this.writeTail(request);
+            ps.Index index = new ps.Index(request.getLocationFile(this.path));
+            try {
+                index.println(this.getLocation());
+            }
+            finally {
+                index.close();
+            }
+        }
     }
 
 }
