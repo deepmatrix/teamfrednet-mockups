@@ -92,19 +92,24 @@ public class Post
         String sig = request.getParameter("sig");
         if (null != usr && null != pad && null != sig){
             usr = usr.toLowerCase();
-            BigInteger sigInt = new BigInteger(sig,16);
+            try {
+                BigInteger sigInt = new BigInteger(sig,16);
 
-            if (Database.Authenticate(usr,pad,sigInt)){
-                request.disableSocketTimeout();
-                this.path = "/"+usr;
-                this.file = request.getLocationFile(this.path+"/"+ToString(System.currentTimeMillis()));
-                this.setLocation(this.file);
-                this.setStatusOk();
+                if (Database.Authenticate(usr,pad,sigInt)){
+                    request.disableSocketTimeout();
+                    this.path = "/"+usr;
+                    this.file = request.getLocationFile(this.path+"/"+ToString(System.currentTimeMillis()));
+                    this.setLocation(this.file);
+                    this.setStatusOk();
 
-                this.writeInit(request);
+                    this.writeInit(request);
+                }
+                else
+                    this.setStatusNotAuthorized();
             }
-            else
+            catch (NumberFormatException exc){
                 this.setStatusNotAuthorized();
+            }
         }
         else
             this.setStatusBadRequest();
