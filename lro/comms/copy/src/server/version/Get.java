@@ -16,6 +16,7 @@ public class Get
     public void init(ps.Request request)
         throws IOException
     {
+        super.init(request);
         this.println(Version.Full);
         this.setContentType("text/plain");
         this.setStatusOk();
