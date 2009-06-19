@@ -1,8 +1,12 @@
 
 import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintStream;
 
 public class CTDP
     extends Object
@@ -25,10 +29,10 @@ public class CTDP
     }
 
 
-    public boolean hasLock(){
+    public final boolean hasLock(){
         return this.lock;
     }
-    public CTDP setLock(boolean lock){
+    public final CTDP setLock(boolean lock){
         if (this.lock)
             throw new IllegalStateException("Locked");
         else {
@@ -36,18 +40,18 @@ public class CTDP
             return this;
         }
     }
-    public CTDP lock(){
+    public final CTDP lock(){
         this.lock = true;
         return this;
     }
-    public CTDP unlock(){
+    public final CTDP unlock(){
         this.lock = false;
         return this;
     }
-    public int getTagA(){
+    public final int getTagA(){
         return this.tagA;
     }
-    public CTDP setTagA(int value){
+    public final CTDP setTagA(int value){
         if (this.lock)
             throw new IllegalStateException("Locked");
         else if (-1 < value && 255 > value){
@@ -57,10 +61,10 @@ public class CTDP
         else
             throw new IllegalArgumentException("Out of range '"+value+"'.");
     }
-    public int getTagB(){
+    public final int getTagB(){
         return this.tagB;
     }
-    public CTDP setTagB(int value){
+    public final CTDP setTagB(int value){
         if (this.lock)
             throw new IllegalStateException("Locked");
         else if (-1 < value && 255 > value){
@@ -70,10 +74,10 @@ public class CTDP
         else
             throw new IllegalArgumentException("Out of range '"+value+"'.");
     }
-    public int getTagC(){
+    public final int getTagC(){
         return this.tagC;
     }
-    public CTDP setTagC(int value){
+    public final CTDP setTagC(int value){
         if (this.lock)
             throw new IllegalStateException("Locked");
         else if (-1 < value && 255 > value){
@@ -83,7 +87,7 @@ public class CTDP
         else
             throw new IllegalArgumentException("Out of range '"+value+"'.");
     }
-    public byte[] getPayload(){
+    public final byte[] getPayload(){
         if (this.lock){
             byte[] payload = this.payload;
             if (null == payload)
@@ -98,7 +102,7 @@ public class CTDP
         else
             return this.payload;
     }
-    public byte[] getPayloadNotNull(){
+    public final byte[] getPayloadNotNull(){
         byte[] payload = this.payload;
         if (null == payload)
             return new byte[0];
@@ -109,7 +113,7 @@ public class CTDP
             return copy;
         }
     }
-    public CTDP setPayload(byte[] payload){
+    public final CTDP setPayload(byte[] payload){
         if (this.lock)
             throw new IllegalStateException("Locked");
         else {
@@ -117,16 +121,30 @@ public class CTDP
             return this;
         }
     }
-    public InputStream readPayload(){
+    public final int getPayloadLength(){
+        byte[] payload = this.payload;
+        if (null == payload)
+            return 0;
+        else 
+            return payload.length;
+    }
+    public final int length(){
+        byte[] payload = this.payload;
+        if (null == payload)
+            return 0;
+        else 
+            return payload.length;
+    }
+    public final InputStream readPayload(){
         return new CTDPInputStream(this);
     }
-    public OutputStream writePayload(){
+    public final OutputStream writePayload(){
         if (this.lock)
             throw new IllegalStateException("Locked");
         else 
             return new CTDPOutputStream(this);
     }
-    public void read(InputStream in)
+    public final void read(InputStream in)
         throws IOException
     {
         if (this.lock)
@@ -173,7 +191,7 @@ public class CTDP
                 throw new EOFException();
         }
     }
-    public void write(OutputStream out)
+    public final void write(OutputStream out)
         throws IOException
     {
         out.write(this.tagA);
@@ -193,18 +211,51 @@ public class CTDP
             }
         }
     }
-
-
-    protected static void usage(java.io.PrintStream out){
+    public final void writeHTTPM(PrintStream out){
+        out.println("Tag-A: "+this.tagA);
+        out.println("Tag-B: "+this.tagB);
+        out.println("Tag-C: "+this.tagC);
+        int len = this.length();
+        out.println("Content-Length: "+len);
         out.println();
-        out.println("Usage");
+        if (0 != len){
+            byte[] payload = this.getPayloadNotNull();
+            out.write(payload,0,len);
+        }
+        out.flush();
+    }
+
+
+    protected static void usage(PrintStream out){
+        out.println();
+        out.println("Form");
         out.println();
         out.println("   CTDP  <tag-a> <tag-b> <tag-c> ");
         out.println();
         out.println("Operation");
         out.println();
-        out.println("   Read stdin until exhaustion, wrapping as payload. ");
+        out.println("   Wrap: read stdin until exhaustion, wrapping as payload. ");
         out.println("   Write product to stdout.");
+        out.println();
+        out.println("Form");
+        out.println();
+        out.println("   CTDP  - ");
+        out.println();
+        out.println("Operation");
+        out.println();
+        out.println("   Unwrap: read stdin for one CTDP.  To stdout write tags and");
+        out.println("   payload in HTTP message format with header 'Content-Length'.");
+        out.println("   Tag header names are 'Tag-A', 'Tag-B', 'Tag-C'.");
+        out.println();
+        out.println("Form");
+        out.println();
+        out.println("   CTDP  <file.in/ctdp>  <file.out/httpm> ");
+        out.println();
+        out.println("Operation");
+        out.println();
+        out.println("   Unwrap: read file.in for one CTDP.  To file.out write tags and");
+        out.println("   payload in HTTP message format with header 'Content-Length'.");
+        out.println("   Tag header names are 'Tag-A', 'Tag-B', 'Tag-C'.");
         out.println();
         System.exit(1);
     }
@@ -234,6 +285,54 @@ public class CTDP
             catch (Exception exc){
                 exc.printStackTrace();
                 System.exit(1);
+            }
+        }
+        else if (2 == argc){
+            File filein = new File(argv[0]);
+            if (filein.isFile()){
+                File fileout = new File(argv[1]);
+                try {
+                    InputStream fin = new FileInputStream(filein);
+                    try {
+                        CTDP ctdp = new CTDP();
+                        ctdp.read(fin);
+
+                        PrintStream fout = new PrintStream(new FileOutputStream(fileout));
+                        try {
+                            ctdp.writeHTTPM(fout);
+                        }
+                        finally {
+                            fout.close();
+                        }
+                    }
+                    finally {
+                        fin.close();
+                    }
+                }
+                catch (Exception exc){
+                    exc.printStackTrace();
+                    System.exit(1);
+                }
+            }
+            else {
+                usage(System.err);
+            }
+        }
+        else if (1 == argc){
+            String arg = argv[0];
+            if (1 == arg.length() && '-' == arg.charAt(0)){
+                CTDP ctdp = new CTDP();
+                try {
+                    ctdp.read(System.in);
+                    ctdp.writeHTTPM(System.out);
+                }
+                catch (Exception exc){
+                    exc.printStackTrace();
+                    System.exit(1);
+                }
+            }
+            else {
+                usage(System.err);
             }
         }
         else {
