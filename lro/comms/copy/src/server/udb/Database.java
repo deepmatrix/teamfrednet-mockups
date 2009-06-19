@@ -236,32 +236,45 @@ public class Database {
             Init();
             System.out.println("ok initialized");
             int argc = argv.length;
-            if (2 <= argc){
+            if (1 <= argc){
                 String username = argv[0];
-                String password = argv[1];
-                String first = null;
-                String last = null; 
-                String gmloc = null;
-                String email = null;
-                if (2 < argc){
-                    first = argv[2];
-                    if (3 < argc){
-                        last = argv[3];
-                        if (4 < argc){
-                            gmloc = argv[4];
-                            if (5 < argc){
-                                email = argv[5];
+                if (2 <= argc){
+                    String password = argv[1];
+                    String first = null;
+                    String last = null; 
+                    String gmloc = null;
+                    String email = null;
+                    if (2 < argc){
+                        first = argv[2];
+                        if (3 < argc){
+                            last = argv[3];
+                            if (4 < argc){
+                                gmloc = argv[4];
+                                if (5 < argc){
+                                    email = argv[5];
+                                }
                             }
                         }
                     }
-                }
-                if (Create(username,password,first,last,gmloc,email)){
-                    System.out.println("ok created user");
-                    System.exit(0);
+                    if (Create(username,password,first,last,gmloc,email)){
+                        System.out.println("ok created user");
+                        System.exit(0);
+                    }
+                    else {
+                        System.out.println("err creating user");
+                        System.exit(1);
+                    }
                 }
                 else {
-                    System.out.println("err creating user");
-                    System.exit(1);
+                    User user = Lookup(username);
+                    if (null != user){
+                        System.out.println("ok user '"+username+"' has password '"+user.password+"'.");
+                        System.exit(0);
+                    }
+                    else {
+                        System.out.println("err user not found: '"+username+"'");
+                        System.exit(1);
+                    }
                 }
             }
             else
