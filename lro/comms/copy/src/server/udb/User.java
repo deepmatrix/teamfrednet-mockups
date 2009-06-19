@@ -8,7 +8,8 @@ import java.security.NoSuchAlgorithmException;
 public class User 
     extends Object
 {
-    private final static Charset UTF8 = Charset.forName("UTF-8");
+    private final static Charset ASCI = Charset.forName("US-ASCII");
+
 
     public final int uid;
 
@@ -27,11 +28,11 @@ public class User
     }
 
 
-    public boolean authenticate(BigInteger pad, BigInteger sig){
+    public boolean authenticate(String pad, BigInteger sig){
         try {
             MessageDigest sha = MessageDigest.getInstance("SHA");
-            sha.update(pad.toByteArray());
-            sha.update(this.password.getBytes(UTF8));
+            sha.update(pad.getBytes(ASCI));
+            sha.update(this.password.getBytes(ASCI));
             BigInteger val = new BigInteger(1,sha.digest());
 
             return (val.equals(sig));

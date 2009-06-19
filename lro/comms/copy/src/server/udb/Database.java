@@ -184,7 +184,7 @@ public class Database {
         }
     }
 
-    public final static boolean Authenticate(String username, BigInteger pad, BigInteger sig){
+    public final static boolean Authenticate(String username, String pad, BigInteger sig){
         try {
             User user = Lookup(username);
             if (null != user)

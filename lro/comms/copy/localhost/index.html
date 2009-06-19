@@ -6,18 +6,13 @@
       function bpad(){
         var a = Math.floor(Math.random()*0xffffffff);
         var b = Math.floor(Math.random()*0xffffffff);
-        this.bin = new Array(a,b);
-        this.binlen = 64;
-        this.hex = binb2hex(this.bin);
+        var words = new Array(a,b);
+        this.hex = binb2hex(words);
         this.update = function(s){
-          var sb = str2binb(s);
-          this.bin = this.bin.concat(sb);
-          this.binlen += (s.length * chrsz);
-          return this.binlen;
+          this.string = this.hex + s;
         };
         this.digest = function(){
-          this.bdig = core_sha1(this.bin,this.binlen);
-          this.dig = binb2hex(this.bdig);
+          this.dig = hex_sha1(this.string);
           return this.dig;
         };
       }
@@ -126,6 +121,14 @@
        color: #812;
        font-weight: 900;
       }
+      .required {
+       color: #129;
+       font-weight: 700;
+      }
+      .optional {
+       color: #126;
+       font-weight: 300;
+      }
     // --></style>
   </head>
   <body onload="javascript:init()">
@@ -138,13 +141,13 @@
         <table>
           <tr>
             <td align="right">
-              Auth User
+              <label for="usr" class="required">Auth User</label>
             </td>
             <td align="left">
-              <input type="text" name="usr" id="usr" onchange="javascript:authenticate()"/>
+              <input type="text" name="usr" id="usr"/>
             </td>
             <td align="right">
-              Auth Pass
+              <label for="pas" class="required">Auth Pass</label>
             </td>
             <td align="left">
               <input type="password" name="pas" id="pas" onchange="javascript:authenticate()"/>
@@ -154,13 +157,13 @@
           </tr>
           <tr>
             <td align="right">
-              Username
+              <label for="username" class="required">Username</label>
             </td>
             <td align="left">
               <input type="text" name="username" id="username" />
             </td>
             <td align="right">
-              Password
+              <label for="password" class="required">Password</label>
             </td>
             <td align="left">
               <input type="password" name="password" id="password" />
@@ -168,13 +171,13 @@
           </tr>
           <tr>
             <td align="right">
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;First 
+              <label for="first" class="optional">First</label>
             </td>
             <td align="left">
               <input type="text" name="first" id="first" />
             </td>
             <td align="right">
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Last
+              <label for="last" class="optional">Last</label>
             </td>
             <td align="left">
               <input type="text" name="last" id="last" />
@@ -182,7 +185,7 @@
           </tr>
           <tr>
             <td align="right">
-              &nbsp;&nbsp;&nbsp;&nbsp;Email
+              <label for="email" class="optional">Email</label>
             </td>
             <td align="left" colspan="3">
               <input type="text" name="email" id="email" size="60"/>
@@ -190,7 +193,7 @@
           </tr>
           <tr>
             <td align="right">
-              G Maps URL
+              <label for="gmloc" class="optional">G Maps URL</label>
             </td>
             <td align="left" colspan="3">
               <input type="text" name="gmloc" id="gmloc" size="60"/>
