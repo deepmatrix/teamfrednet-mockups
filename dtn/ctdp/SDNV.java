@@ -27,17 +27,23 @@ public class SDNV
     public final static void Write(OutputStream out, int value)
         throws IOException
     {
-        boolean inline = false;
-        int bb;
-        for (int cc = 3; ; cc--){
-            bb = ((value >>> (cc*7)) & 0x7f);
-            if (inline || 0 != bb){
-                inline = true;
-                if (0 == cc)
-                    out.write(bb);
-                else {
-                    bb |= 0x80;
-                    out.write(bb);
+        if (0 == value)
+            out.write(0);
+        else {
+            boolean inline = false;
+            int bb;
+            for (int cc = 3; ; cc--){
+                bb = ((value >>> (cc*7)) & 0x7f);
+                if (inline || 0 != bb){
+                    inline = true;
+                    if (0 == cc){
+                        out.write(bb);
+                        return;
+                    }
+                    else {
+                        bb |= 0x80;
+                        out.write(bb);
+                    }
                 }
             }
         }
