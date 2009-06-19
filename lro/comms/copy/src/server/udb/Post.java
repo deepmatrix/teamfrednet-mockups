@@ -31,7 +31,7 @@ import java.sql.SQLException;
  * <dt><tt>sig</tt></dt>
  * 
  * <dd> A hexidecimal (no prefix) encoding of the <i>SHA-1</i> digest
- * of the binary value of <tt>pad</tt> and the string value of
+ * of the string value of <tt>pad</tt> and the string value of
  * <tt>password</tt>.  </dd>
  * 
  * <dt><tt>username</tt></dt>
@@ -113,9 +113,9 @@ public class Post
         String pad = request.getParameter("pad");
         String sig = request.getParameter("sig");
         if (null != usr && null != pad && null != sig){
-            BigInteger padInt = new BigInteger(pad,16);
             BigInteger sigInt = new BigInteger(sig,16);
-            if (Database.Authenticate(usr,padInt,sigInt)){
+
+            if (Database.Authenticate(usr,pad,sigInt)){
 
                 String username = request.getParameter("username");
                 String password = request.getParameter("password");
