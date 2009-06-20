@@ -11,95 +11,99 @@
      --></script>
   </head>
   <body bgcolor="#000" onload="javascript:init()">
-    <div id="nav">
-      <ul class="nav">
-        <li class="nav"><a tabindex="1" href="/">Home</a></li>
-        <li class="nav"><a tabindex="2" href="/Create.html">Create user</a></li>
-      </ul>
-    </div>
-    <div id="main">
-      <div id="msg">
+    <div id="body">
+      <div id="nav">
+        <img class="nav" src="/images/tfx-40x40.png" width="40" height="40"/>
+        <ul class="nav">
+          <li class="nav"><a tabindex="1" href="/">Home</a></li>
+          <li class="nav"><a tabindex="2" href="/Create.html">Create user</a></li>
+        </ul>
       </div>
-      <form method="post" action="/udb" name="udb">
-        <input type="hidden" name="success" value="/index.html" />
-        <input type="hidden" name="failure" value="/index.html" />
-        <table>
-          <tr>
-            <td align="right">
-              <label for="usr" class="required">Auth User</label>
-            </td>
-            <td align="left">
-              <input type="text" name="usr" id="usr"/>
-            </td>
-            <td align="right">
-              <label for="pas" class="required">Auth Pass</label>
-            </td>
-            <td align="left">
-              <input type="password" name="pas" id="pas" onchange="javascript:authenticate()"/>
-              <input type="hidden" name="pad" id="pad" />
-              <input type="hidden" name="sig" id="sig" />
-            </td>
-          </tr>
-          <tr>
-            <td align="right">
-              <label for="username" class="required">Username</label>
-            </td>
-            <td align="left">
-              <input type="text" name="username" id="username" />
-            </td>
-            <td align="right">
-              <label for="password" class="required">Password</label>
-            </td>
-            <td align="left">
-              <input type="password" name="password" id="password" />
-            </td>
-          </tr>
-          <tr>
-            <td align="right">
-              <label for="first" class="optional">First</label>
-            </td>
-            <td align="left">
-              <input type="text" name="first" id="first" />
-            </td>
-            <td align="right">
-              <label for="last" class="optional">Last</label>
-            </td>
-            <td align="left">
-              <input type="text" name="last" id="last" />
-            </td>
-          </tr>
-          <tr>
-            <td align="right">
-              <label for="email" class="optional">Email</label>
-            </td>
-            <td align="left" colspan="3">
-              <input type="text" name="email" id="email" size="60"/>
-            </td>
-          </tr>
-          <tr>
-            <td align="right">
-              <label for="gmloc" class="optional">G Maps URL</label>
-            </td>
-            <td align="left" colspan="3">
-              <input type="text" name="gmloc" id="gmloc" size="60"/>
-            </td>
-          </tr>
-          <tr>
-            <td>
-            </td>
-            <td>
-            </td>
-            <td>
-            </td>
-            <td align="left">
-              <input type="submit" value="Create"/>
-              <input type="submit" value="Refresh" onclick="javascript:document.location = '/'; return false;"/>
-            </td>
-            <td>
-            </td>
-          </tr>
-        </table>
-      </form>
+      <div id="main">
+        <div id="msg">
+        </div>
+        <form method="post" action="/udb" name="udb">
+          <input type="hidden" name="success" value="/index.html" />
+          <input type="hidden" name="failure" value="/index.html" />
+          <table>
+            <tr>
+              <td align="right">
+                <label for="usr" class="required">Auth User</label>
+              </td>
+              <td align="left">
+                <input type="text" name="usr" id="usr"/>
+              </td>
+              <td align="right">
+                <label for="pas" class="required">Auth Pass</label>
+              </td>
+              <td align="left">
+                <input type="password" name="pas" id="pas" onchange="javascript:authenticate()"/>
+                <input type="hidden" name="pad" id="pad" />
+                <input type="hidden" name="sig" id="sig" />
+              </td>
+            </tr>
+            <tr>
+              <td align="right">
+                <label for="username" class="required">Username</label>
+              </td>
+              <td align="left">
+                <input type="text" name="username" id="username" />
+              </td>
+              <td align="right">
+                <label for="password" class="required">Password</label>
+              </td>
+              <td align="left">
+                <input type="password" name="password" id="password" />
+              </td>
+            </tr>
+            <tr>
+              <td align="right">
+                <label for="first" class="optional">First</label>
+              </td>
+              <td align="left">
+                <input type="text" name="first" id="first" />
+              </td>
+              <td align="right">
+                <label for="last" class="optional">Last</label>
+              </td>
+              <td align="left">
+                <input type="text" name="last" id="last" />
+              </td>
+            </tr>
+            <tr>
+              <td align="right">
+                <label for="email" class="optional">Email</label>
+              </td>
+              <td align="left" colspan="3">
+                <input type="text" name="email" id="email" size="60"/>
+              </td>
+            </tr>
+            <tr>
+              <td align="right">
+                <label for="gmloc" class="optional">G Maps URL</label>
+              </td>
+              <td align="left" colspan="3">
+                <input type="text" name="gmloc" id="gmloc" size="60"/>
+              </td>
+            </tr>
+            <tr>
+              <td>
+              </td>
+              <td>
+              </td>
+              <td>
+              </td>
+              <td align="left">
+                <input type="submit" value="Create"/>
+                <input type="submit" value="Refresh" onclick="javascript:document.location = '/'; return false;"/>
+              </td>
+              <td>
+              </td>
+            </tr>
+          </table>
+        </form>
+        <p><i>Any existing user can create a new user account.</i></p>
+      </div>
     </div>
   </body>
 </html>
