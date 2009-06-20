@@ -1,0 +1,100 @@
+/*  -*-C-*- 
+ *
+ */
+body {
+ background-color: #000;
+ background: url(/images/star_tile.gif);
+}
+body, table, tr, td, input {
+ font: 12px Verdana;
+ color: #128;
+}
+table {
+ width: 95%;
+}
+div {
+ margin: 60px;
+ margin-top: 6px;
+ margin-bottom: 6px;
+ color: #128;
+ background-color: #fff;
+ border: 3px solid #128;
+ padding: 3px;
+ padding-left: 8px;
+ padding-top: 8px;
+}
+div#msg {
+ margin: 6px;
+ height: 2em;
+ width: 92%;
+ border: 1px solid #128;
+}
+div#main {
+ width: 62em;
+}
+div#nav {
+ height: 2em;
+ width: 62em;
+ background-color: #128;
+ color: #fff;
+}
+ul.nav {
+ margin: 0;
+ padding: 0;
+ width: 99%;
+ background-color: #128;
+ color: #fff;
+ float: left;
+ line-style: none;
+ list-style: none;
+}
+li.nav {
+ margin: 1px;
+ margin-top: 0;
+ padding: 2px;
+ padding-left: 4px;
+ width: 15%;
+ background-color: #128;
+ color: #fff;
+ border: 1px solid #fff;
+ float: left;
+ line-style: none;
+ list-style: none;
+}
+li.nav a {
+ text-decoration: none;
+ color: #fff;
+ margin: 0;
+ padding: 0;
+}
+div.nav a.visited {
+ color: #fff;
+}
+input {
+ border: 1px solid #128;
+ background-color: #fff;
+ color: #128;
+ padding: 3px;
+}
+p {
+ margin-left: 12px;
+}
+.success {
+ color: #182;
+ font-weight: 900;
+}
+.failure {
+ color: #812;
+ font-weight: 900;
+}
+.required {
+ color: #129;
+ font-weight: 700;
+}
+.optional {
+ color: #126;
+ font-weight: 300;
+}
+a.link {
+ text-decoration: none;
+}
