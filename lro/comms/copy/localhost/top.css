@@ -4,6 +4,8 @@
 body {
  background-color: #000;
  background: url(/images/star_tile.gif);
+ margin: 0;
+ padding: 0;
 }
 body, table, tr, td, input {
  font: 12px Verdana;
@@ -13,15 +15,30 @@ table {
  width: 95%;
 }
 div {
- margin: 60px;
- margin-top: 6px;
- margin-bottom: 6px;
+ margin: 6px;
  color: #128;
- background-color: #fff;
- border: 3px solid #128;
  padding: 3px;
  padding-left: 8px;
  padding-top: 8px;
+}
+div#body {
+ margin: 46px;
+ padding: 0;
+ width: 768px;
+ height: 600px;
+}
+div#nav {
+ padding: 0;
+ height: 40px;
+ width: 740px;
+ background-color: #128;
+ margin-top: 18px;
+ border: 3px solid #128;
+}
+div#main {
+ width: 730px;
+ border: 3px solid #128;
+ background-color: #fff;
 }
 div#msg {
  margin: 6px;
@@ -29,21 +46,18 @@ div#msg {
  width: 92%;
  border: 1px solid #128;
 }
-div#main {
- width: 62em;
-}
-div#nav {
- height: 2em;
- width: 62em;
- background-color: #128;
- color: #fff;
+img.nav {
+ margin: 0;
+ float: left;
 }
 ul.nav {
  margin: 0;
- padding: 0;
- width: 99%;
+ margin-top: 8px;
+ margin-left: 1em;
+ padding: 1px;
+ width: 642px;
  background-color: #128;
- color: #fff;
+ border: 1px solid #a0a0ef;
  float: left;
  line-style: none;
  list-style: none;
@@ -51,24 +65,21 @@ ul.nav {
 li.nav {
  margin: 1px;
  margin-top: 0;
+ margin-bottom: 0;
  padding: 2px;
  padding-left: 4px;
- width: 15%;
+ width: 7em;
  background-color: #128;
- color: #fff;
- border: 1px solid #fff;
+ border: 1px solid #a0a0ef;
  float: left;
  line-style: none;
  list-style: none;
 }
-li.nav a {
+li.nav a, li.nav a.visited {
+ color: #a0a0ef;
  text-decoration: none;
- color: #fff;
  margin: 0;
  padding: 0;
-}
-div.nav a.visited {
- color: #fff;
 }
 input {
  border: 1px solid #128;
