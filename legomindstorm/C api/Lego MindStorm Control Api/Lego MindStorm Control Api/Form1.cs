@@ -10,6 +10,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.IO;
 using System.Threading;
+using MySql.Data.MySqlClient;
 
 namespace Lego_MindStorm_Control_Api
 {
@@ -17,54 +18,192 @@ namespace Lego_MindStorm_Control_Api
     {
 
         private Thread InternetRelayChat;
+        private Thread mysql_check;
             
         public Form1()
         {
             InitializeComponent();
+            mysql_check = new Thread(new ThreadStart(mysql.run));
+            mysql_check.Start();
             //IrcBot.run_irc();
-            InternetRelayChat = new Thread(new ThreadStart(IrcBot.run_irc));
-            InternetRelayChat.Start();
+            //InternetRelayChat = new Thread(new ThreadStart(IrcBot.run_irc));
+            //InternetRelayChat.Start();
         }
+       
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            
 
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             richTextBox1.Text = IrcBot.log;
+            TimeSpan ts = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
+            double unixTime = ts.TotalSeconds;
+            toolStripStatusLabel1.Text = unixTime.ToString();
         }
 
         
     }
-/*
-* Class that sends PING to irc server every 15 seconds
-*/
+    class mysql_results
+    {
+        public int ID;
+        public double when;
+        public string msg;
+        public bool result;
+    }
+    class mysql
+    {
+          public static MySqlConnectionStringBuilder connBuilder =
+               new MySqlConnectionStringBuilder();
+          
+          public static MySqlConnection connection;
+          public static MySqlCommand cmd;
+          public static void run()
+          {
+              mysql.connect();
+              while (true)
+              {
+                  check();
+                  Thread.Sleep(100);
+              }
+              
+          }
+          public static void check()
+          {
+
+              TimeSpan ts = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
+              double unixTime = ts.TotalSeconds;
+             
+              mysql_results res = new mysql_results();
+              nxt_result result = new nxt_result();
+              res = mysql.QueryCommand("SELECT `ID`,`message`,`when` FROM `log_current_session` WHERE `status`='' AND `when`< '" + unixTime.ToString().Replace(',', '.') + "' AND `type`='cmd' ORDER BY `when` ASC LIMIT 0,1");
+              if (res.result)
+              {
+                  IrcBot.log += DateTime.Now + "checking(" + res.msg + ")...";
+                  result = NXT_ROVER_CONTROL.command_translation(res.msg);
+                  if (result.result)
+                  {
+                      //true
+                      cmd.CommandText = "UPDATE `log_current_session` SET `status`='"+result.value+"' WHERE `ID`=" + res.ID;
+                      cmd.CommandType = CommandType.Text;
+                      MySqlDataReader reader = cmd.ExecuteReader();
+                      reader.Close();
+                      IrcBot.log += "succed\n";
+                  }
+                  else
+                  {
+                      //false
+                      cmd.CommandText = "UPDATE `log_current_session` SET `status`='not found' WHERE `ID`=" + res.ID;
+                      cmd.CommandType = CommandType.Text;
+                      MySqlDataReader reader = cmd.ExecuteReader();
+                      reader.Close();
+                      IrcBot.log += "faild\n";
+
+                  }
+              }
+              
+              
+          }
+          public static void connect()
+          {
+
+
+
+
+              connBuilder.Add("Database", "rover");
+              connBuilder.Add("Data Source", "localhost");
+              connBuilder.Add("User Id", "root");
+              connBuilder.Add("Password", "");
+              connection = new MySqlConnection(connBuilder.ConnectionString);
+              cmd = connection.CreateCommand();
+              connection.Open();
+          }
+        public static void close(){
+              
+              connection.Close();
+          }
+        public static mysql_results QueryCommand(string sql)
+        {
+            cmd.CommandText = sql;
+            cmd.CommandType = CommandType.Text;
+
+            MySqlDataReader reader = cmd.ExecuteReader();
+            mysql_results res = new mysql_results();
+            res.result = false;
+            while (reader.Read())
+            {
+                res.ID = reader.GetInt32(0);
+                res.msg = reader.GetString(1);
+                res.when = reader.GetDouble(2);
+                res.result = true;
+                
+
+            }
+
+            reader.Close();
+            return res;
+        }
+        
+    }
+    class nxt_result
+    {
+        public string type="set";
+        public string value;
+        public bool result=false;
+    }
     class NXT_ROVER_CONTROL
     {
         public static string[] arg_command;
-        public static Boolean command_translation(string text_command)
+        public static nxt_result command_translation(string text_command)
         {
+            nxt_result result = new nxt_result();
+            
             //check type
             arg_command = text_command.Split(' ');
-            if (arg_command[1] == "motor" && arg_command[3] == "on")
+            if (arg_command.Length == 4)
             {
-                return motor_on(arg_command[2]);
+                if (arg_command[1] == "motor" && arg_command[3] == "on")
+                {
+                    return motor_on(arg_command[2]);
+                }
+                if (arg_command[1] == "motor" && arg_command[3] == "off")
+                {
+                    return motor_off(arg_command[2]);
+                }
             }
-            if (arg_command[1] == "motor" && arg_command[3] == "off")
+            if (arg_command.Length == 5)
             {
-                return motor_off(arg_command[2]);
+                if (arg_command[1] == "get" && arg_command[2] == "sensor" && arg_command[3] == "value")
+                {
+                    return get_sensor(arg_command[4]);
+                }
             }
-            return false;
+            return result;
         }
-        public static Boolean motor_on(string motors)
+        public static nxt_result get_sensor(string sensor)
         {
-            return true;
+            nxt_result result = new nxt_result();
+            result.result = true;
+            result.type = "sensor";
+            result.value = "56";
+            return result;
         }
-        public static Boolean motor_off(string motors)
+        public static nxt_result motor_on(string motors)
         {
-            return true;
+            nxt_result result = new nxt_result();
+            result.result = true;
+            result.value = "succed";
+            return result;
+        }
+        public static nxt_result motor_off(string motors)
+        {
+            nxt_result result = new nxt_result();
+            result.result = true;
+            result.value = "succed";
+            return result;
         }
     }
 class PingSender
@@ -168,7 +307,7 @@ while ( (inputLine = reader.ReadLine () ) != null )
         log += mes_buffer + "\n";
         if (mes_buffer.StartsWith("cmd "))
         {
-            if (NXT_ROVER_CONTROL.command_translation(mes_buffer))
+            if (true)//NXT_ROVER_CONTROL.command_translation(mes_buffer)
             {
 
                 writer.WriteLine(":" + NICK + "! PRIVMSG " + CHANNEL + " :Result true");
