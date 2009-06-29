@@ -11,6 +11,8 @@ using System.Net.Sockets;
 using System.IO;
 using System.Threading;
 using MySql.Data.MySqlClient;
+using System.Xml;
+
 
 namespace Lego_MindStorm_Control_Api
 {
@@ -23,11 +25,12 @@ namespace Lego_MindStorm_Control_Api
         public Form1()
         {
             InitializeComponent();
+            config.run();
             mysql_check = new Thread(new ThreadStart(mysql.run));
             mysql_check.Start();
             //IrcBot.run_irc();
-            //InternetRelayChat = new Thread(new ThreadStart(IrcBot.run_irc));
-            //InternetRelayChat.Start();
+            InternetRelayChat = new Thread(new ThreadStart(IrcBot.run_irc));
+            InternetRelayChat.Start();
         }
        
 
@@ -42,7 +45,25 @@ namespace Lego_MindStorm_Control_Api
             richTextBox1.Text = IrcBot.log;
             TimeSpan ts = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
             double unixTime = ts.TotalSeconds;
-            toolStripStatusLabel1.Text = unixTime.ToString();
+            toolStripStatusLabel1.Text = "Unix time span: " + unixTime.ToString();
+        }
+
+        private void clearLogToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            IrcBot.log = "";
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            InternetRelayChat.Abort();
+            mysql_check.Abort();
+            
+            Application.Exit();
+        }
+
+        private void recontIRCToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            InternetRelayChat.Resume();
         }
 
         
@@ -79,32 +100,41 @@ namespace Lego_MindStorm_Control_Api
              
               mysql_results res = new mysql_results();
               nxt_result result = new nxt_result();
-              res = mysql.QueryCommand("SELECT `ID`,`message`,`when` FROM `log_current_session` WHERE `status`='' AND `when`< '" + unixTime.ToString().Replace(',', '.') + "' AND `type`='cmd' ORDER BY `when` ASC LIMIT 0,1");
-              if (res.result)
+              //check mysql conntection
+              if (mysql.connection.State == ConnectionState.Open || mysql.connection.State == ConnectionState.Connecting)
               {
-                  IrcBot.log += DateTime.Now + "checking(" + res.msg + ")...";
-                  result = NXT_ROVER_CONTROL.command_translation(res.msg);
-                  if (result.result)
+                  res = mysql.QueryCommand("SELECT `ID`,`message`,`when` FROM `log_current_session` WHERE `status`='' AND `when`< '" + unixTime.ToString().Replace(',', '.') + "' AND `type`='cmd' ORDER BY `when` ASC LIMIT 0,1");
+                  if (res.result)
                   {
-                      //true
-                      cmd.CommandText = "UPDATE `log_current_session` SET `status`='"+result.value+"' WHERE `ID`=" + res.ID;
-                      cmd.CommandType = CommandType.Text;
-                      MySqlDataReader reader = cmd.ExecuteReader();
-                      reader.Close();
-                      IrcBot.log += "succed\n";
-                  }
-                  else
-                  {
-                      //false
-                      cmd.CommandText = "UPDATE `log_current_session` SET `status`='not found' WHERE `ID`=" + res.ID;
-                      cmd.CommandType = CommandType.Text;
-                      MySqlDataReader reader = cmd.ExecuteReader();
-                      reader.Close();
-                      IrcBot.log += "faild\n";
+                      IrcBot.log += DateTime.Now + "checking(" + res.msg + ")...";
+                      result = NXT_ROVER_CONTROL.command_translation(res.msg);
+                      if (result.result)
+                      {
+                          //true
+                          cmd.CommandText = "UPDATE `log_current_session` SET `status`='" + result.value + "' WHERE `ID`=" + res.ID;
+                          cmd.CommandType = CommandType.Text;
+                          MySqlDataReader reader = cmd.ExecuteReader();
+                          reader.Close();
+                          IrcBot.log += "succed\n";
+                      }
+                      else
+                      {
+                          //false
+                          cmd.CommandText = "UPDATE `log_current_session` SET `status`='not found' WHERE `ID`=" + res.ID;
+                          cmd.CommandType = CommandType.Text;
+                          MySqlDataReader reader = cmd.ExecuteReader();
+                          reader.Close();
+                          IrcBot.log += "faild\n";
 
+                      }
                   }
               }
-              
+              else
+              {
+                  //make connecion
+                  IrcBot.log += "Mysql connection faild";
+                  mysql.connect();
+              }
               
           }
           public static void connect()
@@ -120,6 +150,7 @@ namespace Lego_MindStorm_Control_Api
               connection = new MySqlConnection(connBuilder.ConnectionString);
               cmd = connection.CreateCommand();
               connection.Open();
+              IrcBot.log += "MYSQL connection ready\n";
           }
         public static void close(){
               
@@ -147,6 +178,41 @@ namespace Lego_MindStorm_Control_Api
             return res;
         }
         
+    }
+    class config
+    {
+        public static string IRC_server;
+        public static int IRC_port;
+        public static string IRC_channel;
+        public static string IRC_nickname;
+        public static string IRC_user;
+        public static string IRC_password;
+        public static string Mysql_server;
+        public static string Mysql_database;
+        public static string Mysql_user;
+        public static string Mysql_password;
+        public static void run()
+        {
+
+                  XmlDocument doc = new XmlDocument();
+
+      doc.Load("settings.xml");
+
+      XmlNodeList userNodes = doc.SelectNodes("/settings/IRC");
+      XmlNode userNode = userNodes[0];
+      IRC_channel = userNode.SelectSingleNode("channel").InnerText;
+      IRC_port = Convert.ToInt32(userNode.SelectSingleNode("port").InnerText);
+      IRC_password = userNode.SelectSingleNode("password").InnerText;
+      IRC_user = userNode.SelectSingleNode("user").InnerText;
+      IRC_server= userNode.SelectSingleNode("server").InnerText;
+      IRC_nickname = userNode.SelectSingleNode("nickname").InnerText;
+      userNodes = doc.SelectNodes("/settings/mysql");
+      userNode = userNodes[0];
+      Mysql_database = userNode.SelectSingleNode("database").InnerText;
+      Mysql_password = userNode.SelectSingleNode("password").InnerText;
+      Mysql_user = userNode.SelectSingleNode("user").InnerText;
+      Mysql_server = userNode.SelectSingleNode("server").InnerText;  
+        }
     }
     class nxt_result
     {
@@ -206,32 +272,7 @@ namespace Lego_MindStorm_Control_Api
             return result;
         }
     }
-class PingSender
-{
-static string PING = "PING :";
-private Thread pingSender;
-// Empty constructor makes instance of Thread
-public PingSender ()
-{
-pingSender = new Thread (new ThreadStart (this.Run) );
-}
-// Starts the thread
-public void Start ()
-{
-pingSender.Start ();
-}
-// Send PING to irc server every 15 seconds
-public void Run ()
-{
-while (true)
-{
-    IrcBot.log += "Send: " + PING + IrcBot.SERVER;
-IrcBot.writer.WriteLine (PING + IrcBot.SERVER);
-IrcBot.writer.Flush ();
-Thread.Sleep (15000);
-}
-}
-}
+
 class IrcBot
 {
     public static void ident(){
@@ -241,21 +282,31 @@ writer.Flush();
 
 writer.WriteLine ("USER " + USER);
 writer.Flush ();
-writer.WriteLine ("JOIN " + CHANNEL);
-writer.Flush ();
+if (PASS != "")
+{
+    writer.WriteLine("JOIN " + CHANNEL + " " + PASS);
+    writer.Flush();
+}
+else
+{
+    writer.WriteLine("JOIN " + CHANNEL);
+    writer.Flush();
+}
     }
     public static string log = "";
 // Irc server to connect
-public static string SERVER = "localhost";
+public static string SERVER = config.IRC_server;
+public static int timesleep = 5000;
 // Irc server's port (6667 is default port)
-private static int PORT = 6667;
+private static int PORT = config.IRC_port;
+private static string PASS = config.IRC_password;
 // User information defined in RFC 2812 (Internet Relay Chat: Client Protocol) is sent to irc server
-private static string USER = "Capi 127.0.0.1 " + SERVER + " :Capi echo";
+private static string USER = config.IRC_user;//"Capi 127.0.0.1 " + SERVER + " :Capi echo";
     //send("USER " + username + " " + socket.getLocalAddress() + " " + host + " :" + realname); 
 // Bot's nickname
-private static string NICK = "Capi";
+private static string NICK = config.IRC_nickname;
 // Channel to join
-private static string CHANNEL = "#control";
+private static string CHANNEL = config.IRC_channel;
 private static string mes_buffer = "";
 // StreamWriter is declared here so that PingSender can access it
 public static StreamWriter writer;
@@ -267,7 +318,6 @@ NetworkStream stream;
 TcpClient irc;
 string inputLine;
 StreamReader reader;
-string nickname;
 try
 {
 irc = new TcpClient (SERVER, PORT);
@@ -281,6 +331,8 @@ inputLine = reader.ReadLine();
 log += inputLine + "\n";
 //MessageBox.Show(inputLine);
 ident();
+IrcBot.log += "IRC chat ready\n";
+nxt_result result = new nxt_result();
 while (true)
 {
 while ( (inputLine = reader.ReadLine () ) != null )
@@ -288,7 +340,7 @@ while ( (inputLine = reader.ReadLine () ) != null )
     //log += inputLine + "\n";
     if (inputLine.Contains("PING"))
     {
-        inputLine.Split(' ');
+//        inputLine.Split(' ');
         //MessageBox.Show(inputLine);
         //MessageBox.Show(inputLine.Substring(inputLine.IndexOf(" ") + 2));
         //log += "send: " + "PONG " + inputLine.Substring(inputLine.IndexOf(" ") + 2) + "\n";
@@ -307,15 +359,16 @@ while ( (inputLine = reader.ReadLine () ) != null )
         log += mes_buffer + "\n";
         if (mes_buffer.StartsWith("cmd "))
         {
-            if (true)//NXT_ROVER_CONTROL.command_translation(mes_buffer)
+            result = NXT_ROVER_CONTROL.command_translation(mes_buffer);
+           if (result.result)
             {
 
-                writer.WriteLine(":" + NICK + "! PRIVMSG " + CHANNEL + " :Result true");
+                writer.WriteLine(":" + NICK + "! PRIVMSG " + CHANNEL + " :Result " + result.value);
                 writer.Flush();
             }
             else
             {
-                writer.WriteLine(":" + NICK + "! PRIVMSG " + CHANNEL + " :Result false");
+                writer.WriteLine(":" + NICK + "! PRIVMSG " + CHANNEL + " :Result faild");
                 writer.Flush();
             }
         }
@@ -338,8 +391,10 @@ irc.Close ();
 catch (Exception e)
 {
 // Show the exception, sleep for a while and try to establish a new connection to irc server
-MessageBox.Show(e.ToString () );
-Thread.Sleep (1000);
+log += e.Message.ToString () + "\n";
+timesleep *= 2;
+
+Thread.Sleep (timesleep);
 run_irc ();
 }
 }

@@ -45,7 +45,8 @@ setTimeout("who_is_online()",10345);
     <td width="864"><table width="100%" border="1" cellspacing="0" cellpadding="0">
       <tr>
         <td width="200">Home</td>
-        <td width="200" bgcolor="#999999">Mission control</td>
+        <td width="200" bgcolor="#999999"><a href="control.php">Mission control</a></td>
+        <td width="200"><a href="pre_program.php">pre-program</a></td>
         <td width="200">logbook</td>
         <td width="*">&nbsp;</td>
       </tr>
@@ -58,13 +59,11 @@ setTimeout("who_is_online()",10345);
           <table>
           <tr>
            <td>
-           <div id="who_online">
-            
-            </div>
+           <div id="who_online">            </div>
             Set Your nick Name:<br />
-            <input type="text" id="nickname" />
-            <input type="button" value="Set" onclick="set_nickname();" />
-           </td>
+            <input type="text" id="nickname" value="<?php
+            if(isset($_SESSION['nickname'])){echo $_SESSION['nickname']; } ?>" />
+            <input type="button" value="Set" onclick="set_nickname();" />           </td>
         </tr>
         </table>
         </td>
