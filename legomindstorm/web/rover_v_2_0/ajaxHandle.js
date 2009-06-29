@@ -1,4 +1,4 @@
-ajax_on = false;
+
 function getXMLHttp()
 {
 	var xmlHttp;
@@ -31,14 +31,15 @@ function getXMLHttp()
 	  }	  
 	  return xmlHttp;
 }
-
+xmlHttp = getXMLHttp();
 
 function ajax_donwload(url, divId)
 {
-	if(ajax_on == false){
-		ajax_on = true;
+	
 		
-xmlHttp = getXMLHttp();
+//xmlHttp = getXMLHttp();
+
+if(xmlHttp.readyState == 0 || xmlHttp.readyState == 4){
 
   xmlHttp.onreadystatechange=function()
     {
@@ -77,14 +78,17 @@ xmlHttp = getXMLHttp();
   xmlHttp.open("GET",url,true);
 xmlHttp.send(null);
 
-  	ajax_on = false;
-	}
+}else{
+		setTimeout("ajax_donwload('"+url+"', '"+divId+"')",100);
+		//alert("ajax_donwload('"+url+"', '"+divId+"')");
+}
   }
   function ajax_donwload_add(url, divId)
 {
-	if(ajax_on == false){
-	ajax_on = true;
-xmlHttp = getXMLHttp();
+	
+
+
+if(xmlHttp.readyState == 0  || xmlHttp.readyState == 4){
 
   xmlHttp.onreadystatechange=function()
     {
@@ -123,6 +127,9 @@ xmlHttp = getXMLHttp();
   xmlHttp.open("GET",url,true);
 xmlHttp.send(null);
 
-  	ajax_on = false;
-  }
+  	
+}else{
+	setTimeout("ajax_donwload_add('"+url+"', '"+divId+"')",100);
+			//alert("ajax_donwload('"+url+"', '"+divId+"')");
+}
 }

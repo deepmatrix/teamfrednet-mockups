@@ -1,0 +1,219 @@
+-- phpMyAdmin SQL Dump
+-- version 3.1.3
+-- http://www.phpmyadmin.net
+--
+-- Machine: localhost
+-- Genereertijd: 29 Jun 2009 om 21:33
+-- Serverversie: 5.1.32
+-- PHP-Versie: 5.2.9-1
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+--
+-- Database: `rover`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `log_current_session`
+--
+
+CREATE TABLE IF NOT EXISTS `log_current_session` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(5) NOT NULL,
+  `message` varchar(250) NOT NULL,
+  `who_ID` int(11) NOT NULL,
+  `status` varchar(10) NOT NULL,
+  `when` double NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=133 ;
+
+--
+-- Gegevens worden uitgevoerd voor tabel `log_current_session`
+--
+
+INSERT INTO `log_current_session` (`ID`, `type`, `message`, `who_ID`, `status`, `when`) VALUES
+(1, 'chat', 'test', 0, '', 1246199573.0669),
+(2, 'chat', 'test', 0, '', 1246199580.2593),
+(3, 'chat', 'test', 0, '', 1246199649.4172),
+(4, 'chat', 'test', 0, '', 1246199674.2107),
+(5, 'chat', 'test', 0, '', 1246199708.4436),
+(6, 'chat', 'test', 0, '', 1246199807.6863),
+(7, 'cmd', 'cmd get value A', 0, 'failed', 1246199821.8831),
+(8, 'cmd', 'cmd get sensor value A', 0, '56', 1246199834.0628),
+(9, 'chat', 'Hello everyone', 0, '', 1246199883.2326),
+(10, 'chat', 'I am in control', 0, '', 1246199900.8326),
+(11, 'cmd', 'cmd get sensor value 1', 0, '56', 1246199923.4739),
+(12, 'cmd', 'cmd get sensor value 2', 0, '56', 1246199945.3172),
+(13, 'cmd', 'cmd motor A on', 0, 'succed', 1246199956.0548),
+(14, 'chat', 'I can control the rover', 0, '', 1246199987.4026),
+(15, 'cmd', 'cmd dir AvBv-C', 0, 'failed', 1246200090.0504),
+(16, 'chat', 'test', 0, '', 1246200628.4352),
+(17, 'chat', 'test', 0, '', 1246200631.2324),
+(18, 'cmd', 'cmd test', 0, 'failed', 1246200637.4928),
+(19, 'cmd', 'cmd test', 0, 'failed', 1246200642.274),
+(20, 'cmd', 'cmd test', 0, 'failed', 1246200642.9561),
+(21, 'cmd', 'cmd test', 0, 'failed', 1246200643.5771),
+(22, 'cmd', 'cmd test', 0, 'failed', 1246200645.5262),
+(23, 'cmd', 'cmd test', 0, 'failed', 1246200645.7412),
+(24, 'cmd', 'cmd test', 0, 'failed', 1246200645.9732),
+(25, 'chat', 'test', 0, '', 1246201248.8997),
+(26, 'chat', 'test', 0, '', 1246201347.2724),
+(27, 'chat', 'test hhhhdfsjfkshdhfksdh fkshdf ksdkfh sdkfh s', 0, '', 1246201356.8349),
+(28, 'chat', 'Hello', 0, '', 1246201697.7314),
+(29, 'chat', 'No way', 0, '', 1246201708.279),
+(30, 'chat', 'Yes, this way', 0, '', 1246201715.8744),
+(31, 'chat', 'Yes, this way', 0, '', 1246201766.8614),
+(32, 'chat', 'money', 0, '', 1246201773.3587),
+(33, 'chat', 'yesterday I got something', 0, '', 1246201783.9953),
+(34, 'chat', 'yesterday I got something', 0, '', 1246201813.271),
+(35, 'chat', 'Yes', 0, '', 1246201821.1365),
+(36, 'chat', 'No', 0, '', 1246201825.2037),
+(37, 'chat', 'test', 0, '', 1246202321.2111),
+(38, 'chat', 'das', 0, '', 1246202358.1102),
+(39, 'chat', 'Hello', 0, '', 1246202374.7941),
+(40, 'chat', 'Hello', 0, '', 1246202412.2353),
+(41, 'chat', 'lol', 0, '', 1246202475.4949),
+(42, 'chat', 'test', 0, '', 1246203488.4588),
+(43, 'chat', 'no way', 0, '', 1246203497.7984),
+(44, 'chat', 'hello', 0, '', 1246203639.0624),
+(45, 'chat', 'hello', 0, '', 1246203697.7098),
+(46, 'chat', 'hello', 0, '', 1246203708.3164),
+(47, 'chat', 'some one', 0, '', 1246203718.959),
+(48, 'cmd', 'cmd motor A on', 0, 'succed', 1246203762.0445),
+(49, 'cmd', 'cmd motor A on', 0, 'succed', 1246203767.9388),
+(50, 'cmd', 'cmd motor A on', 0, 'succed', 1246203845.8553),
+(51, 'chat', 'test', 0, '', 1246203852.5787),
+(52, 'chat', 'Hello', 3, '', 1246204290.4567),
+(53, 'chat', 'test', 4, '', 1246204308.3897),
+(54, 'chat', 'Hello', 5, '', 1246204463.0566),
+(55, 'chat', 'when I control I rull the world', 5, '', 1246204479.5565),
+(56, 'chat', 'test', 5, '', 1246204549.8565),
+(57, 'chat', 'No way', 5, '', 1246204555.7269),
+(58, 'chat', 'Do', 5, '', 1246204567.7476),
+(59, 'chat', 'sdfa', 5, '', 1246204608.1829),
+(60, 'chat', 'No way', 5, '', 1246204613.4862),
+(61, 'chat', 'Yes', 5, '', 1246204617.5384),
+(62, 'chat', 'thinks', 5, '', 1246204624.6108),
+(63, 'chat', 'nog', 5, '', 1246204630.0821),
+(64, 'cmd', 'cmd test', 5, 'failed', 1246204639.0556),
+(65, 'cmd', 'cmd motor A on', 5, 'succed', 1246204649.9263),
+(66, 'cmd', 'cmd motor A on', 5, 'succed', 1246204653.9185),
+(67, 'chat', 'Marc is online', 5, '', 1246204740.5124),
+(68, 'chat', 'lol', 5, '', 1246204882.3396),
+(69, 'chat', 'lol', 5, '', 1246204960.9921),
+(70, 'chat', 'lol', 6, '', 1246205095.1227),
+(71, 'chat', 'test', 7, '', 1246205333.1193),
+(72, 'cmd', 'cmd test', 7, 'failed', 1246205345.12),
+(73, 'cmd', 'cmd motor A on', 7, 'succed', 1246205369.0034),
+(74, 'cmd', 'cmd test', 7, 'not found', 1246205441.7776),
+(75, 'cmd', 'cmd test', 7, 'not found', 1246205447.8759),
+(76, 'cmd', 'cmd test', 7, 'not found', 1246205450.441),
+(77, 'cmd', 'cmd test', 7, 'not found', 1246205450.7251),
+(78, 'chat', 'lol', 7, '', 1246205455.1823),
+(79, 'cmd', 'cmd test', 7, 'not found', 1246205482.3989),
+(80, 'cmd', 'cmd get sensor value 1', 7, '56', 1246205500.7129),
+(81, 'cmd', 'cmd get sensor value 3', 7, '56', 1246205537.337),
+(82, 'chat', 'lol', 8, '', 1246205575.5382),
+(83, 'cmd', 'cmd get sensor value 3', 7, '56', 1246205597.4135),
+(84, 'cmd', 'cmd test', 8, 'not found', 1246205620.6378),
+(85, 'cmd', 'cmd test', 8, 'not found', 1246205664.5293),
+(86, 'cmd', 'cmd test', 8, 'not found', 1246205667.2584),
+(87, 'chat', 'lol', 8, '', 1246205678.9941),
+(88, 'chat', 'lol', 8, '', 1246205711.353),
+(89, 'chat', 'hello', 8, '', 1246205794.6307),
+(90, 'chat', 'hello', 7, '', 1246205803.7493),
+(91, 'cmd', 'cmd test', 8, 'not found', 1246205827.1726),
+(92, 'cmd', 'cmd motor A on', 8, 'succed', 1246205845.2586),
+(93, 'cmd', 'cmd motor A on', 8, 'succed', 1246206131.966),
+(94, 'cmd', 'cmd motor A on', 8, 'succed', 1246206136.5693),
+(95, 'chat', 'Test', 9, '', 1246206192.7095),
+(96, 'chat', 'Hello', 9, '', 1246206201.392),
+(97, 'cmd', 'cmd motor A on', 9, 'succed', 1246206209.9645),
+(98, 'cmd', 'cmd get sensor value 1', 9, '56', 1246206256.1111),
+(99, 'cmd', 'cmd get sensor value 1', 9, '56', 1246206260.6194),
+(100, 'cmd', 'cmd cmd motor A off', 9, 'not found', 1246206289.335),
+(101, 'cmd', 'cmd motor A off', 9, 'succed', 1246206297.9915),
+(102, 'chat', 'hoi', 9, '', 1246208909.6145),
+(103, 'cmd', 'cmd motor A on', 9, 'succed', 1246208930.2477),
+(104, 'chat', 'Hello', 10, '', 1246300070.2324),
+(105, 'chat', 'Test', 10, '', 1246300076.8088),
+(106, 'cmd', 'cmd motor A on', 10, 'succed', 1246300083.6972),
+(107, 'cmd', 'cmd motor A on', 10, 'succed', 1246300109.9767),
+(108, 'cmd', 'cmd motor A on', 10, 'succed', 1246300144.2337),
+(109, 'cmd', 'cmd motor A stop', 10, 'not found', 1246300150.412),
+(110, 'cmd', 'cmd motor A off', 10, 'succed', 1246300156.9244),
+(111, 'chat', 'test', 10, '', 1246301133.7153),
+(112, 'chat', 'hello', 10, '', 1246301138.6325),
+(113, 'cmd', 'cmd test', 10, 'not found', 1246301143.9528),
+(114, 'cmd', 'cmd test', 10, 'not found', 1246301147.271),
+(115, 'cmd', 'cmd test', 10, 'not found', 1246301151.4423),
+(116, 'chat', 'hello', 10, '', 1246301267.1349),
+(117, 'chat', 'test', 10, '', 1246301323.1921),
+(118, 'cmd', 'cmd motor A on', 10, 'succed', 1246301333.3527),
+(119, 'cmd', 'cmd motor A on', 10, 'succed', 1246301336.1258),
+(120, 'cmd', 'cmd motor A on', 10, 'succed', 1246301339.48),
+(121, 'cmd', 'cmd motor A on', 10, 'succed', 1246301341.8052),
+(122, 'chat', 'test', 10, '', 1246301404.4087),
+(123, 'cmd', 'cmd test', 10, 'not found', 1246301413.2592),
+(124, 'cmd', 'cmd test', 10, 'not found', 1246301416.7875),
+(125, 'chat', 'test', 10, '', 1246301762.5232),
+(126, 'cmd', 'cmd motor a on', 10, 'succed', 1246301828.151),
+(127, 'chat', 'hoi', 10, '', 1246302116.6625),
+(128, 'cmd', 'cmd test', 10, 'not found', 1246302126.445),
+(129, 'cmd', 'cmd test', 10, 'not found', 1246302336.8381),
+(130, 'chat', 'marc', 10, '', 1246303689.1364),
+(131, 'chat', 'test log', 10, '', 1246303703.9483),
+(132, 'cmd', 'cmd motor on', 10, 'not found', 1246303713.0838);
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `pre_program`
+--
+
+CREATE TABLE IF NOT EXISTS `pre_program` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `delay` int(11) NOT NULL,
+  `cmd` varchar(250) NOT NULL,
+  `masterID` int(11) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Gegevens worden uitgevoerd voor tabel `pre_program`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `users`
+--
+
+CREATE TABLE IF NOT EXISTS `users` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `nickname` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `last` int(11) NOT NULL,
+  `start_control` int(11) NOT NULL,
+  `end_control` int(11) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+
+--
+-- Gegevens worden uitgevoerd voor tabel `users`
+--
+
+INSERT INTO `users` (`ID`, `nickname`, `password`, `last`, `start_control`, `end_control`) VALUES
+(0, 'Guest', '', 1246203852, 1246203806, 1246204106),
+(2, 'someone', '', 1241173973, 1246204114, 1246204414),
+(3, 'marc', '', 1246204290, 1246204430, 1246204730),
+(4, 'Hello', '', 1246204308, 1246204507, 1246204807),
+(5, 'marc', '', 1246204960, 1246204883, 1246205183),
+(6, 'test', '', 1246205095, 1246205020, 1246205320),
+(7, 'marc', '', 1246205803, 1246205323, 1246205623),
+(8, 'test_firefox', '', 1246206136, 1246205897, 1246206197),
+(9, 'marc', '', 1246208930, 1246208910, 1246209210),
+(10, 'marc', '', 1246303713, 1246303689, 1246303989);

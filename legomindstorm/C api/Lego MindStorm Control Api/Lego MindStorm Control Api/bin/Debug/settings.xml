@@ -1,0 +1,16 @@
+<settings>
+<IRC>
+<port>6667</port>
+<server>localhost</server>
+<nickname>Capi</nickname>
+<user>Capi 127.0.0.1 localhost :Capi echo</user>
+<channel>#control</channel>
+<password>Test</password>
+</IRC>
+<mysql>
+<server>localhost</server>
+<database>rover</database>
+<user>root</user>
+<password></password>
+</mysql>
+</settings>
