@@ -119,4 +119,10 @@ $sql = "INSERT `users` SET `nickname`='{$_GET['nickname']}', `last`=".time()."";
 mysql_query($sql);
 $_SESSION['user_ID'] = mysql_insert_id();
 }
+if(isset($_GET['sensor'])){
+$sql = "SELECT * FROM `sensors` WHERE 1 ORDER BY `when` DESC LIMIT 0,1";
+			 $result = mysql_query($sql);
+$row = mysql_fetch_array( $result );
+echo nl2br($row['result']);
+}
 ?>

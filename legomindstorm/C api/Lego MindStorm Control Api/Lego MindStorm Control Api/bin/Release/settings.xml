@@ -13,4 +13,10 @@
 <user>root</user>
 <password></password>
 </mysql>
+<rover>
+  <light>1</light>
+  <sound>2</sound>
+  <touch>3</touch>
+  <distance>4</distance>
+</rover>
 </settings>
