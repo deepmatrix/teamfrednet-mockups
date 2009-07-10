@@ -30,7 +30,8 @@ namespace Lego_MindStorm_Control_Api
             mysql_check.Start();
             //IrcBot.run_irc();
             InternetRelayChat = new Thread(new ThreadStart(IrcBot.run_irc));
-            InternetRelayChat.Start();
+            //InternetRelayChat.Start();
+            timer2.Enabled = true;
         }
        
 
@@ -64,6 +65,34 @@ namespace Lego_MindStorm_Control_Api
         private void recontIRCToolStripMenuItem_Click(object sender, EventArgs e)
         {
             InternetRelayChat.Resume();
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            string temp,sql;
+            
+            TimeSpan ts = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
+            double unixTime = ts.TotalSeconds;
+            //send commands
+            NXT_ROVER_CONTROL.command_translation("cmd sensor value " + config.Rover_distance.ToString());
+            NXT_ROVER_CONTROL.command_translation("cmd sensor value " + config.Rover_light.ToString());
+            NXT_ROVER_CONTROL.command_translation("cmd sensor value " + config.Rover_sound.ToString());
+            //build
+            temp = "Distantes: " + NXT_ROVER_CONTROL.Rover_distance + " cm\n";
+            temp += "Light: " + NXT_ROVER_CONTROL.Rover_light + "%\n";
+            temp += "Sound: " + NXT_ROVER_CONTROL.Rover_sound + "%\n";
+            //update database
+            sql = "INSERT INTO `rover`.`sensors` (`ID`, `when`, `result`) VALUES (NULL, '"+unixTime.ToString().Replace(',','.')+"', '"+temp+"');";
+            mysql.QueryCommand(sql);
+            //show
+            status.Text = temp;
+
+            
         }
 
         
@@ -111,7 +140,7 @@ namespace Lego_MindStorm_Control_Api
                       if (result.result)
                       {
                           //true
-                          cmd.CommandText = "UPDATE `log_current_session` SET `status`='" + result.value + "' WHERE `ID`=" + res.ID;
+                          cmd.CommandText = "UPDATE `log_current_session` SET `status`='" + result.value + "', `when`='" + unixTime.ToString().Replace(',', '.') + "' WHERE `ID`=" + res.ID;
                           cmd.CommandType = CommandType.Text;
                           MySqlDataReader reader = cmd.ExecuteReader();
                           reader.Close();
@@ -191,6 +220,10 @@ namespace Lego_MindStorm_Control_Api
         public static string Mysql_database;
         public static string Mysql_user;
         public static string Mysql_password;
+        public static int Rover_distance;
+        public static int Rover_light;
+        public static int Rover_touch;
+        public static int Rover_sound;
         public static void run()
         {
 
@@ -211,7 +244,14 @@ namespace Lego_MindStorm_Control_Api
       Mysql_database = userNode.SelectSingleNode("database").InnerText;
       Mysql_password = userNode.SelectSingleNode("password").InnerText;
       Mysql_user = userNode.SelectSingleNode("user").InnerText;
-      Mysql_server = userNode.SelectSingleNode("server").InnerText;  
+      Mysql_server = userNode.SelectSingleNode("server").InnerText;
+      userNodes = doc.SelectNodes("/settings/rover");
+      userNode = userNodes[0];
+      Rover_distance = Convert.ToInt32(userNode.SelectSingleNode("distance").InnerText);
+      Rover_light = Convert.ToInt32(userNode.SelectSingleNode("light").InnerText);
+      Rover_touch = Convert.ToInt32(userNode.SelectSingleNode("touch").InnerText);
+      Rover_sound = Convert.ToInt32(userNode.SelectSingleNode("sound").InnerText);
+      
         }
     }
     class nxt_result
@@ -223,6 +263,10 @@ namespace Lego_MindStorm_Control_Api
     class NXT_ROVER_CONTROL
     {
         public static string[] arg_command;
+        public static int Rover_distance;
+        public static int Rover_light;
+        public static int Rover_touch;
+        public static int Rover_sound;
         public static nxt_result command_translation(string text_command)
         {
             nxt_result result = new nxt_result();
@@ -240,11 +284,11 @@ namespace Lego_MindStorm_Control_Api
                     return motor_off(arg_command[2]);
                 }
             }
-            if (arg_command.Length == 5)
+            if (arg_command.Length == 4)
             {
-                if (arg_command[1] == "get" && arg_command[2] == "sensor" && arg_command[3] == "value")
+                if (arg_command[1] == "sensor" && arg_command[2] == "value")
                 {
-                    return get_sensor(arg_command[4]);
+                    return get_sensor(arg_command[3]);
                 }
             }
             return result;
@@ -254,7 +298,27 @@ namespace Lego_MindStorm_Control_Api
             nxt_result result = new nxt_result();
             result.result = true;
             result.type = "sensor";
-            result.value = "56";
+            result.value = "0";
+            TimeSpan ts = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
+              int unixTime = (int)ts.TotalSeconds;
+              Random test = new Random(Convert.ToInt32(sensor) + unixTime);
+            
+            //set 
+            if (sensor == config.Rover_distance.ToString())
+            {
+                NXT_ROVER_CONTROL.Rover_distance = test.Next(255);
+                result.value = NXT_ROVER_CONTROL.Rover_distance.ToString();
+            }
+            if (sensor == config.Rover_sound.ToString())
+            {
+                NXT_ROVER_CONTROL.Rover_sound = test.Next(100);
+                result.value = NXT_ROVER_CONTROL.Rover_sound.ToString();
+            }
+            if (sensor == config.Rover_light.ToString())
+            {
+                NXT_ROVER_CONTROL.Rover_light = test.Next(100);
+                result.value = NXT_ROVER_CONTROL.Rover_light.ToString();
+            }
             return result;
         }
         public static nxt_result motor_on(string motors)
