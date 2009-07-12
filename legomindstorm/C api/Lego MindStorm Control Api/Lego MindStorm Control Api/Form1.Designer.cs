@@ -41,6 +41,8 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.status = new System.Windows.Forms.Label();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.command = new System.Windows.Forms.TextBox();
+            this.send_command = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -55,7 +57,7 @@
             // 
             this.richTextBox1.Location = new System.Drawing.Point(0, 27);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(486, 375);
+            this.richTextBox1.Size = new System.Drawing.Size(486, 353);
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
             this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
@@ -138,11 +140,30 @@
             this.timer2.Interval = 5000;
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
+            // command
+            // 
+            this.command.Location = new System.Drawing.Point(0, 386);
+            this.command.Name = "command";
+            this.command.Size = new System.Drawing.Size(417, 20);
+            this.command.TabIndex = 4;
+            // 
+            // send_command
+            // 
+            this.send_command.Location = new System.Drawing.Point(424, 387);
+            this.send_command.Name = "send_command";
+            this.send_command.Size = new System.Drawing.Size(61, 20);
+            this.send_command.TabIndex = 5;
+            this.send_command.Text = "Do";
+            this.send_command.UseVisualStyleBackColor = true;
+            this.send_command.Click += new System.EventHandler(this.send_command_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(760, 432);
+            this.Controls.Add(this.send_command);
+            this.Controls.Add(this.command);
             this.Controls.Add(this.status);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -174,6 +195,8 @@
         private System.Windows.Forms.ToolStripMenuItem recontIRCToolStripMenuItem;
         private System.Windows.Forms.Label status;
         private System.Windows.Forms.Timer timer2;
+        private System.Windows.Forms.TextBox command;
+        private System.Windows.Forms.Button send_command;
     }
 }
 

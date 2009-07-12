@@ -18,5 +18,6 @@
   <sound>2</sound>
   <touch>3</touch>
   <distance>4</distance>
+  <port>com5</port>
 </rover>
 </settings>
