@@ -8,3 +8,4 @@ C:\Users\marc\Documents\frednet\google code source\legomindstorm\C api\Lego Mind
 C:\Users\marc\Documents\frednet\google code source\legomindstorm\C api\Lego MindStorm Control Api\Lego MindStorm Control Api\obj\Debug\Lego_MindStorm_Control_Api.Form1.resources
 C:\Users\marc\Documents\frednet\google code source\legomindstorm\C api\Lego MindStorm Control Api\Lego MindStorm Control Api\bin\Debug\Lego MindStorm Control Api.exe.config
 C:\Users\marc\Documents\frednet\google code source\legomindstorm\C api\Lego MindStorm Control Api\Lego MindStorm Control Api\bin\Debug\settings.xml
+C:\Users\marc\Documents\frednet\google code source\legomindstorm\C api\Lego MindStorm Control Api\Lego MindStorm Control Api\bin\Debug\AForge.Robotics.Lego.dll

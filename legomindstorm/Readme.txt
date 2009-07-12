@@ -1,10 +1,9 @@
 Lego mindstorm Control api.
 Current state:
 Will answere a message with true or false base on message.
-follow command will result in true:
-cmd motor ***** on
-cmd motor ***** off
-cmd ger sensor value *****
+go to the wiki for the commands.
+
+We used a mod version of Aforce framework to allow running programs.
 
 written in Visual C# Framework 2.0
 
@@ -15,7 +14,7 @@ Server: localhost
 user: root
 password: 
 database: rover
-   A dumb of the database can be found here:
+   A dumb of the database can be found here: web/database_dump.txt
 web:
 apache
 server: localhost

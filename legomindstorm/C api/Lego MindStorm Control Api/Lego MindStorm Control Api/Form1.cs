@@ -12,7 +12,7 @@ using System.IO;
 using System.Threading;
 using MySql.Data.MySqlClient;
 using System.Xml;
-
+using AForge.Robotics.Lego;
 
 namespace Lego_MindStorm_Control_Api
 {
@@ -21,6 +21,7 @@ namespace Lego_MindStorm_Control_Api
 
         private Thread InternetRelayChat;
         private Thread mysql_check;
+        private Thread rover;
             
         public Form1()
         {
@@ -28,9 +29,10 @@ namespace Lego_MindStorm_Control_Api
             config.run();
             mysql_check = new Thread(new ThreadStart(mysql.run));
             mysql_check.Start();
-            //IrcBot.run_irc();
+            rover = new Thread(new ThreadStart(NXT_ROVER_CONTROL.run));
+            rover.Start();
             InternetRelayChat = new Thread(new ThreadStart(IrcBot.run_irc));
-            //InternetRelayChat.Start();
+            InternetRelayChat.Start();
             timer2.Enabled = true;
         }
        
@@ -64,7 +66,7 @@ namespace Lego_MindStorm_Control_Api
 
         private void recontIRCToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InternetRelayChat.Resume();
+           
         }
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
@@ -93,6 +95,11 @@ namespace Lego_MindStorm_Control_Api
             status.Text = temp;
 
             
+        }
+
+        private void send_command_Click(object sender, EventArgs e)
+        {
+            NXT_ROVER_CONTROL.command_translation(command.Text); 
         }
 
         
@@ -224,6 +231,7 @@ namespace Lego_MindStorm_Control_Api
         public static int Rover_light;
         public static int Rover_touch;
         public static int Rover_sound;
+        public static string Rover_port;
         public static void run()
         {
 
@@ -251,6 +259,7 @@ namespace Lego_MindStorm_Control_Api
       Rover_light = Convert.ToInt32(userNode.SelectSingleNode("light").InnerText);
       Rover_touch = Convert.ToInt32(userNode.SelectSingleNode("touch").InnerText);
       Rover_sound = Convert.ToInt32(userNode.SelectSingleNode("sound").InnerText);
+      Rover_port = userNode.SelectSingleNode("port").InnerText;
       
         }
     }
@@ -267,6 +276,117 @@ namespace Lego_MindStorm_Control_Api
         public static int Rover_light;
         public static int Rover_touch;
         public static int Rover_sound;
+        // NXT brick
+        public static NXTBrick nxt = new NXTBrick();
+        // rugulation modes
+        public static NXTBrick.MotorRegulationMode[] regulationModes = new NXTBrick.MotorRegulationMode[] {
+            NXTBrick.MotorRegulationMode.Idle,
+            NXTBrick.MotorRegulationMode.Speed,
+            NXTBrick.MotorRegulationMode.Sync };
+        // run states
+        public static NXTBrick.MotorRunState[] runStates = new NXTBrick.MotorRunState[] {
+            NXTBrick.MotorRunState.Idle,
+            NXTBrick.MotorRunState.RampUp,
+            NXTBrick.MotorRunState.Running,
+            NXTBrick.MotorRunState.RampDown };
+        // sensor types
+        public static NXTBrick.SensorType[] sensorTypes = new NXTBrick.SensorType[] {
+            NXTBrick.SensorType.NoSensor, NXTBrick.SensorType.Switch,
+            NXTBrick.SensorType.Temperature, NXTBrick.SensorType.Reflection,
+            NXTBrick.SensorType.Angle, NXTBrick.SensorType.LightActive,
+            NXTBrick.SensorType.LightInactive, NXTBrick.SensorType.SoundDB,
+            NXTBrick.SensorType.SoundDBA, NXTBrick.SensorType.Custom,
+            NXTBrick.SensorType.Lowspeed, NXTBrick.SensorType.Lowspeed9V };
+        // sensor modes
+        public static NXTBrick.SensorMode[] sensorModes = new NXTBrick.SensorMode[] {
+            NXTBrick.SensorMode.Raw, NXTBrick.SensorMode.Boolean,
+            NXTBrick.SensorMode.TransitionCounter, NXTBrick.SensorMode.PeriodicCounter,
+            NXTBrick.SensorMode.PCTFullScale, NXTBrick.SensorMode.Celsius,
+            NXTBrick.SensorMode.Fahrenheit, NXTBrick.SensorMode.AngleSteps };
+
+
+        public static void run()
+        {
+            
+            if (nxt.Connect(config.Rover_port))
+            {
+                IrcBot.log += "Connected successfully\n";
+
+                CollectInformation();
+
+                
+            }
+            else
+            {
+                
+                IrcBot.log += "Failed connecting to NXT device\n";
+                Thread.Sleep(5000);
+                run();
+            }
+        }
+        public static void CollectInformation()
+        {
+            
+            // ------------------------------------------------
+            // get NXT version
+            string firmwareVersion;
+            string protocolVersion;
+
+            if (nxt.GetVersion(out protocolVersion, out firmwareVersion))
+            {
+                IrcBot.log += "firmwareVersion: " + firmwareVersion + "\n";
+                IrcBot.log += "protocolVersion: " + protocolVersion + "\n";
+                
+            }
+            else
+            {
+                IrcBot.log += "Failed getting verion\n";
+            }
+
+            // ------------------------------------------------
+            // get device information
+            string deviceName;
+            byte[] btAddress;
+            int btSignalStrength;
+            int freeUserFlesh;
+
+            if (nxt.GetDeviceInformation(out deviceName, out btAddress, out btSignalStrength, out freeUserFlesh))
+            {
+                IrcBot.log += "deviceName: " + deviceName;
+
+                IrcBot.log += string.Format("{0} {1} {2} {3} {4} {5} {6}\n",
+                    btAddress[0].ToString("X2"),
+                    btAddress[1].ToString("X2"),
+                    btAddress[2].ToString("X2"),
+                    btAddress[3].ToString("X2"),
+                    btAddress[4].ToString("X2"),
+                    btAddress[5].ToString("X2"),
+                    btAddress[6].ToString("X2")
+                );
+
+                IrcBot.log += btSignalStrength.ToString() + "\n";
+                IrcBot.log += freeUserFlesh.ToString() + "\n";
+            }
+            else
+            {
+                IrcBot.log += "Failed getting device information\n";
+            }
+
+
+            // ------------------------------------------------
+            // get battery level
+            int batteryLevel;
+
+            if (nxt.GetBatteryPower(out batteryLevel))
+            {
+                IrcBot.log += batteryLevel.ToString() + "\n";
+            }
+            else
+            {
+                IrcBot.log += "Failed getting battery level\n";
+            }
+             
+        }
         public static nxt_result command_translation(string text_command)
         {
             nxt_result result = new nxt_result();
@@ -321,16 +441,60 @@ namespace Lego_MindStorm_Control_Api
             }
             return result;
         }
+        // Use set all motors on
         public static nxt_result motor_on(string motors)
         {
             nxt_result result = new nxt_result();
+            NXTBrick.MotorState motorState = new NXTBrick.MotorState();
+
+            // prepare motor's state to set
+            motorState.Power = (sbyte)50;
+            motorState.TurnRatio = (sbyte)50;
+            motorState.Mode = ((true) ? NXTBrick.MotorMode.On : NXTBrick.MotorMode.None) |
+                ((false) ? NXTBrick.MotorMode.Brake : NXTBrick.MotorMode.None) |
+                ((false) ? NXTBrick.MotorMode.Regulated : NXTBrick.MotorMode.None);
+            motorState.Regulation = NXTBrick.MotorRegulationMode.Speed;
+            motorState.RunState = NXTBrick.MotorRunState.Running;
+            // tacho limit
+            motorState.TachoLimit = 100;
+            
+            // set motor's state
+            if (nxt.SetMotorState(NXTBrick.Motor.All, motorState) != true)
+            {
+                IrcBot.log += "Failed setting motor state\n";
+                result.result = false;
+                result.value = "Failed";
+                return result;
+            }
             result.result = true;
             result.value = "succed";
             return result;
         }
+        // Use set all motors off
         public static nxt_result motor_off(string motors)
         {
             nxt_result result = new nxt_result();
+            NXTBrick.MotorState motorState = new NXTBrick.MotorState();
+
+            // prepare motor's state to set
+            motorState.Power = (sbyte)0;
+            motorState.TurnRatio = (sbyte)0;
+            motorState.Mode = ((false) ? NXTBrick.MotorMode.On : NXTBrick.MotorMode.None) |
+                ((false) ? NXTBrick.MotorMode.Brake : NXTBrick.MotorMode.None) |
+                ((false) ? NXTBrick.MotorMode.Regulated : NXTBrick.MotorMode.None);
+            motorState.Regulation = NXTBrick.MotorRegulationMode.Speed;
+            motorState.RunState = NXTBrick.MotorRunState.Running;
+            // tacho limit
+            motorState.TachoLimit = 0;
+
+            // set motor's state
+            if (nxt.SetMotorState(NXTBrick.Motor.All, motorState) != true)
+            {
+                IrcBot.log += "Failed setting motor state\n";
+                result.result = false;
+                result.value = "Failed";
+                return result;
+            }
             result.result = true;
             result.value = "succed";
             return result;
