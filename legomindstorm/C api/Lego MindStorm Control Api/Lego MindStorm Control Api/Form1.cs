@@ -35,13 +35,9 @@ namespace Lego_MindStorm_Control_Api
             InternetRelayChat.Start();
             timer2.Enabled = true;
         }
-       
+       // TODO on form unload kill app
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            
-
-        }
+        
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -81,9 +77,9 @@ namespace Lego_MindStorm_Control_Api
             TimeSpan ts = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
             double unixTime = ts.TotalSeconds;
             //send commands
-            NXT_ROVER_CONTROL.command_translation("cmd sensor value " + config.Rover_distance.ToString());
-            NXT_ROVER_CONTROL.command_translation("cmd sensor value " + config.Rover_light.ToString());
-            NXT_ROVER_CONTROL.command_translation("cmd sensor value " + config.Rover_sound.ToString());
+            //NXT_ROVER_CONTROL.command_translation("cmd sensor value " + config.Rover_distance.ToString());
+            //NXT_ROVER_CONTROL.command_translation("cmd sensor value " + config.Rover_light.ToString());
+            //NXT_ROVER_CONTROL.command_translation("cmd sensor value " + config.Rover_sound.ToString());
             //build
             temp = "Distantes: " + NXT_ROVER_CONTROL.Rover_distance + " cm\n";
             temp += "Light: " + NXT_ROVER_CONTROL.Rover_light + "%\n";
@@ -232,6 +228,8 @@ namespace Lego_MindStorm_Control_Api
         public static int Rover_touch;
         public static int Rover_sound;
         public static string Rover_port;
+        public static NXTBrick.SensorType[] sensorType = new NXTBrick.SensorType[4];
+        public static NXTBrick.SensorMode[] sensorMode = new NXTBrick.SensorMode[4];
         public static void run()
         {
 
@@ -255,8 +253,13 @@ namespace Lego_MindStorm_Control_Api
       Mysql_server = userNode.SelectSingleNode("server").InnerText;
       userNodes = doc.SelectNodes("/settings/rover");
       userNode = userNodes[0];
+      // TODO check sensor
       Rover_distance = Convert.ToInt32(userNode.SelectSingleNode("distance").InnerText);
+      sensorType[Rover_distance - 1] = NXTBrick.SensorType.Reflection;
+      sensorMode[Rover_distance - 1] = NXTBrick.SensorMode.PeriodicCounter;
       Rover_light = Convert.ToInt32(userNode.SelectSingleNode("light").InnerText);
+      sensorType[Rover_light - 1] = NXTBrick.SensorType.LightInactive;
+      sensorMode[Rover_light - 1] = NXTBrick.SensorMode.Raw;
       Rover_touch = Convert.ToInt32(userNode.SelectSingleNode("touch").InnerText);
       Rover_sound = Convert.ToInt32(userNode.SelectSingleNode("sound").InnerText);
       Rover_port = userNode.SelectSingleNode("port").InnerText;
@@ -303,8 +306,36 @@ namespace Lego_MindStorm_Control_Api
             NXTBrick.SensorMode.TransitionCounter, NXTBrick.SensorMode.PeriodicCounter,
             NXTBrick.SensorMode.PCTFullScale, NXTBrick.SensorMode.Celsius,
             NXTBrick.SensorMode.Fahrenheit, NXTBrick.SensorMode.AngleSteps };
-
-
+        public static NXTBrick.Sensor[] sensors = new NXTBrick.Sensor[] {
+            NXTBrick.Sensor.First,NXTBrick.Sensor.Second,NXTBrick.Sensor.Third,NXTBrick.Sensor.Fourth};
+        
+        public static void setSensors()
+        {
+            if (nxt.SetSensorMode(NXTBrick.Sensor.First,
+                config.sensorType[0],
+                config.sensorMode[0]) != true)
+            {
+                IrcBot.log += "Failed setting input mode(1)\n";
+            }
+            if (nxt.SetSensorMode(NXTBrick.Sensor.Second,
+                config.sensorType[1],
+                config.sensorMode[1]) != true)
+            {
+                IrcBot.log += "Failed setting input mode(2)\n";
+            }
+            if (nxt.SetSensorMode(NXTBrick.Sensor.Third,
+                config.sensorType[2],
+                config.sensorMode[2]) != true)
+            {
+                IrcBot.log += "Failed setting input mode(3)\n";
+            }
+            if (nxt.SetSensorMode(NXTBrick.Sensor.Fourth,
+                config.sensorType[3],
+                config.sensorMode[3]) != true)
+            {
+                IrcBot.log += "Failed setting input mode(4)\n";
+            }
+        }
         public static void run()
         {
             
@@ -313,7 +344,7 @@ namespace Lego_MindStorm_Control_Api
                 IrcBot.log += "Connected successfully\n";
 
                 CollectInformation();
-
+                setSensors();
                 
             }
             else
@@ -411,38 +442,100 @@ namespace Lego_MindStorm_Control_Api
                     return get_sensor(arg_command[3]);
                 }
             }
+            if (arg_command.Length == 5)
+            {
+                if (arg_command[1] == "run" && arg_command[2] == "rover" && arg_command[3] == "program")
+                {
+                    return run_program(arg_command[4]);
+                }
+            }
+            if (arg_command.Length == 4)
+            {
+                if (arg_command[1] == "run" && arg_command[2] == "program")
+                {
+                    return run_program_mysql(arg_command[3]);
+                }
+            }
             return result;
         }
         public static nxt_result get_sensor(string sensor)
         {
+            return get_sensor(Convert.ToInt32(sensor));
+        }
+        public static nxt_result get_sensor(int sensor)
+        {
             nxt_result result = new nxt_result();
-            result.result = true;
+            NXTBrick.SensorValues sensorValues;
+            result.result = false;
             result.type = "sensor";
             result.value = "0";
-            TimeSpan ts = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
-              int unixTime = (int)ts.TotalSeconds;
-              Random test = new Random(Convert.ToInt32(sensor) + unixTime);
+            // get input values
+            if (nxt.GetSensorValue(sensors[sensor-1], out sensorValues))
+            {
+                result.result = sensorValues.IsValid;
+
+                result.value = "Raw: " + sensorValues.Raw.ToString() + " normalized: " + sensorValues.Normalized.ToString();
+                
+               
+                //log 
+                if (sensor == config.Rover_distance)
+                {
+                    NXT_ROVER_CONTROL.Rover_distance = sensorValues.Normalized;
+                    
+                }
+                if (sensor == config.Rover_sound)
+                {
+                    NXT_ROVER_CONTROL.Rover_sound = sensorValues.Normalized;
+                    
+                }
+                if (sensor == config.Rover_light)
+                {
+                    NXT_ROVER_CONTROL.Rover_light = sensorValues.Normalized;
+                    
+                }
+            }
+            else
+            {
+                IrcBot.log += "Failed getting input values\n";
+            }
+              
             
-            //set 
-            if (sensor == config.Rover_distance.ToString())
-            {
-                NXT_ROVER_CONTROL.Rover_distance = test.Next(255);
-                result.value = NXT_ROVER_CONTROL.Rover_distance.ToString();
-            }
-            if (sensor == config.Rover_sound.ToString())
-            {
-                NXT_ROVER_CONTROL.Rover_sound = test.Next(100);
-                result.value = NXT_ROVER_CONTROL.Rover_sound.ToString();
-            }
-            if (sensor == config.Rover_light.ToString())
-            {
-                NXT_ROVER_CONTROL.Rover_light = test.Next(100);
-                result.value = NXT_ROVER_CONTROL.Rover_light.ToString();
-            }
+            
             return result;
         }
-        // Use set all motors on
         public static nxt_result motor_on(string motors)
+        {
+            string[] motors_array;
+            nxt_result motor_result = new nxt_result();
+            motor_result.result = false;
+            motor_result.value = "Motor not found.";
+            motors_array = motors.ToLower().Split('v');
+            foreach (string motor in motors_array)
+            {
+                if (motor.ToUpper() == "A")
+                {
+                    motor_result = motor_on(NXTBrick.Motor.A);
+                }
+                if (motor.ToUpper() == "B")
+                {
+                    motor_result = motor_on(NXTBrick.Motor.B);
+                }
+                if (motor.ToUpper() == "C")
+                {
+                    motor_result = motor_on(NXTBrick.Motor.C);
+                }
+                if (motor.ToUpper() == "ALL")
+                {
+                    motor_result = motor_on(NXTBrick.Motor.All);
+                }
+                if (motor_result.result == false)
+                {
+                    return motor_result;
+                }
+            }
+            return motor_result;
+        }
+        public static nxt_result motor_on(NXTBrick.Motor motor)
         {
             nxt_result result = new nxt_result();
             NXTBrick.MotorState motorState = new NXTBrick.MotorState();
@@ -459,7 +552,7 @@ namespace Lego_MindStorm_Control_Api
             motorState.TachoLimit = 100;
             
             // set motor's state
-            if (nxt.SetMotorState(NXTBrick.Motor.All, motorState) != true)
+            if (nxt.SetMotorState(motor, motorState) != true)
             {
                 IrcBot.log += "Failed setting motor state\n";
                 result.result = false;
@@ -470,10 +563,42 @@ namespace Lego_MindStorm_Control_Api
             result.value = "succed";
             return result;
         }
-        // Use set all motors off
         public static nxt_result motor_off(string motors)
         {
+            string[] motors_array;
+            nxt_result motor_result=new nxt_result();
+            motor_result.result = false;
+            motor_result.value = "Motor not found.";
+            motors_array = motors.ToLower().Split('v');
+            foreach (string motor in motors_array)
+            {
+                if (motor.ToUpper() == "A")
+                {
+                    motor_result = motor_off(NXTBrick.Motor.A);
+                }
+                if (motor.ToUpper() == "B")
+                {
+                    motor_result = motor_off(NXTBrick.Motor.B);
+                }
+                if (motor.ToUpper() == "C")
+                {
+                    motor_result = motor_off(NXTBrick.Motor.C);
+                }
+                if (motor.ToUpper() == "ALL")
+                {
+                    motor_result = motor_off(NXTBrick.Motor.All);
+                }
+                if (motor_result.result == false)
+                {
+                    return motor_result;
+                }
+            }
+            return motor_result;
+        }
+        public static nxt_result motor_off(NXTBrick.Motor motor)
+        {
             nxt_result result = new nxt_result();
+            
             NXTBrick.MotorState motorState = new NXTBrick.MotorState();
 
             // prepare motor's state to set
@@ -488,7 +613,7 @@ namespace Lego_MindStorm_Control_Api
             motorState.TachoLimit = 0;
 
             // set motor's state
-            if (nxt.SetMotorState(NXTBrick.Motor.All, motorState) != true)
+            if (nxt.SetMotorState(motor, motorState) != true)
             {
                 IrcBot.log += "Failed setting motor state\n";
                 result.result = false;
@@ -497,6 +622,45 @@ namespace Lego_MindStorm_Control_Api
             }
             result.result = true;
             result.value = "succed";
+            
+            return result;
+        }
+        public static nxt_result run_program(string name)
+        {
+            nxt_result result = new nxt_result();
+            if (nxt.RunProgram(name))
+            {
+                
+                result.result = true;
+                result.value = "succed";
+            }
+            else
+            {
+                result.result = false;
+                result.value = "Failed";
+            }
+            return result;
+
+        }
+        public static nxt_result run_program_mysql(string name)
+        {
+            return run_program_mysql(Convert.ToInt32(name));
+        }
+        public static nxt_result run_program_mysql(int name)
+        {
+            nxt_result result = new nxt_result();
+            mysql_results result_mysql = new mysql_results();
+            // TODO Find the correct mysql qeury
+            result_mysql = mysql.QueryCommand("");
+            if (result_mysql.result == true)
+            {
+                result.result = true;
+                
+            }
+            else
+            {
+                result.result = false;
+            }
             return result;
         }
     }
