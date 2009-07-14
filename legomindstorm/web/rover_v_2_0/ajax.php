@@ -125,4 +125,93 @@ $sql = "SELECT * FROM `sensors` WHERE 1 ORDER BY `when` DESC LIMIT 0,1";
 $row = mysql_fetch_array( $result );
 echo nl2br($row['result']);
 }
+if(isset($_GET['pre_program'])){
+if($_GET['pre_program'] == "new"){
+$sql = "SELECT * FROM `pre_program` WHERE 1 GROUP BY `masterID` ORDER BY `masterID` DESC";
+$result = mysql_query($sql);
+$row = mysql_fetch_array( $result );
+$id = $row['masterID']+1;
+$sql = "INSERT `pre_program` SET `masterID`=$id, `innerID`=0";
+mysql_query($sql);
+$_SESSION['id_pre_program'] = $id;
+}elseif($_GET['pre_program'] == $_GET['pre_program']*1 && $_GET['pre_program'] != ""){
+
+$id = $_GET['pre_program'];
+$_SESSION['id_pre_program'] = $id;
+}else{
+if(isset($_SESSION['id_pre_program'])){
+if($_SESSION['id_pre_program'] != ""){
+$id = $_SESSION['id_pre_program'];
+}else{
+die();
+}
+}else{
+die();
+}
+
+}
+$sql = "SELECT * FROM `pre_program` WHERE `masterID`=$id";
+$result = mysql_query($sql);
+while($row = mysql_fetch_array( $result )){
+$commands[$row['innerID']] = $row['cmd'];
+$delays[$row['innerID']] = $row['delay'];
+}
+echo "Your Program ID: $id<br />\n";
+?>
+<form action="ajax.php?pre_program_commands=<?php echo $id; ?>" target="hiddenframe" method="post">
+        <table width="400" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="49"><a title="in seconde" alt="in seconde">Delay</a></td>
+            <td width="351">Command</td>
+          </tr>
+	<?php
+	for($i = 0;$i < 10;$i++){
+	$command = "";
+	$delay = 0;
+	if(isset($commands[$i])){
+	$command = $commands[$i];
+	$delay = $delays[$i];
+	}
+	echo "<tr>
+            <td><input name=\"delay$i\" type=\"text\" id=\"delay$i\" value=\"$delay\" size=\"4\" maxlength=\"4\" /></td>
+            <td><input name=\"command$i\" type=\"text\" id=\"command$i\" value=\"$command\" size=\"50\" maxlength=\"250\" /></td>
+          </tr>";
+	}
+	?>
+    </table> 
+        <p>
+          <label>
+          <input type="submit" name="button" id="button" value="save" />
+          </label>
+          
+        </p>
+        </form>       </td>
+      </tr>
+      
+    </table>
+    <?php	  
+
+
+}
+if(isset($_GET['pre_program_commands'])){
+if(!isset($_SESSION['user_ID'])){
+$_SESSION['user_ID'] = 0;
+}
+$id = $_GET['pre_program_commands'];
+for($i = 0;$i < 10;$i++){
+//check
+$sql = "SELECT * FROM `pre_program` WHERE `masterID`=$id AND `innerID`=$i";
+$result = mysql_query($sql);
+$row = mysql_fetch_array( $result );
+if(count($row)>2){
+//update
+$sql = "UPDATE `pre_program` SET `cmd`='".$_POST['command'.$i]."', `delay`='".$_POST['delay'.$i]."',`who`='{$_SESSION['user_ID']}' WHERE `masterID`=$id AND `innerID`=$i";
+}else{
+//new
+$sql = "INSERT `pre_program` SET `masterID`=$id, `innerID`=$i, `cmd`='".$_POST['command'.$i]."',`who`='{$_SESSION['user_ID']}', `delay`='".$_POST['delay'.$i]."'";
+}
+//save
+$result = mysql_query($sql);
+}
+}
 ?>
