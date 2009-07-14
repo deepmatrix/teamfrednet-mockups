@@ -107,6 +107,10 @@ namespace Lego_MindStorm_Control_Api
         public string msg;
         public bool result;
     }
+    class mysql_todo
+    {
+        public string sql;
+    }
     class mysql
     {
           public static MySqlConnectionStringBuilder connBuilder =
@@ -183,11 +187,42 @@ namespace Lego_MindStorm_Control_Api
               cmd = connection.CreateCommand();
               connection.Open();
               IrcBot.log += "MYSQL connection ready\n";
+              pre_program("7");
           }
         public static void close(){
               
               connection.Close();
           }
+        public static mysql_results pre_program(string id)
+        {
+            cmd.CommandText = "SELECT * FROM `pre_program` WHERE `masterID` = " + id;
+            cmd.CommandType = CommandType.Text;
+            MySqlDataReader reader = cmd.ExecuteReader();
+            mysql_todo[] list = new mysql_todo[50];
+            mysql_results res = new mysql_results();
+            TimeSpan ts = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
+            double unixTime = ts.TotalSeconds;
+            int i=0,j=0;
+            res.result = false;
+            while (reader.Read())
+            {
+                if (reader.GetString(2).Length > 2)
+                {
+                    list[i] = new mysql_todo();
+                    list[i].sql = "INSERT `log_current_session` SET `type`='cmd', `message`='" + reader.GetString(2) + "',`when`=" + (reader.GetInt32(1) + unixTime).ToString().Replace(',', '.') + ",`who_ID`=" + reader.GetUInt32(5);
+                    res.result = true;
+                    i++;
+                }
+
+            }
+
+            reader.Close();
+            for (j = 0; j < i; j++)
+            {
+                QueryCommand(list[j].sql);
+            }
+            return res;
+        }
         public static mysql_results QueryCommand(string sql)
         {
             cmd.CommandText = sql;
@@ -651,7 +686,8 @@ namespace Lego_MindStorm_Control_Api
             nxt_result result = new nxt_result();
             mysql_results result_mysql = new mysql_results();
             // TODO Find the correct mysql qeury
-            result_mysql = mysql.QueryCommand("");
+            result_mysql = mysql.pre_program(Convert.ToString(name));
+            
             if (result_mysql.result == true)
             {
                 result.result = true;
