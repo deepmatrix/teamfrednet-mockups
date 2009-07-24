@@ -171,6 +171,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "NXT control API log";
+            // TODO check this
             
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
