@@ -77,9 +77,10 @@ namespace Lego_MindStorm_Control_Api
             TimeSpan ts = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
             double unixTime = ts.TotalSeconds;
             //send commands
-            //NXT_ROVER_CONTROL.command_translation("cmd sensor value " + config.Rover_distance.ToString());
-            //NXT_ROVER_CONTROL.command_translation("cmd sensor value " + config.Rover_light.ToString());
-            //NXT_ROVER_CONTROL.command_translation("cmd sensor value " + config.Rover_sound.ToString());
+            // TODO re enable THIS
+            NXT_ROVER_CONTROL.command_translation("cmd sensor value " + config.Rover_distance.ToString());
+            NXT_ROVER_CONTROL.command_translation("cmd sensor value " + config.Rover_light.ToString());
+            NXT_ROVER_CONTROL.command_translation("cmd sensor value " + config.Rover_sound.ToString());
             //build
             temp = "Distantes: " + NXT_ROVER_CONTROL.Rover_distance + " cm\n";
             temp += "Light: " + NXT_ROVER_CONTROL.Rover_light + "%\n";
@@ -96,6 +97,11 @@ namespace Lego_MindStorm_Control_Api
         private void send_command_Click(object sender, EventArgs e)
         {
             NXT_ROVER_CONTROL.command_translation(command.Text); 
+        }
+
+        private void Form1_unLoad(object sender, EventArgs e)
+        {
+            
         }
 
         
@@ -187,7 +193,7 @@ namespace Lego_MindStorm_Control_Api
               cmd = connection.CreateCommand();
               connection.Open();
               IrcBot.log += "MYSQL connection ready\n";
-              pre_program("7");
+              
           }
         public static void close(){
               
