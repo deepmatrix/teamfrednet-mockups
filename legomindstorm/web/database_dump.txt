@@ -91,6 +91,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+INSERT INTO `users` (`ID`, `nickname`, `password`, `last`, `start_control`, `end_control`) VALUES
+(0, 'Guest', '', 0, 0, 0);
+
 --
 -- Gegevens worden uitgevoerd voor tabel `users`
 --

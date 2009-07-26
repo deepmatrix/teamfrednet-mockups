@@ -15,13 +15,4 @@ $_SESSION['last_time_check'] = (date("U") + microtime());
 }
 //timeout
 $user_offline_time = 60;
-//irc
-$config = array(); 
-$config['nickname'] = 'php'; 
-$config['realname'] = 'php bot'; 
-$config['hostname'] = 0; 
-$config['server']   = 'localhost'; 
-$config['port']    = 6667; 
-$config['channel']   = "#control";
-$config['user'] = "PHP 127.0.0.1 {$config['server']} :PHP";
 ?>
