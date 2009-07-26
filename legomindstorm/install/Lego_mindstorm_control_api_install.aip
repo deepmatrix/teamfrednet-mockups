@@ -4,16 +4,15 @@
     <ROW Property="AI_MINDOTNETVERSION" MultiBuildValue="DefaultBuild:2.0" ValueLocId="-"/>
     <ROW Property="ALLUSERS" Value="2"/>
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
-    <ROW Property="ARPNOMODIFY" MultiBuildValue="DefaultBuild:1"/>
     <ROW Property="ARPNOREPAIR" Value="1"/>
     <ROW Property="ARPURLINFOABOUT" Value="http://wiki.xprize.frednet.org/index.php/Portal:Lego_Mindstorms"/>
     <ROW Property="BannerBitmap" MultiBuildValue="DefaultBuild:default_banner.bmp" Type="1"/>
     <ROW Property="DialogBitmap" MultiBuildValue="DefaultBuild:default_dialog.bmp" Type="1"/>
     <ROW Property="Manufacturer" Value="Frednet" ValueLocId="*"/>
-    <ROW Property="ProductCode" Value="1033:{5E5787FD-ACE5-4066-8D60-603686C3A7C8} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{3FBCB75B-2184-45D8-B77B-A114E1905ADB} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="Lego Mindstorm Remote Control" ValueLocId="*"/>
-    <ROW Property="ProductVersion" Value="0.1.94"/>
+    <ROW Property="ProductVersion" Value="0.1.95"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{6058811D-0665-4385-8A26-E7CB4BDE06BC}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 98 SE" ValueLocId="-"/>
@@ -27,25 +26,25 @@
     <ROW Directory="wamppath" Directory_Parent="TARGETDIR" DefaultDir="wamppath" IsPseudoRoot="1"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
-    <ROW Component="AForge.Robotics.Lego.dll" ComponentId="{F95D7CC9-6ACE-4912-9FCD-0DE920A21EA3}" Directory_="APPDIR" Attributes="0" KeyPath="AForge.Robotics.Lego.dll"/>
-    <ROW Component="Lego_MindStorm_Control_Api.exe" ComponentId="{5B0788B5-E98D-4CAE-B2DB-EAFC82D0B02B}" Directory_="APPDIR" Attributes="0" KeyPath="Lego_MindStorm_Control_Api.exe"/>
-    <ROW Component="Lego_MindStorm_Control_Api.exe.config_1" ComponentId="{0755C2C3-DC93-4435-8E48-FA04848CB422}" Directory_="APPDIR" Attributes="0" KeyPath="settings.xml" Type="0"/>
+    <ROW Component="AForge.Robotics.Lego.dll" ComponentId="{747CE446-5224-43D2-9E9C-0CD28767F047}" Directory_="APPDIR" Attributes="0" KeyPath="AForge.Robotics.Lego.dll"/>
+    <ROW Component="Lego_MindStorm_Control_Api.exe.config" ComponentId="{4B017980-E0F6-4928-93E5-8137753C3B47}" Directory_="APPDIR" Attributes="0" KeyPath="Lego_MindStorm_Control_Api.exe.config" Type="0"/>
     <ROW Component="SHORTCUTDIR" ComponentId="{94B4D888-9C9C-4C6F-95C4-076402951F3E}" Directory_="SHORTCUTDIR" Attributes="0"/>
-    <ROW Component="ajax.php" ComponentId="{5A5562E2-BE08-4698-AE70-5972D35F66CC}" Directory_="rover_DIR" Attributes="0" KeyPath="ajax.php" Type="0"/>
+    <ROW Component="ajax.php" ComponentId="{E2753D58-FF46-45B2-9640-A7DC8234ABA7}" Directory_="rover_DIR" Attributes="0" KeyPath="ajax.php" Type="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
-    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Attributes="0" Components="AForge.Robotics.Lego.dll Lego_MindStorm_Control_Api.exe.config_1 ajax.php Lego_MindStorm_Control_Api.exe SHORTCUTDIR"/>
+    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Attributes="0" Components="SHORTCUTDIR ajax.php AForge.Robotics.Lego.dll Lego_MindStorm_Control_Api.exe.config"/>
     <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
-    <ROW File="AForge.Robotics.Lego.dll" Component_="AForge.Robotics.Lego.dll" FileName="AForge~1.dll|AForge.Robotics.Lego.dll" Attributes="0" SourcePath="..\C api\Lego MindStorm Control Api\Lego MindStorm Control Api\bin\Release\AForge.Robotics.Lego.dll" SelfReg="false" Sequence="1"/>
-    <ROW File="Lego_MindStorm_Control_Api.exe" Component_="Lego_MindStorm_Control_Api.exe" FileName="LegoMi~1.exe|Lego MindStorm Control Api.exe" Attributes="0" SourcePath="..\C api\Lego MindStorm Control Api\Lego MindStorm Control Api\bin\Release\Lego MindStorm Control Api.exe" SelfReg="false" Sequence="8"/>
-    <ROW File="ajax.php" Component_="ajax.php" FileName="ajax.php" Attributes="0" SourcePath="..\web\rover_v_2_0\ajax.php" SelfReg="false" Sequence="3"/>
-    <ROW File="ajaxHandle.js" Component_="ajax.php" FileName="ajaxHa~1.js|ajaxHandle.js" Attributes="0" SourcePath="..\web\rover_v_2_0\ajaxHandle.js" SelfReg="false" Sequence="4"/>
-    <ROW File="config.php" Component_="ajax.php" FileName="config.php" Attributes="0" SourcePath="..\web\rover_v_2_0\config.php" SelfReg="false" Sequence="5"/>
-    <ROW File="control.php" Component_="ajax.php" FileName="control.php" Attributes="0" SourcePath="..\web\rover_v_2_0\control.php" SelfReg="false" Sequence="6"/>
-    <ROW File="pre_program.php" Component_="ajax.php" FileName="pre_pr~1.php|pre_program.php" Attributes="0" SourcePath="..\web\rover_v_2_0\pre_program.php" SelfReg="false" Sequence="7"/>
-    <ROW File="settings.xml" Component_="Lego_MindStorm_Control_Api.exe.config_1" FileName="settings.xml" Attributes="0" SourcePath="..\C api\Lego MindStorm Control Api\Lego MindStorm Control Api\bin\Release\settings.xml" SelfReg="false" Sequence="2"/>
+    <ROW File="AForge.Robotics.Lego.dll" Component_="AForge.Robotics.Lego.dll" FileName="AForge~1.dll|AForge.Robotics.Lego.dll" Attributes="0" SourcePath="..\C api\Lego MindStorm Control Api\Lego MindStorm Control Api\bin\Release\AForge.Robotics.Lego.dll" SelfReg="false" Sequence="7"/>
+    <ROW File="Lego_MindStorm_Control_Api.exe.config" Component_="Lego_MindStorm_Control_Api.exe.config" FileName="LegoMi~1.con|Lego MindStorm Control Api.exe.config" Attributes="0" SourcePath="..\C api\Lego MindStorm Control Api\Lego MindStorm Control Api\bin\Release\Lego MindStorm Control Api.exe.config" SelfReg="false" Sequence="8"/>
+    <ROW File="ajax.php" Component_="ajax.php" FileName="ajax.php" Attributes="0" SourcePath="..\web\rover_v_2_0\ajax.php" SelfReg="false" Sequence="1"/>
+    <ROW File="ajaxHandle.js" Component_="ajax.php" FileName="ajaxHa~1.js|ajaxHandle.js" Attributes="0" SourcePath="..\web\rover_v_2_0\ajaxHandle.js" SelfReg="false" Sequence="2"/>
+    <ROW File="config.php" Component_="ajax.php" FileName="config.php" Attributes="0" SourcePath="..\web\rover_v_2_0\config.php" SelfReg="false" Sequence="3"/>
+    <ROW File="control.php" Component_="ajax.php" FileName="control.php" Attributes="0" SourcePath="..\web\rover_v_2_0\control.php" SelfReg="false" Sequence="4"/>
+    <ROW File="pre_program.php" Component_="ajax.php" FileName="pre_pr~1.php|pre_program.php" Attributes="0" SourcePath="..\web\rover_v_2_0\pre_program.php" SelfReg="false" Sequence="5"/>
+    <ROW File="settings.xml" Component_="Lego_MindStorm_Control_Api.exe.config" FileName="settings.xml" Attributes="0" SourcePath="..\C api\Lego MindStorm Control Api\Lego MindStorm Control Api\bin\Release\settings.xml" SelfReg="false" Sequence="9"/>
+    <ROW File="style.css" Component_="ajax.php" FileName="style.css" Attributes="0" SourcePath="..\web\rover_v_2_0\style.css" SelfReg="false" Sequence="6"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
     <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="0" Languages="en" InstallationType="4"/>
@@ -98,10 +97,10 @@
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIniFileComponent">
-    <ROW IniFile="URL" FileName="phpmya~1.url|phpmyadmin.url" DirProperty="SHORTCUTDIR" Section="InternetShortcut" Key="URL" Value="http://localhost/phpmyadmin" Action="0" Component_="Lego_MindStorm_Control_Api.exe"/>
-    <ROW IniFile="URL_1" FileName="Projec~1.url|Project home page.url" DirProperty="SHORTCUTDIR" Section="InternetShortcut" Key="URL" Value="http://wiki.xprize.frednet.org/index.php/Portal:Lego_Mindstorms" Action="0" Component_="Lego_MindStorm_Control_Api.exe"/>
-    <ROW IniFile="WorkingDirectory" FileName="phpmya~1.url|phpmyadmin.url" DirProperty="SHORTCUTDIR" Section="InternetShortcut" Key="WorkingDirectory" Value="[SHORTCUTDIR]" Action="0" Component_="Lego_MindStorm_Control_Api.exe"/>
-    <ROW IniFile="WorkingDirectory_1" FileName="Projec~1.url|Project home page.url" DirProperty="SHORTCUTDIR" Section="InternetShortcut" Key="WorkingDirectory" Value="[SHORTCUTDIR]" Action="0" Component_="Lego_MindStorm_Control_Api.exe"/>
+    <ROW IniFile="URL" FileName="phpmya~1.url|phpmyadmin.url" DirProperty="SHORTCUTDIR" Section="InternetShortcut" Key="URL" Value="http://localhost/phpmyadmin" Action="0" Component_="SHORTCUTDIR"/>
+    <ROW IniFile="URL_1" FileName="Projec~1.url|Project home page.url" DirProperty="SHORTCUTDIR" Section="InternetShortcut" Key="URL" Value="http://wiki.xprize.frednet.org/index.php/Portal:Lego_Mindstorms" Action="0" Component_="SHORTCUTDIR"/>
+    <ROW IniFile="WorkingDirectory" FileName="phpmya~1.url|phpmyadmin.url" DirProperty="SHORTCUTDIR" Section="InternetShortcut" Key="WorkingDirectory" Value="[SHORTCUTDIR]" Action="0" Component_="SHORTCUTDIR"/>
+    <ROW IniFile="WorkingDirectory_1" FileName="Projec~1.url|Project home page.url" DirProperty="SHORTCUTDIR" Section="InternetShortcut" Key="WorkingDirectory" Value="[SHORTCUTDIR]" Action="0" Component_="SHORTCUTDIR"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
     <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
@@ -121,9 +120,6 @@
     <ROW Signature_="AI_DotNet30SearchSgn" Root="2" Key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.0\Setup" Name="InstallSuccess" Type="2"/>
     <ROW Signature_="AI_DotNet35ClientProfileSearchSgn" Root="2" Key="SOFTWARE\Microsoft\NET Framework Setup\DotNetClient\v3.5" Name="Install" Type="2"/>
     <ROW Signature_="AI_DotNet35SearchSgn" Root="2" Key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.5" Name="Install" Type="2"/>
-  </COMPONENT>
-  <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
-    <ROW Shortcut="Lego_MindStorm_Remote_Control" Directory_="SHORTCUTDIR" Name="LegoMi~1|Lego MindStorm Remote Control " Component_="Lego_MindStorm_Control_Api.exe" Target="[#Lego_MindStorm_Control_Api.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiUpgradeComponent">
     <ROW UpgradeCode="[|UpgradeCode]" VersionMax="[|ProductVersion]" Attributes="1025" ActionProperty="OLDPRODUCTS"/>

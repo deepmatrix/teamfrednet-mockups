@@ -6,42 +6,33 @@ include("config.php");
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>rover control</title>
-<style type="text/css">
-<!--
-body {
-	background-color: #00CCCC;
-}
-.style1 {color: #FF0000}
-.style2 {color: #00FF00}
-.style4 {color: #996600}
--->
-</style>
+<link rel="stylesheet" type="text/css" href="style.css" />
 <script src="ajaxHandle.js"></script>
 <script>
 function set_nickname(){
-ajax_donwload_add("http://localhost/rover/ajax.php?nickname="+document.getElementById("nickname").value,"logbook");
+ajax_donwload_add("ajax.php?nickname="+document.getElementById("nickname").value,"logbook");
 }
 function who_is_online(){
-ajax_donwload("http://localhost/rover/ajax.php?online","who_online");
+ajax_donwload("ajax.php?online","who_online");
 setTimeout("who_is_online()",10345);
 }
 function new_pre_program(){
-ajax_donwload("http://localhost/rover/ajax.php?pre_program=new","pre_program");
+ajax_donwload("ajax.php?pre_program=new","pre_program");
 }
 function pre_program(){
-ajax_donwload("http://localhost/rover/ajax.php?pre_program","pre_program");
+ajax_donwload("ajax.php?pre_program","pre_program");
 }
 function pre_program_id(){
-ajax_donwload("http://localhost/rover/ajax.php?pre_program="+document.getElementById("pre_program_id").value,"pre_program");
+ajax_donwload("ajax.php?pre_program="+document.getElementById("pre_program_id").value,"pre_program");
 }
 </script>
 </head>
 
 <body onload="who_is_online();pre_program();">
 <img src="http://forum.xprize.frednet.org/styles/prosilver/imageset/site_logo.png" /> Lego mindstorm missions
-<table width="868" border="1" cellpadding="0" cellspacing="0" bgcolor="#DDDDDD">
+<table width="868" border="0" cellpadding="0" cellspacing="0" bgcolor="#DDDDDD" class="compleet_border">
   <tr>
-    <td width="864"><table width="100%" border="1" cellspacing="0" cellpadding="0">
+    <td width="864"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="border_buttom">
       <tr>
         <td width="200">Home</td>
         <td width="200"><a href="control.php">Mission control</a></td>
@@ -52,9 +43,9 @@ ajax_donwload("http://localhost/rover/ajax.php?pre_program="+document.getElement
     </table></td>
   </tr>
   <tr>
-    <td><table width="100%" border="1" cellspacing="0" cellpadding="0">
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0" >
       <tr>
-        <td width="240" rowspan="1" valign="top">
+        <td width="240" rowspan="1" valign="top" class="border_right">
           <table>
           <tr>
            <td>
@@ -71,8 +62,8 @@ ajax_donwload("http://localhost/rover/ajax.php?pre_program="+document.getElement
         </td>
         
         <td>
-        <a onclick="new_pre_program();">Create new pre Program</a><br />
-        Enter ID: <input id="pre_program_id" /><input type="button" onclick="pre_program_id();" /><br />
+        <input type="button" onclick="new_pre_program();" value="Create new pre Program" /><br />
+        Enter ID: <input id="pre_program_id" /><input type="button" value="Load" onclick="pre_program_id();" /><br />
 		<div id="pre_program">
         
     </div>
