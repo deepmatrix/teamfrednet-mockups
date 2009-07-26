@@ -5,9 +5,11 @@ $mysql['database'] = "rover";
 $mysql['user'] = "root";
 $mysql['password'] = "";
 $mysql['server'] = "localhost";
+if(!isset($not_connect)){
 //contect to database
 mysql_connect($mysql['server'], $mysql['user'], $mysql['password']) or die(mysql_error());
 mysql_select_db($mysql['database']) or die(mysql_error());
+}
 //session start
 session_start();
 if(!isset($_SESSION['last_time_check'])){
