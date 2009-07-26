@@ -96,7 +96,7 @@ namespace Lego_MindStorm_Control_Api
 
         private void send_command_Click(object sender, EventArgs e)
         {
-            NXT_ROVER_CONTROL.command_translation(command.Text); 
+            command.Text = NXT_ROVER_CONTROL.command_translation(command.Text).value; 
         }
 
         private void Form1_unLoad(object sender, EventArgs e)
