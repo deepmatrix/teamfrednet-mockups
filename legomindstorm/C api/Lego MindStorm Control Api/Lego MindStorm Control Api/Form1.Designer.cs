@@ -50,7 +50,6 @@
             // timer1
             // 
             this.timer1.Enabled = true;
-            this.timer1.Interval = 500;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // richTextBox1
@@ -108,22 +107,22 @@
             // clearLogToolStripMenuItem
             // 
             this.clearLogToolStripMenuItem.Name = "clearLogToolStripMenuItem";
-            this.clearLogToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.clearLogToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.clearLogToolStripMenuItem.Text = "clear log";
             this.clearLogToolStripMenuItem.Click += new System.EventHandler(this.clearLogToolStripMenuItem_Click);
             // 
             // recontIRCToolStripMenuItem
             // 
             this.recontIRCToolStripMenuItem.Name = "recontIRCToolStripMenuItem";
-            this.recontIRCToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
-            this.recontIRCToolStripMenuItem.Text = "Recont IRC";
+            this.recontIRCToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.recontIRCToolStripMenuItem.Text = "Recont IRC(doesn\'t work)";
             this.recontIRCToolStripMenuItem.Click += new System.EventHandler(this.recontIRCToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
-            this.exitToolStripMenuItem.Text = "exit";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.exitToolStripMenuItem.Text = "exit(doesn\'t work)";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // status
@@ -171,8 +170,6 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "NXT control API log";
-            // TODO check this
-            
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
