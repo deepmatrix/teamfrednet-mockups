@@ -1,5 +1,6 @@
 <settings>
 <IRC>
+<enable>false</enable>
 <port>6667</port>
 <server>localhost</server>
 <nickname>Capi</nickname>
@@ -14,6 +15,7 @@
 <password></password>
 </mysql>
 <rover>
+  <auto>false</auto>
   <light>1</light>
   <sound>2</sound>
   <touch>3</touch>

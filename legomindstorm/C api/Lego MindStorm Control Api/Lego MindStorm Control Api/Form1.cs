@@ -31,8 +31,11 @@ namespace Lego_MindStorm_Control_Api
             mysql_check.Start();
             rover = new Thread(new ThreadStart(NXT_ROVER_CONTROL.run));
             rover.Start();
-            InternetRelayChat = new Thread(new ThreadStart(IrcBot.run_irc));
-            InternetRelayChat.Start();
+            if (config.IRC_on_off)
+            {
+                InternetRelayChat = new Thread(new ThreadStart(IrcBot.run_irc));
+                InternetRelayChat.Start();
+            }
             timer2.Enabled = true;
         }
        // TODO on form unload kill app
@@ -41,7 +44,10 @@ namespace Lego_MindStorm_Control_Api
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            richTextBox1.Text = IrcBot.log;
+            if (richTextBox1.Text != IrcBot.log)
+            {
+                richTextBox1.Text = IrcBot.log;
+        }
             TimeSpan ts = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
             double unixTime = ts.TotalSeconds;
             toolStripStatusLabel1.Text = "Unix time span: " + unixTime.ToString();
@@ -54,6 +60,7 @@ namespace Lego_MindStorm_Control_Api
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // TODO check this
             InternetRelayChat.Abort();
             mysql_check.Abort();
             
@@ -72,25 +79,27 @@ namespace Lego_MindStorm_Control_Api
 
         private void timer2_Tick(object sender, EventArgs e)
         {
+            if (config.sensor_auto_on_off)
+            {
             string temp,sql;
             
             TimeSpan ts = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
             double unixTime = ts.TotalSeconds;
             //send commands
-            // TODO re enable THIS
-            NXT_ROVER_CONTROL.command_translation("cmd sensor value " + config.Rover_distance.ToString());
-            NXT_ROVER_CONTROL.command_translation("cmd sensor value " + config.Rover_light.ToString());
-            NXT_ROVER_CONTROL.command_translation("cmd sensor value " + config.Rover_sound.ToString());
-            //build
-            temp = "Distantes: " + NXT_ROVER_CONTROL.Rover_distance + " cm\n";
-            temp += "Light: " + NXT_ROVER_CONTROL.Rover_light + "%\n";
-            temp += "Sound: " + NXT_ROVER_CONTROL.Rover_sound + "%\n";
-            //update database
-            sql = "INSERT INTO `rover`.`sensors` (`ID`, `when`, `result`) VALUES (NULL, '"+unixTime.ToString().Replace(',','.')+"', '"+temp+"');";
-            mysql.QueryCommand(sql);
-            //show
-            status.Text = temp;
-
+            
+                NXT_ROVER_CONTROL.command_translation("cmd sensor value " + config.Rover_distance.ToString());
+                NXT_ROVER_CONTROL.command_translation("cmd sensor value " + config.Rover_light.ToString());
+                NXT_ROVER_CONTROL.command_translation("cmd sensor value " + config.Rover_sound.ToString());
+                //build
+                temp = "Distantes: " + NXT_ROVER_CONTROL.Rover_distance + " cm\n";
+                temp += "Light: " + NXT_ROVER_CONTROL.Rover_light + "%\n";
+                temp += "Sound: " + NXT_ROVER_CONTROL.Rover_sound + "%\n";
+                //update database
+                sql = "INSERT INTO `rover`.`sensors` (`ID`, `when`, `result`) VALUES (NULL, '" + unixTime.ToString().Replace(',', '.') + "', '" + temp + "');";
+                mysql.QueryCommand(sql);
+                //show
+                status.Text = temp;
+            }
             
         }
 
@@ -99,10 +108,7 @@ namespace Lego_MindStorm_Control_Api
             command.Text = NXT_ROVER_CONTROL.command_translation(command.Text).value; 
         }
 
-        private void Form1_unLoad(object sender, EventArgs e)
-        {
-            
-        }
+        
 
         
     }
@@ -260,6 +266,8 @@ namespace Lego_MindStorm_Control_Api
         public static string IRC_nickname;
         public static string IRC_user;
         public static string IRC_password;
+        public static Boolean IRC_on_off;
+        public static Boolean sensor_auto_on_off;
         public static string Mysql_server;
         public static string Mysql_database;
         public static string Mysql_user;
@@ -286,6 +294,14 @@ namespace Lego_MindStorm_Control_Api
       IRC_user = userNode.SelectSingleNode("user").InnerText;
       IRC_server= userNode.SelectSingleNode("server").InnerText;
       IRC_nickname = userNode.SelectSingleNode("nickname").InnerText;
+      if (userNode.SelectSingleNode("enable").InnerText == "true")
+      {
+          IRC_on_off = true;
+      }
+      else
+      {
+          IRC_on_off = false;
+      }
       userNodes = doc.SelectNodes("/settings/mysql");
       userNode = userNodes[0];
       Mysql_database = userNode.SelectSingleNode("database").InnerText;
@@ -304,7 +320,14 @@ namespace Lego_MindStorm_Control_Api
       Rover_touch = Convert.ToInt32(userNode.SelectSingleNode("touch").InnerText);
       Rover_sound = Convert.ToInt32(userNode.SelectSingleNode("sound").InnerText);
       Rover_port = userNode.SelectSingleNode("port").InnerText;
-      
+      if (userNode.SelectSingleNode("auto").InnerText == "true")
+      {
+          sensor_auto_on_off = true;
+      }
+      else
+      {
+          sensor_auto_on_off = false;
+      }
         }
     }
     class nxt_result
@@ -349,7 +372,8 @@ namespace Lego_MindStorm_Control_Api
             NXTBrick.SensorMode.Fahrenheit, NXTBrick.SensorMode.AngleSteps };
         public static NXTBrick.Sensor[] sensors = new NXTBrick.Sensor[] {
             NXTBrick.Sensor.First,NXTBrick.Sensor.Second,NXTBrick.Sensor.Third,NXTBrick.Sensor.Fourth};
-        
+        // TODO Set defeult speed
+        public static int[] speed_motors = {80,80,80};
         public static void setSensors()
         {
             if (nxt.SetSensorMode(NXTBrick.Sensor.First,
@@ -476,6 +500,13 @@ namespace Lego_MindStorm_Control_Api
                     return motor_off(arg_command[2]);
                 }
             }
+            if (arg_command.Length == 5)
+            {
+                if (arg_command[1] == "motor" && arg_command[2] == "speed")
+                {
+                    return set_speed(arg_command[3],arg_command[4]);
+                }
+            }
             if (arg_command.Length == 4)
             {
                 if (arg_command[1] == "sensor" && arg_command[2] == "value")
@@ -544,6 +575,52 @@ namespace Lego_MindStorm_Control_Api
             
             return result;
         }
+        public static nxt_result set_speed(string motors, string speed)
+        {
+            return set_speed(motors, Convert.ToInt32(speed));
+        }
+        public static nxt_result set_speed(string motors,int speed)
+        {
+            string[] motors_array;
+            nxt_result motor_result = new nxt_result();
+            motor_result.result = false;
+            motor_result.value = "Motor not found.";
+            motors_array = motors.ToLower().Split('v');
+            foreach (string motor in motors_array)
+            {
+                if (motor.ToUpper() == "A")
+                {
+                    motor_result.result = true;
+                    motor_result.value = "done!";
+                    speed_motors[0] = speed;
+                }
+                if (motor.ToUpper() == "B")
+                {
+                    motor_result.result = true;
+                    motor_result.value = "done!";
+                    speed_motors[1] = speed;
+                }
+                if (motor.ToUpper() == "C")
+                {
+                    motor_result.result = true;
+                    motor_result.value = "done!";
+                    speed_motors[2] = speed;
+                }
+                if (motor.ToUpper() == "ALL")
+                {
+                    motor_result.result = true;
+                    motor_result.value = "done!";
+                    speed_motors[0] = speed;
+                    speed_motors[1] = speed;
+                    speed_motors[2] = speed;
+                }
+                if (motor_result.result == false)
+                {
+                    return motor_result;
+                }
+            }
+            return motor_result;
+        }
         public static nxt_result motor_on(string motors)
         {
             string[] motors_array;
@@ -580,10 +657,31 @@ namespace Lego_MindStorm_Control_Api
         {
             nxt_result result = new nxt_result();
             NXTBrick.MotorState motorState = new NXTBrick.MotorState();
-
-            // prepare motor's state to set
-            motorState.Power = (sbyte)50;
-            motorState.TurnRatio = (sbyte)50;
+            if (motor == NXTBrick.Motor.A)
+            {
+                // prepare motor's state to set
+                motorState.Power = (sbyte)speed_motors[0];
+                motorState.TurnRatio = (sbyte)speed_motors[0];
+            }
+            if (motor == NXTBrick.Motor.B)
+            {
+                // prepare motor's state to set
+                motorState.Power = (sbyte)speed_motors[1];
+                motorState.TurnRatio = (sbyte)speed_motors[1];
+            }
+            if (motor == NXTBrick.Motor.C)
+            {
+                // prepare motor's state to set
+                motorState.Power = (sbyte)speed_motors[2];
+                motorState.TurnRatio = (sbyte)speed_motors[2];
+            }
+            // TODO If al motor's on handel correct speed
+            if (motor == NXTBrick.Motor.All)
+            {
+                // prepare motor's state to set
+                motorState.Power = (sbyte)speed_motors[0];
+                motorState.TurnRatio = (sbyte)speed_motors[0];
+            }
             motorState.Mode = ((true) ? NXTBrick.MotorMode.On : NXTBrick.MotorMode.None) |
                 ((false) ? NXTBrick.MotorMode.Brake : NXTBrick.MotorMode.None) |
                 ((false) ? NXTBrick.MotorMode.Regulated : NXTBrick.MotorMode.None);
@@ -691,7 +789,7 @@ namespace Lego_MindStorm_Control_Api
         {
             nxt_result result = new nxt_result();
             mysql_results result_mysql = new mysql_results();
-            // TODO Find the correct mysql qeury
+            
             result_mysql = mysql.pre_program(Convert.ToString(name));
             
             if (result_mysql.result == true)
