@@ -6,19 +6,19 @@
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{3F9057C7-52AA-4849-9AA1-815D692136AC}
-AppName=Lege Mindstorm Remote Control
-AppVerName=Lege Mindstorm Remote Control 0.1
+AppName=Lego Mindstorm Remote Control
+VersionInfoVersion=0.1.99.2
+AppVerName=Lego Mindstorm Remote Control 0.1.99.3
 AppPublisher=Frednet
 AppPublisherURL=http://wiki.xprize.frednet.org/index.php/Portal:Lego_Mindstorms
 AppSupportURL=http://wiki.xprize.frednet.org/index.php/Portal:Lego_Mindstorms
 AppUpdatesURL=http://wiki.xprize.frednet.org/index.php/Portal:Lego_Mindstorms
-DefaultDirName={pf}\Lege Mindstorm Remote Control
-DefaultGroupName=Lege Mindstorm Remote Control
+DefaultDirName={pf}\Lego Mindstorm Remote Control
+DefaultGroupName=Lego Mindstorm Remote Control
 LicenseFile=C:\Users\marc\Documents\frednet\gpl3
 OutputBaseFilename=setup
 Compression=lzma
 SolidCompression=yes
-VersionInfoVersion=0.1.98.0
 AppCopyright=Copyright (C) 2009 Frednet
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -34,15 +34,15 @@ Source: "C:\Users\marc\Documents\frednet\google code source\legomindstorm\web\ro
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\Lege Mindstorm Remote Control"; Filename: "{app}\Lego MindStorm Control Api.exe"
+Name: "{group}\Lego Mindstorm Remote Control"; Filename: "{app}\Lego MindStorm Control Api.exe"; WorkingDir: "{app}"
 Name: "{group}\edit settings.xml"; Filename: "{app}\settings.xml"
 Name: "{group}\edit settings.php"; Filename: "c:\wamp\www\rover\config.php"
-Name: "{group}\{cm:ProgramOnTheWeb,Lege Mindstorm Remote Control}"; Filename: "http://wiki.xprize.frednet.org/index.php/Portal:Lego_Mindstorms"
+Name: "{group}\{cm:ProgramOnTheWeb,Lego Mindstorm Remote Control}"; Filename: "http://wiki.xprize.frednet.org/index.php/Portal:Lego_Mindstorms"
 Name: "{group}\local web interface"; Filename: "http://localhost/rover"
-Name: "{commondesktop}\Lege Mindstorm Remote Control"; Filename: "{app}\Lego MindStorm Control Api.exe"; Tasks: desktopicon
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\Lege Mindstorm Remote Control"; Filename: "{app}\Lego MindStorm Control Api.exe"; Tasks: quicklaunchicon
+Name: "{commondesktop}\Lego Mindstorm Remote Control"; Filename: "{app}\Lego MindStorm Control Api.exe"; Tasks: desktopicon; WorkingDir: "{app}"
+Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\Lego Mindstorm Remote Control"; Filename: "{app}\Lego MindStorm Control Api.exe"; Tasks: quicklaunchicon; WorkingDir: "{app}"
 
 [Run]
-Filename: "c:\wamp\wampmanager.exe"; Description: "{cm:LaunchProgram,Wampserver}"; Flags: nowait postinstall skipifsilent
-Filename: "{app}\Lego MindStorm Control Api.exe"; Description: "{cm:LaunchProgram,Lege Mindstorm Remote Control}"; Flags: nowait postinstall skipifsilent
+; Filename: "c:\wamp\wampmanager.exe"; Description: "{cm:LaunchProgram,Wampserver}"; Flags: nowait postinstall skipifsilent
+; Filename: "{app}\Lego MindStorm Control Api.exe"; Description: "{cm:LaunchProgram,Lego Mindstorm Remote Control}"; Flags: nowait postinstall skipifsilent
 

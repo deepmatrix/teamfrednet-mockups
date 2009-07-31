@@ -52,6 +52,10 @@
             this.label4 = new System.Windows.Forms.Label();
             this.sensor4type = new System.Windows.Forms.ComboBox();
             this.values = new System.Windows.Forms.CheckBox();
+            this.comport = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -248,11 +252,51 @@
             this.values.UseVisualStyleBackColor = true;
             this.values.CheckedChanged += new System.EventHandler(this.values_CheckedChanged);
             // 
+            // comport
+            // 
+            this.comport.Location = new System.Drawing.Point(562, 296);
+            this.comport.Name = "comport";
+            this.comport.Size = new System.Drawing.Size(121, 20);
+            this.comport.TabIndex = 15;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(499, 303);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(46, 13);
+            this.label5.TabIndex = 16;
+            this.label5.Text = "Comport";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(602, 331);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(81, 22);
+            this.button1.TabIndex = 17;
+            this.button1.Text = "connect";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(518, 331);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(78, 21);
+            this.button2.TabIndex = 18;
+            this.button2.Text = "disconnect";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(760, 432);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.comport);
             this.Controls.Add(this.values);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.sensor4type);
@@ -270,7 +314,7 @@
             this.Controls.Add(this.richTextBox1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.Text = "NXT control API log";
+            this.Text = "Lego Mindstrom Remote Control";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
@@ -306,6 +350,10 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox sensor4type;
         private System.Windows.Forms.CheckBox values;
+        private System.Windows.Forms.TextBox comport;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }
 

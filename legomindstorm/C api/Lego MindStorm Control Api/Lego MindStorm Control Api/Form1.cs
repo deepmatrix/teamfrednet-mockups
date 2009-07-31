@@ -30,7 +30,7 @@ namespace Lego_MindStorm_Control_Api
             mysql_check = new Thread(new ThreadStart(mysql.run));
             mysql_check.Start();
             rover = new Thread(new ThreadStart(NXT_ROVER_CONTROL.run));
-            rover.Start();
+            
             InternetRelayChat = new Thread(new ThreadStart(IrcBot.run_irc));
             if (config.IRC_on_off)
             {
@@ -147,12 +147,14 @@ namespace Lego_MindStorm_Control_Api
                 sensor3type.Items.Add(type.ToString());
                 sensor4type.Items.Add(type.ToString());
             }
-            
+
+            comport.Text = config.Rover_port;
         }
 
         private void sensor1type_SelectedIndexChanged(object sender, EventArgs e)
         {
             config.sensorType[0] = NXT_ROVER_CONTROL.sensorTypes[sensor1type.SelectedIndex];
+            
             //update
             NXT_ROVER_CONTROL.setSensors();
         }
@@ -181,6 +183,17 @@ namespace Lego_MindStorm_Control_Api
         private void values_CheckedChanged(object sender, EventArgs e)
         {
             config.sensor_auto_on_off = values.Checked;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            config.Rover_port = comport.Text;
+            rover.Start();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            rover.Abort();
         }
 
         
@@ -439,6 +452,16 @@ namespace Lego_MindStorm_Control_Api
             NXTBrick.SensorType.LightInactive, NXTBrick.SensorType.SoundDB,
             NXTBrick.SensorType.SoundDBA, NXTBrick.SensorType.Custom,
             NXTBrick.SensorType.Lowspeed, NXTBrick.SensorType.Lowspeed9V };
+        // TODO check this
+        // relative sensormode
+        public static NXTBrick.SensorMode[] sensorModes_based_on_sensorTypes = new NXTBrick.SensorMode[] {
+            NXTBrick.SensorMode.Raw, NXTBrick.SensorMode.Boolean, 
+            NXTBrick.SensorMode.Celsius, NXTBrick.SensorMode.PeriodicCounter,
+            NXTBrick.SensorMode.AngleSteps, NXTBrick.SensorMode.Raw,
+            NXTBrick.SensorMode.Raw, NXTBrick.SensorMode.Raw,
+            NXTBrick.SensorMode.Raw, NXTBrick.SensorMode.Raw,
+            NXTBrick.SensorMode.Raw, NXTBrick.SensorMode.Raw
+        };
         // sensor modes
         public static NXTBrick.SensorMode[] sensorModes = new NXTBrick.SensorMode[] {
             NXTBrick.SensorMode.Raw, NXTBrick.SensorMode.Boolean,
@@ -581,6 +604,10 @@ namespace Lego_MindStorm_Control_Api
                 {
                     return set_speed(arg_command[3],arg_command[4]);
                 }
+                if (arg_command[1] == "motor" && arg_command[2] == "degree")
+                {
+                    return set_speed(arg_command[3], arg_command[4]);
+                }
             }
             if (arg_command.Length == 4)
             {
@@ -601,6 +628,13 @@ namespace Lego_MindStorm_Control_Api
                 if (arg_command[1] == "run" && arg_command[2] == "program")
                 {
                     return run_program_mysql(arg_command[3]);
+                }
+            }
+            if (arg_command.Length == 4)
+            {
+                if (arg_command[1] == "stop" && arg_command[2] == "rover" && arg_command[2] == "program")
+                {
+                    return stop_program();
                 }
             }
             return result;
@@ -624,22 +658,7 @@ namespace Lego_MindStorm_Control_Api
                 result.value = "Raw: " + sensorValues.Raw.ToString() + " normalized: " + sensorValues.Normalized.ToString();
                 
                
-                //log 
-                if (sensor == config.Rover_distance)
-                {
-                    NXT_ROVER_CONTROL.Rover_distance = sensorValues.Normalized;
-                    
-                }
-                if (sensor == config.Rover_sound)
-                {
-                    NXT_ROVER_CONTROL.Rover_sound = sensorValues.Normalized;
-                    
-                }
-                if (sensor == config.Rover_light)
-                {
-                    NXT_ROVER_CONTROL.Rover_light = sensorValues.Normalized;
-                    
-                }
+                
             }
             else
             {
@@ -757,14 +776,93 @@ namespace Lego_MindStorm_Control_Api
                 motorState.Power = (sbyte)speed_motors[0];
                 motorState.TurnRatio = (sbyte)speed_motors[0];
             }
-            motorState.Mode = ((true) ? NXTBrick.MotorMode.On : NXTBrick.MotorMode.None) |
-                ((false) ? NXTBrick.MotorMode.Brake : NXTBrick.MotorMode.None) |
-                ((false) ? NXTBrick.MotorMode.Regulated : NXTBrick.MotorMode.None);
+            motorState.Mode = NXTBrick.MotorMode.On;
             motorState.Regulation = NXTBrick.MotorRegulationMode.Speed;
             motorState.RunState = NXTBrick.MotorRunState.Running;
             // tacho limit
+            // TODO edit this: number of dregree
             motorState.TachoLimit = 100;
             
+            // set motor's state
+            if (nxt.SetMotorState(motor, motorState) != true)
+            {
+                IrcBot.log += "Failed setting motor state\n";
+                result.result = false;
+                result.value = "Failed";
+                return result;
+            }
+            result.result = true;
+            result.value = "succed";
+            return result;
+        }
+        public static nxt_result motor_degree(string motors, string degree)
+        {
+            string[] motors_array;
+            nxt_result motor_result = new nxt_result();
+            motor_result.result = false;
+            motor_result.value = "Motor not found.";
+            motors_array = motors.ToLower().Split('v');
+            foreach (string motor in motors_array)
+            {
+                if (motor.ToUpper() == "A")
+                {
+                    motor_result = motor_degree(NXTBrick.Motor.A,Convert.ToInt32(degree));
+                }
+                if (motor.ToUpper() == "B")
+                {
+                    motor_result = motor_degree(NXTBrick.Motor.B, Convert.ToInt32(degree));
+                }
+                if (motor.ToUpper() == "C")
+                {
+                    motor_result = motor_degree(NXTBrick.Motor.C, Convert.ToInt32(degree));
+                }
+                if (motor.ToUpper() == "ALL")
+                {
+                    motor_result = motor_degree(NXTBrick.Motor.All, Convert.ToInt32(degree));
+                }
+                if (motor_result.result == false)
+                {
+                    return motor_result;
+                }
+            }
+            return motor_result;
+        }
+        public static nxt_result motor_degree(NXTBrick.Motor motor, int degree)
+        {
+            nxt_result result = new nxt_result();
+            NXTBrick.MotorState motorState = new NXTBrick.MotorState();
+            if (motor == NXTBrick.Motor.A)
+            {
+                // prepare motor's state to set
+                motorState.Power = (sbyte)speed_motors[0];
+                motorState.TurnRatio = (sbyte)speed_motors[0];
+            }
+            if (motor == NXTBrick.Motor.B)
+            {
+                // prepare motor's state to set
+                motorState.Power = (sbyte)speed_motors[1];
+                motorState.TurnRatio = (sbyte)speed_motors[1];
+            }
+            if (motor == NXTBrick.Motor.C)
+            {
+                // prepare motor's state to set
+                motorState.Power = (sbyte)speed_motors[2];
+                motorState.TurnRatio = (sbyte)speed_motors[2];
+            }
+            // TODO If al motor's on handel correct speed
+            if (motor == NXTBrick.Motor.All)
+            {
+                // prepare motor's state to set
+                motorState.Power = (sbyte)speed_motors[0];
+                motorState.TurnRatio = (sbyte)speed_motors[0];
+            }
+            motorState.Mode = NXTBrick.MotorMode.On;
+            motorState.Regulation = NXTBrick.MotorRegulationMode.Speed;
+            motorState.RunState = NXTBrick.MotorRunState.Running;
+            // tacho limit
+           
+            motorState.TachoLimit = degree;
+
             // set motor's state
             if (nxt.SetMotorState(motor, motorState) != true)
             {
@@ -818,11 +916,9 @@ namespace Lego_MindStorm_Control_Api
             // prepare motor's state to set
             motorState.Power = (sbyte)0;
             motorState.TurnRatio = (sbyte)0;
-            motorState.Mode = ((false) ? NXTBrick.MotorMode.On : NXTBrick.MotorMode.None) |
-                ((false) ? NXTBrick.MotorMode.Brake : NXTBrick.MotorMode.None) |
-                ((false) ? NXTBrick.MotorMode.Regulated : NXTBrick.MotorMode.None);
+            motorState.Mode = NXTBrick.MotorMode.None;
             motorState.Regulation = NXTBrick.MotorRegulationMode.Speed;
-            motorState.RunState = NXTBrick.MotorRunState.Running;
+            motorState.RunState = NXTBrick.MotorRunState.Idle;
             // tacho limit
             motorState.TachoLimit = 0;
 
@@ -845,6 +941,23 @@ namespace Lego_MindStorm_Control_Api
             if (nxt.RunProgram(name))
             {
                 
+                result.result = true;
+                result.value = "succed";
+            }
+            else
+            {
+                result.result = false;
+                result.value = "Failed";
+            }
+            return result;
+
+        }
+        public static nxt_result stop_program()
+        {
+            nxt_result result = new nxt_result();
+            if (nxt.StopProgram())
+            {
+
                 result.result = true;
                 result.value = "succed";
             }
