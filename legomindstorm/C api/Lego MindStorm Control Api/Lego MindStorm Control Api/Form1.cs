@@ -31,9 +31,10 @@ namespace Lego_MindStorm_Control_Api
             mysql_check.Start();
             rover = new Thread(new ThreadStart(NXT_ROVER_CONTROL.run));
             rover.Start();
+            InternetRelayChat = new Thread(new ThreadStart(IrcBot.run_irc));
             if (config.IRC_on_off)
             {
-                InternetRelayChat = new Thread(new ThreadStart(IrcBot.run_irc));
+                
                 InternetRelayChat.Start();
             }
             timer2.Enabled = true;
@@ -61,15 +62,18 @@ namespace Lego_MindStorm_Control_Api
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // TODO check this
-            InternetRelayChat.Abort();
-            mysql_check.Abort();
-            
-            Application.Exit();
+            if (MessageBox.Show("Really Quit?", "Exit", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                rover.Abort();
+                mysql_check.Abort();
+                InternetRelayChat.Abort();
+                Application.Exit();
+            }
         }
 
         private void recontIRCToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           
+            InternetRelayChat.Start();
         }
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
@@ -86,19 +90,45 @@ namespace Lego_MindStorm_Control_Api
             TimeSpan ts = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
             double unixTime = ts.TotalSeconds;
             //send commands
-            
-                NXT_ROVER_CONTROL.command_translation("cmd sensor value " + config.Rover_distance.ToString());
-                NXT_ROVER_CONTROL.command_translation("cmd sensor value " + config.Rover_light.ToString());
-                NXT_ROVER_CONTROL.command_translation("cmd sensor value " + config.Rover_sound.ToString());
-                //build
-                temp = "Distantes: " + NXT_ROVER_CONTROL.Rover_distance + " cm\n";
-                temp += "Light: " + NXT_ROVER_CONTROL.Rover_light + "%\n";
-                temp += "Sound: " + NXT_ROVER_CONTROL.Rover_sound + "%\n";
+            nxt_result[] cmd = new nxt_result[4];
+            temp = "";
+            if (sensor1type.SelectedIndex != -1)
+            {
+                cmd[0] = NXT_ROVER_CONTROL.command_translation("cmd sensor value 1");
+                temp += "Sensor 1: " + cmd[0].value + "\n";
+            }
+            if (sensor2type.SelectedIndex != -1)
+            {
+                cmd[1] = NXT_ROVER_CONTROL.command_translation("cmd sensor value 2");
+                temp += "Sensor 2: " + cmd[1].value + "\n";
+            }
+            if (sensor3type.SelectedIndex != -1)
+            {
+                cmd[2] = NXT_ROVER_CONTROL.command_translation("cmd sensor value 3");
+                temp += "Sensor 3: " + cmd[2].value + "\n";
+            }
+            if (sensor4type.SelectedIndex != -1)
+            {
+                cmd[3] = NXT_ROVER_CONTROL.command_translation("cmd sensor value 4");
+                temp += "Sensor 4: " + cmd[3].value + "\n";
+            }   
+                
+                
+                
+                
+                
                 //update database
                 sql = "INSERT INTO `rover`.`sensors` (`ID`, `when`, `result`) VALUES (NULL, '" + unixTime.ToString().Replace(',', '.') + "', '" + temp + "');";
                 mysql.QueryCommand(sql);
                 //show
-                status.Text = temp;
+                if (temp.Length < 5)
+                {
+                    status.Text = "Please select type of sensor below.";
+                }
+                else
+                {
+                    status.Text = temp;
+                }
             }
             
         }
@@ -106,6 +136,51 @@ namespace Lego_MindStorm_Control_Api
         private void send_command_Click(object sender, EventArgs e)
         {
             command.Text = NXT_ROVER_CONTROL.command_translation(command.Text).value; 
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            foreach (NXTBrick.SensorType type in NXT_ROVER_CONTROL.sensorTypes)
+            {
+                sensor1type.Items.Add(type.ToString());
+                sensor2type.Items.Add(type.ToString());
+                sensor3type.Items.Add(type.ToString());
+                sensor4type.Items.Add(type.ToString());
+            }
+            
+        }
+
+        private void sensor1type_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            config.sensorType[0] = NXT_ROVER_CONTROL.sensorTypes[sensor1type.SelectedIndex];
+            //update
+            NXT_ROVER_CONTROL.setSensors();
+        }
+
+        private void sensor2type_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            config.sensorType[1] = NXT_ROVER_CONTROL.sensorTypes[sensor2type.SelectedIndex];
+            //update
+            NXT_ROVER_CONTROL.setSensors();
+        }
+
+        private void sensor3type_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            config.sensorType[2] = NXT_ROVER_CONTROL.sensorTypes[sensor3type.SelectedIndex];
+            //update
+            NXT_ROVER_CONTROL.setSensors();
+        }
+
+        private void sensor4type_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            config.sensorType[3] = NXT_ROVER_CONTROL.sensorTypes[sensor4type.SelectedIndex];
+            //update
+            NXT_ROVER_CONTROL.setSensors();
+        }
+
+        private void values_CheckedChanged(object sender, EventArgs e)
+        {
+            config.sensor_auto_on_off = values.Checked;
         }
 
         

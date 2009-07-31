@@ -10,10 +10,10 @@ include("config.php");
 <script src="ajaxHandle.js"></script>
 <script>
 function post_chat(){
-ajax_donwload_add("ajax.php?message="+document.getElementById("input_chat").value,"logbook");
+ajax_donwload_add("ajax.php?message="+escape(document.getElementById("input_chat").value),"logbook");
 }
 function post_chat_delay(){
-ajax_donwload_add("ajax.php?message="+document.getElementById("input_chat").value+"&delay=30","logbook");
+ajax_donwload_add("ajax.php?message="+escape(document.getElementById("input_chat").value)+"&delay=30","logbook");
 }
 function chat_update(){
 ajax_donwload_add("ajax.php?update","logbook");
@@ -65,7 +65,27 @@ setTimeout("sensors()",4900);
         </tr>
         </table>        </td>
         <td width="*"><table width="100%">
-          <tr><td width="*"><div align="center"><img src="http://wiki.xprize.frednet.org/images/Lego_Picorover_Mockup_v1.1.JPG" /></div></td><td width="200" valign="top"><p><strong>Sensor data</strong></p>
+          <tr><td width="*"><div align="center">
+		  <OBJECT id='mediaPlayer' width="320" height="285" 
+      classid='CLSID:22d6f312-b0f6-11d0-94ab-0080c74c7e95' 
+      codebase='http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=5,1,52,701'
+      standby='Loading Microsoft Windows Media Player components...' type='application/x-oleobject'>
+      <param name='fileName' value="<?php echo $stream_url; ?>">
+      <param name='animationatStart' value='true'>
+      <param name='transparentatStart' value='true'>
+      <param name='autoStart' value="true">
+      <param name='showControls' value="true">
+      <param name='loop' value="true">
+      <EMBED type='application/x-mplayer2'
+        pluginspage='http://microsoft.com/windows/mediaplayer/en/download/'
+        id='mediaPlayer' name='mediaPlayer' displaysize='4' autosize='-1' 
+        bgcolor='darkblue' showcontrols="true" showtracker='-1' 
+        showdisplay='0' showstatusbar='-1' videoborder3d='-1' width="320" height="285"
+        src="<?php echo $stream_url; ?>" autostart="true" designtimesp='5311' loop="true">
+      </EMBED>
+      </OBJECT>
+
+		  </div></td><td width="200" valign="top"><p><strong>Sensor data</strong></p>
                 <div id="sensors"><p>Light sensor: 50%<br />
                 disteans sensor: 0.4m</p>
                 <p>Interface mode: command</p></div></td>

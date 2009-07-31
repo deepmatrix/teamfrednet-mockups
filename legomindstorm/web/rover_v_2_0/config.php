@@ -16,5 +16,6 @@ if(!isset($_SESSION['last_time_check'])){
 $_SESSION['last_time_check'] = (date("U") + microtime());
 }
 //timeout
-$user_offline_time = 60;
+$user_offline_time = 300;
+$stream_url = "mms://192.168.50.103:81/";//the stream url
 ?>

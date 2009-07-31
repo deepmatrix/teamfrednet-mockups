@@ -43,6 +43,15 @@
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.command = new System.Windows.Forms.TextBox();
             this.send_command = new System.Windows.Forms.Button();
+            this.sensor1type = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.sensor2type = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.sensor3type = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.sensor4type = new System.Windows.Forms.ComboBox();
+            this.values = new System.Windows.Forms.CheckBox();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -122,7 +131,7 @@
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
-            this.exitToolStripMenuItem.Text = "exit(doesn\'t work)";
+            this.exitToolStripMenuItem.Text = "exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // status
@@ -156,11 +165,103 @@
             this.send_command.UseVisualStyleBackColor = true;
             this.send_command.Click += new System.EventHandler(this.send_command_Click);
             // 
+            // sensor1type
+            // 
+            this.sensor1type.FormattingEnabled = true;
+            this.sensor1type.Location = new System.Drawing.Point(562, 159);
+            this.sensor1type.Name = "sensor1type";
+            this.sensor1type.Size = new System.Drawing.Size(121, 21);
+            this.sensor1type.TabIndex = 6;
+            this.sensor1type.SelectedIndexChanged += new System.EventHandler(this.sensor1type_SelectedIndexChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(499, 162);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(52, 13);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Sensor 1:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(499, 192);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(52, 13);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Sensor 2:";
+            // 
+            // sensor2type
+            // 
+            this.sensor2type.FormattingEnabled = true;
+            this.sensor2type.Location = new System.Drawing.Point(562, 189);
+            this.sensor2type.Name = "sensor2type";
+            this.sensor2type.Size = new System.Drawing.Size(121, 21);
+            this.sensor2type.TabIndex = 8;
+            this.sensor2type.SelectedIndexChanged += new System.EventHandler(this.sensor2type_SelectedIndexChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(499, 224);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(52, 13);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "Sensor 3:";
+            // 
+            // sensor3type
+            // 
+            this.sensor3type.FormattingEnabled = true;
+            this.sensor3type.Location = new System.Drawing.Point(562, 221);
+            this.sensor3type.Name = "sensor3type";
+            this.sensor3type.Size = new System.Drawing.Size(121, 21);
+            this.sensor3type.TabIndex = 10;
+            this.sensor3type.SelectedIndexChanged += new System.EventHandler(this.sensor3type_SelectedIndexChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(499, 257);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(52, 13);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "Sensor 4:";
+            // 
+            // sensor4type
+            // 
+            this.sensor4type.FormattingEnabled = true;
+            this.sensor4type.Location = new System.Drawing.Point(562, 254);
+            this.sensor4type.Name = "sensor4type";
+            this.sensor4type.Size = new System.Drawing.Size(121, 21);
+            this.sensor4type.TabIndex = 12;
+            this.sensor4type.SelectedIndexChanged += new System.EventHandler(this.sensor4type_SelectedIndexChanged);
+            // 
+            // values
+            // 
+            this.values.AutoSize = true;
+            this.values.Location = new System.Drawing.Point(502, 136);
+            this.values.Name = "values";
+            this.values.Size = new System.Drawing.Size(159, 17);
+            this.values.TabIndex = 14;
+            this.values.Text = "Enable auto sensor read out";
+            this.values.UseVisualStyleBackColor = true;
+            this.values.CheckedChanged += new System.EventHandler(this.values_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(760, 432);
+            this.Controls.Add(this.values);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.sensor4type);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.sensor3type);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.sensor2type);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.sensor1type);
             this.Controls.Add(this.send_command);
             this.Controls.Add(this.command);
             this.Controls.Add(this.status);
@@ -170,6 +271,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "NXT control API log";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -195,6 +297,15 @@
         private System.Windows.Forms.Timer timer2;
         private System.Windows.Forms.TextBox command;
         private System.Windows.Forms.Button send_command;
+        private System.Windows.Forms.ComboBox sensor1type;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox sensor2type;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox sensor3type;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox sensor4type;
+        private System.Windows.Forms.CheckBox values;
     }
 }
 
