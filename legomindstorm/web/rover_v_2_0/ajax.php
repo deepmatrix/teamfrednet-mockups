@@ -30,7 +30,7 @@ echo "Your aren't allow to summit commands.<br />\n";
 die();
 }
 //make sql
-$sql = "INSERT `log_current_session` SET `type`='$type', `when`='$time', `message`='".substr($message,0,245)."', `who_ID`='$who_ID'";
+$sql = "INSERT `log_current_session` SET `type`='$type', `when`='$time', `message`='".htmlentities(substr($message,0,150), ENT_QUOTES)."', `who_ID`='$who_ID'";
 mysql_query($sql) or die(mysql_error() . "SQL: $sql");
 //update last online time
 $sql = "UPDATE `users` SET `last`=" . date("U")." WHERE `ID`='{$_SESSION['user_ID']}'";
@@ -86,7 +86,7 @@ while($row = mysql_fetch_array( $result )){
 			 ?>
              <tr>
               <td>
-               <img src="http://wiki.xprize.frednet.org/images/LegoMindstorms_pic160416BB-15E0-4353-904D-8E210258A3F4_v1.1.JPG" width="50" height="50" />
+               <img src="200px-User_icon_2.svg.png" width="50" height="50" />
               </td>
               <td>
         <span class="style1"><?php echo $row['nickname']; ?></span><br />
