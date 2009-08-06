@@ -938,7 +938,7 @@ namespace Lego_MindStorm_Control_Api
         public static nxt_result run_program(string name)
         {
             nxt_result result = new nxt_result();
-            if (nxt.RunProgram(name))
+            if (nxt.RunProgram(name + ".RXE"))
             {
                 
                 result.result = true;
