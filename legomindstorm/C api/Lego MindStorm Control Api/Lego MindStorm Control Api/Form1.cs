@@ -245,7 +245,7 @@ namespace Lego_MindStorm_Control_Api
               //check mysql conntection
               if (mysql.connection.State == ConnectionState.Open || mysql.connection.State == ConnectionState.Connecting)
               {
-                  res = mysql.QueryCommand("SELECT `ID`,`message`,`when` FROM `log_current_session` WHERE `status`='' AND `when`< '" + unixTime.ToString().Replace(',', '.') + "' AND `type`='cmd' ORDER BY `when` ASC LIMIT 0,1");
+                  res = mysql.QueryCommand("SELECT `ID`,`message`,`when` FROM `log_current_session` WHERE `status`='' AND `when`< '" + unixTime.ToString().Replace(',', '.') + "' AND `when`> '" + (unixTime-100).ToString().Replace(',', '.') + "' AND `type`='cmd' ORDER BY `when` ASC LIMIT 0,1");
                   if (res.result)
                   {
                       IrcBot.log += DateTime.Now + "checking(" + res.msg + ")...";
@@ -262,7 +262,7 @@ namespace Lego_MindStorm_Control_Api
                       else
                       {
                           //false
-                          cmd.CommandText = "UPDATE `log_current_session` SET `status`='not found' WHERE `ID`=" + res.ID;
+                          cmd.CommandText = "UPDATE `log_current_session` SET `status`='" + result.value + "' WHERE `ID`=" + res.ID;
                           cmd.CommandType = CommandType.Text;
                           MySqlDataReader reader = cmd.ExecuteReader();
                           reader.Close();
@@ -599,7 +599,13 @@ namespace Lego_MindStorm_Control_Api
         public static nxt_result command_translation(string text_command)
         {
             nxt_result result = new nxt_result();
-            
+            //check if NXT is connect
+            if (!nxt.IsConnected)
+            {
+                result.result = false;
+                result.value = "NXT is not connect!";
+                return result;
+            }
             //check type
             arg_command = text_command.Split(' ');
             if (arg_command.Length == 4)
