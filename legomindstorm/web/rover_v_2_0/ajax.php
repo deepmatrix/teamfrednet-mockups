@@ -38,6 +38,15 @@ $result = mysql_query($sql);
 }
 if(isset($_GET['update'])){
 //check if someone has acces
+//check if now else does this
+if(!file_exists("check.txt")){
+//write down he doning it
+$data = rand();
+$fh = fopen("check.txt", 'w') or die("can't open file");
+
+fwrite($fh, $data);
+
+fclose($fh);
 $sql = "SELECT * FROM `users` WHERE `last`>".(time()-$user_offline_time) . " AND `start_control` < ".time()." AND `end_control` > ".time()."";
 			 $result = mysql_query($sql);
 			 if(mysql_num_rows($result)==0){
@@ -53,6 +62,9 @@ $sql = "SELECT * FROM `users` WHERE `last`>".(time()-$user_offline_time) . " AND
 			 mysql_query($sql);
 echo date("H:i:s ") . "system: {$row['nickname']} is now in control.<br />\n";
 			 }
+			 }
+			 //give it free
+			 unlink("check.txt");
 			 }
 			 //update
 $last_id = $_SESSION['last_time_check'];
@@ -80,9 +92,11 @@ if(isset($_GET['online'])){
                 <strong>Who is online?</strong></td>
              </tr>
              <?php
-			 $sql = "SELECT * FROM `users` WHERE `last`>".(time()-$user_offline_time);
+			 $sql = "SELECT * FROM `users` WHERE `last`>".(time()-$user_offline_time) . " ORDER BY `last` DESC";
 			 $result = mysql_query($sql);
+			 $count = 0;
 while($row = mysql_fetch_array( $result )){
+$count++;
 			 ?>
              <tr>
               <td>
@@ -109,8 +123,17 @@ echo "This user will be in control in ".(($row['start_control']-date("U"))/60)."
              </tr>
              <?php
 			 }
+			 if($count == 0){
+			
 			 ?>
-             
+			 <tr>
+			 <td colspan="2">
+			 No one is online.
+			 </td>
+			 </tr>
+             <?php
+			 }
+			 ?>
             </table>
 <?php
 }

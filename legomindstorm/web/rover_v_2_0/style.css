@@ -17,3 +17,8 @@ body {
 	border-right-style: solid;
 	border-right-color: #000000;
 }
+.who_is_online {
+width:250px;
+height:300px;
+overflow:auto;
+}

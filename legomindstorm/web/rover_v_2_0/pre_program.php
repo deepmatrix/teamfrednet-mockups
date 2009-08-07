@@ -8,24 +8,7 @@ include("config.php");
 <title>rover control</title>
 <link rel="stylesheet" type="text/css" href="style.css" />
 <script src="ajaxHandle.js"></script>
-<script>
-function set_nickname(){
-ajax_donwload_add("ajax.php?nickname="+document.getElementById("nickname").value,"logbook");
-}
-function who_is_online(){
-ajax_donwload("ajax.php?online","who_online");
-setTimeout("who_is_online()",10345);
-}
-function new_pre_program(){
-ajax_donwload("ajax.php?pre_program=new","pre_program");
-}
-function pre_program(){
-ajax_donwload("ajax.php?pre_program","pre_program");
-}
-function pre_program_id(){
-ajax_donwload("ajax.php?pre_program="+document.getElementById("pre_program_id").value,"pre_program");
-}
-</script>
+<script src="script.js"></script>
 </head>
 
 <body onload="who_is_online();pre_program();">
@@ -34,10 +17,10 @@ ajax_donwload("ajax.php?pre_program="+document.getElementById("pre_program_id").
   <tr>
     <td width="864"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="border_buttom">
       <tr>
-        <td width="200">Home</td>
+        <td width="200"><a href="home.php">Home</a></td>
         <td width="200"><a href="control.php">Mission control</a></td>
         <td width="200" bgcolor="#999999"><a href="pre_program.php">pre-program</a></td>
-        <td width="200">logbook</td>
+        <td width="200"><a href="rover_program.php">Rover Program(not working)</a></td>
         <td width="*">&nbsp;</td>
       </tr>
     </table></td>
@@ -71,5 +54,11 @@ ajax_donwload("ajax.php?pre_program="+document.getElementById("pre_program_id").
   </tr>
   
 </table>
+</td>
+</tr>
+</table>
+<center>
+&copy; 2009 Frednet Group
+</center>
 </body>
 </html>
