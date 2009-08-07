@@ -112,7 +112,7 @@ if(xmlHttp.readyState == 0  || xmlHttp.readyState == 4){
 		//alert(xmlHttp.status);
 		if(xmlHttp.status==200){
 			Output = xmlHttp.responseText;
-			document.getElementById(divId).innerHTML += Output;
+			document.getElementById(divId).innerHTML = Output + document.getElementById(divId).innerHTML;
 		}else{
 			document.getElementById(divId).innerHTML += 'Error: File not found.<br />\n';
 		}

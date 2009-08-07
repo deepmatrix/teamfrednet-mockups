@@ -8,32 +8,7 @@ include("config.php");
 <title>rover control</title>
 <link rel="stylesheet" type="text/css" href="style.css" />
 <script src="ajaxHandle.js"></script>
-<script>
-function post_chat(){
-ajax_donwload_add("ajax.php?message="+escape(document.getElementById("input_chat").value),"logbook");
-}
-function post_chat_delay(){
-ajax_donwload_add("ajax.php?message="+escape(document.getElementById("input_chat").value)+"&delay=30","logbook");
-}
-function chat_update(){
-ajax_donwload_add("ajax.php?update","logbook");
-setTimeout("chat_update();",1000);
-}
-function set_nickname(){
-ajax_donwload_add("ajax.php?nickname="+document.getElementById("nickname").value,"logbook");
-}
-function who_is_online(){
-//online
-ajax_donwload("ajax.php?online","who_online");
-//get sensors
-
-setTimeout("who_is_online()",10345);
-}
-function sensors(){
-ajax_donwload("ajax.php?sensor","sensors");
-setTimeout("sensors()",4900);
-}
-</script>
+<script src="script.js"></script>
 </head>
 
 <body onload="chat_update();who_is_online();sensors();">
@@ -42,10 +17,10 @@ setTimeout("sensors()",4900);
   <tr>
     <td width="864"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="border_buttom">
       <tr>
-        <td width="200">Home</td>
+        <td width="200"><a href="home.php">Home</a></td>
         <td width="200" bgcolor="#999999"><a href="control.php">Mission control</a></td>
         <td width="200"><a href="pre_program.php">pre-program</a></td>
-        <td width="200">logbook</td>
+        <td width="200"><a href="rover_program.php">Rover Program(not working)</a></td>
         <td width="*">&nbsp;</td>
       </tr>
     </table></td>
@@ -57,11 +32,11 @@ setTimeout("sensors()",4900);
           <table>
           <tr>
            <td>
-           <div id="who_online">            </div>
+           <div id="who_online" class="who_is_online">            </div>
             Set Your nick Name:<br />
             <input type="text" id="nickname" value="<?php
-            if(isset($_SESSION['nickname'])){echo $_SESSION['nickname']; } ?>" />
-            <input type="button" value="Set" onclick="set_nickname();" />           </td>
+            if(isset($_SESSION['nickname'])){echo $_SESSION['nickname']; } ?>"   />
+            <input type="button" value="Set" id="nickname_button" onclick="set_nickname();" />           </td>
         </tr>
         </table>        </td>
         <td width="*"><table width="100%">
@@ -86,9 +61,7 @@ setTimeout("sensors()",4900);
       </OBJECT>
 
 		  </div></td><td width="200" valign="top"><p><strong>Sensor data</strong></p>
-                <div id="sensors"><p>Light sensor: 50%<br />
-                disteans sensor: 0.4m</p>
-                <p>Interface mode: command</p></div></td>
+                <div id="sensors">Please wait...</div></td>
         </tr></table></td>
       </tr>
       <tr>
@@ -102,8 +75,8 @@ setTimeout("sensors()",4900);
           </tr>
           <tr>
             <td bgcolor="#999999"><label>
-              <input name="input_chat" type="text" id="input_chat" size="50" maxlength="240" />
-              <input type="button" name="button" id="button" value="post"onclick="post_chat();" />
+              <input name="input_chat" type="text" id="input_chat" size="50" maxlength="240" onKeyDown="if(event.keyCode==13){post_chat();}" />
+              <input type="button" name="button" id="button" value="post" onclick="post_chat();" />
               <a href="http://wiki.xprize.frednet.org/index.php/Lego_Mindstorms_command" target="_blank">How to enter commands</a></label></td>
           </tr>
         </table></td>
@@ -111,5 +84,8 @@ setTimeout("sensors()",4900);
     </table></td>
   </tr>
 </table>
+<center>
+&copy; 2009 Frednet Group
+</center>
 </body>
 </html>

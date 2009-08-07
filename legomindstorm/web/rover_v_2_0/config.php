@@ -13,7 +13,7 @@ mysql_select_db($mysql['database']) or die(mysql_error());
 //session start
 session_start();
 if(!isset($_SESSION['last_time_check'])){
-$_SESSION['last_time_check'] = (date("U") + microtime());
+$_SESSION['last_time_check'] = (date("U") + microtime()) - 60;
 }
 //timeout
 $user_offline_time = 300;
