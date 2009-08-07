@@ -39,8 +39,14 @@ namespace Lego_MindStorm_Control_Api
             }
             timer2.Enabled = true;
         }
-       // TODO on form unload kill app
-
+       
+        private void Form1_unLoad(object sender, EventArgs e)
+        {
+            rover.Abort();
+            mysql_check.Abort();
+            InternetRelayChat.Abort();
+            Application.Exit();
+        }
         
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -61,7 +67,7 @@ namespace Lego_MindStorm_Control_Api
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // TODO check this
+            
             if (MessageBox.Show("Really Quit?", "Exit", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                 rover.Abort();
@@ -285,8 +291,17 @@ namespace Lego_MindStorm_Control_Api
               connBuilder.Add("Password", "");
               connection = new MySqlConnection(connBuilder.ConnectionString);
               cmd = connection.CreateCommand();
-              connection.Open();
-              IrcBot.log += "MYSQL connection ready\n";
+              try
+              {
+
+                  connection.Open();
+                  IrcBot.log += "MYSQL connection ready\n";
+              }
+              catch
+              {
+                  IrcBot.log += "MYSQL isn't running!!!\n";
+              }
+              
               
           }
         public static void close(){
@@ -781,7 +796,7 @@ namespace Lego_MindStorm_Control_Api
             motorState.RunState = NXTBrick.MotorRunState.Running;
             // tacho limit
             // TODO edit this: number of dregree
-            motorState.TachoLimit = 100;
+            motorState.TachoLimit = 0;
             
             // set motor's state
             if (nxt.SetMotorState(motor, motorState) != true)

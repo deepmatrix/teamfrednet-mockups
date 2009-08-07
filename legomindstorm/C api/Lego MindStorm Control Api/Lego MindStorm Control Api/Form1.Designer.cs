@@ -316,6 +316,7 @@
             this.Name = "Form1";
             this.Text = "Lego Mindstrom Remote Control";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_unLoad);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
