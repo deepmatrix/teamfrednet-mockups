@@ -133,6 +133,7 @@ if(isset($_GET['nickname'])){
 	$sql = "INSERT `users` SET `nickname`='{$_GET['nickname']}', `last`=".time()."";
 	mysql_query($sql);
 	$_SESSION['user_ID'] = mysql_insert_id();
+	$user_info['name'] = $_GET['nickname'];
 	?>
 Hello
 	<?php echo $user_info['name']; ?>
