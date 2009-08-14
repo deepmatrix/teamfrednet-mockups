@@ -14,9 +14,9 @@ setTimeout("chat_update();",1000);//500 ms
 }
 }
 function set_nickname(){
-ajax_donwload("ajax.php?nickname="+document.getElementById("nickname").value+"&pass="+document.getElementById("pass").value,"login");
+ajax_donwload("ajax.php?nickname="+document.getElementById("nickname").value,"login");
 document.getElementById('login').innerHTML = "<img src=\"template/default/img/ajax-loader.gif\" alt=\"Loading\" />";
-setTimeout("who_is_online()",1800);//800ms
+setTimeout("who_is_online()",800);//800ms
 }
 function clipToMain(id){
 ajax_donwload("ajax.php?clip="+id,"mainPlayer");
