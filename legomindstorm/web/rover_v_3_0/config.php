@@ -50,5 +50,10 @@ $template_name = "default";
  * 
  */
 $wiki_server = "http://wiki.xprize.frednet.org/";
+$wiki_prefixed = "Lego_mindstorm_webpages:";
+/**
+ * Wiki chache time in hours
+ */
+$wiki_cache_time = 0.5;
 include("login.php");
 ?>
