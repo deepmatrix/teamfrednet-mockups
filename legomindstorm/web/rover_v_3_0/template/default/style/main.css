@@ -1,150 +1,155 @@
 body {
-font-family: "Tahoma", serif;
-font-size: 12pt; 
-background-color: black;
-background-image: url("../img/background.jpg");
-background-repeat: no-repeat;
-background-attachment: fixed;
-background-position: center left;
-color: #FFD699; 
+	font-family: "Tahoma", serif;
+	font-size: 12pt;
+	background-color: black;
+	background-image: url("../img/background.jpg");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center left;
+	color: #FFD699;
 }
 
 #heading {
-font-weight: bold;
-font-size: 24pt;
-color: #99D6FF;
-text-align: center;
-clear: both;
-margin: 1em;
-padding: 1em;
-padding-bottom: 0;
-width: 90%;
+	font-weight: bold;
+	font-size: 24pt;
+	color: #99D6FF;
+	text-align: center;
+	clear: both;
+	margin: 1em;
+	padding: 1em;
+	padding-bottom: 0;
+	width: 90%;
 }
 
 #left_col {
-margin: 2em;
-margin-left: 1em;
-margin-bottom: 20px;
-padding: 1em;
-padding-top: 0;
-width: 10%;
-float: left;
+	margin: 2em;
+	margin-left: 1em;
+	margin-bottom: 20px;
+	padding: 1em;
+	padding-top: 0;
+	width: 10%;
+	float: left;
 }
 
 #center_col {
-margin: 2em;
-margin-left: 11%;
-padding: 0em;
-width: 60%;
+	margin: 2em;
+	margin-left: 11%;
+	padding: 0em;
+	width: 60%;
 }
 
 #right_col {
-margin: 2em;
-left: 70%;
-top: 10em;
-padding: 1em;
-width: 18%;
-text-align: left;
-border:  2px solid #D699FF;
-color: #99FFD6;
-position: absolute;
+	margin: 2em;
+	left: 70%;
+	top: 10em;
+	padding: 1em;
+	width: 18%;
+	text-align: left;
+	border: 2px solid #D699FF;
+	color: #99FFD6;
+	position: absolute;
 }
 
 #footer {
-margin: 0;
-width: 70%;
-clear: both;
-padding: 2px;
-text-align: left;
-border: 0;
-color: #FFD699;
-background-color: gray;
+	margin: 0;
+	width: 70%;
+	clear: both;
+	padding: 2px;
+	text-align: left;
+	border: 0;
+	color: #FFD699;
+	background-color: gray;
 }
 
 img.head_logo {
-border: 0;
-float: right;
-width: 3em;
+	border: 0;
+	float: right;
+	width: 3em;
 }
 
 div.navButton {
-border: 3px outset #D0B7E0;
-color: #7900CC;
-background-color: #FFD699;
-width: 95%;
-height: 2em;
-position: relative;
-cursor: pointer;
-text-align: center;
-padding: 1px;
-margin: 0;
+	border: 3px outset #D0B7E0;
+	color: #7900CC;
+	background-color: #FFD699;
+	width: 95%;
+	height: 2em;
+	position: relative;
+	cursor: pointer;
+	text-align: center;
+	padding: 1px;
+	margin: 0;
 }
 
 div.navSubMenu {
-border: 1px solid #D0B7E0;
-color: #7900CC;
-background-color: #FFD699;
-width: 100%;
-text-align: left;
-padding: 0px;
-margin: 0;
-margin-left: 10px;
+	border: 1px solid #D0B7E0;
+	color: #7900CC;
+	background-color: #FFD699;
+	width: 100%;
+	text-align: left;
+	padding: 0px;
+	margin: 0;
+	margin-left: 10px;
 }
 
 ul.Menu {
-list-style-type: none;
-padding: 1px;
-margin:0;
-margin-bottom: 1em;
+	list-style-type: none;
+	padding: 1px;
+	margin: 0;
+	margin-bottom: 1em;
 }
 
 div.rankBox {
-background-color: #A399FF;
-border: 3px ridge #FFD699;
-padding: 2px;
-margin: 0;
-margin-top: 0;
-margin-bottom: 2em;
+	background-color: #A399FF;
+	border: 3px ridge #FFD699;
+	padding: 2px;
+	margin: 0;
+	margin-top: 0;
+	margin-bottom: 2em;
 }
 
-a.hilite:hover {background-color: #B9CC00;}
-a.hilite2:hover {background-color: #99FFEF;}
+a.hilite:hover {
+	background-color: #B9CC00;
+}
+
+a.hilite2:hover {
+	background-color: #99FFEF;
+}
 
 table.footTabs {
-margin-left: 10%;
-text-align: left;
-border-width: 6px;
-border-collapse: collapse;
-border-left: double;
-border-right: double;
-border-color: #c3d0d6;
+	margin-left: 10%;
+	text-align: left;
+	border-width: 6px;
+	border-collapse: collapse;
+	border-left: double;
+	border-right: double;
+	border-color: #c3d0d6;
 }
 
 td.footer {
-font-weight: bold;
-padding-left: 8px;
-padding-right: 15px;
-text-align: left;
-border-collapse: separate;
-border-width: 6px;
-border-left: double;
-border-right: double;
-border-color: #c3d0d6;
-
+	font-weight: bold;
+	padding-left: 8px;
+	padding-right: 15px;
+	text-align: left;
+	border-collapse: separate;
+	border-width: 6px;
+	border-left: double;
+	border-right: double;
+	border-color: #c3d0d6;
 }
 
 div.vidButton {
-border: 2px outset #D0B7E0;
-color: #7900CC;
-background-color: #FFD699;
-width: 120px;
-height: 15px;
-cursor: pointer;
-text-align: center;
-padding: 0;
-margin: 0;
-font-size:10pt;
+	border: 2px outset #D0B7E0;
+	color: #7900CC;
+	background-color: #FFD699;
+	width: 120px;
+	height: 15px;
+	cursor: pointer;
+	text-align: center;
+	padding: 0;
+	margin: 0;
+	font-size: 10pt;
 }
+
 div.logbook {
-color: #FFFFFF; 
+	color: #FFFFFF;
 }

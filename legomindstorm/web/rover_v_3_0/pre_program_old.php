@@ -12,53 +12,56 @@ include("config.php");
 </head>
 
 <body onload="who_is_online();pre_program();">
-<img src="teamfred_simple_logo.png" /> Lego mindstorm missions
-<table width="868" border="0" cellpadding="0" cellspacing="0" bgcolor="#DDDDDD" class="compleet_border">
-  <tr>
-    <td width="864"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="border_buttom">
-      <tr>
-        <td width="200"><a href="home.php">Home</a></td>
-        <td width="200"><a href="control.php">Mission control</a></td>
-        <td width="200" bgcolor="#999999"><a href="pre_program.php">pre-program</a></td>
-        <td width="200"><a href="rover_program.php">Rover Program(not working)</a></td>
-        <td width="*">&nbsp;</td>
-      </tr>
-    </table></td>
-  </tr>
-  <tr>
-    <td><table width="100%" border="0" cellspacing="0" cellpadding="0" >
-      <tr>
-        <td width="240" rowspan="1" valign="top" class="border_right">
-          <table>
-          <tr>
-           <td>
-           <div id="who_online">
-            
-            </div>
-            Set Your nick Name:<br />
-            <input type="text" id="nickname" value="<?php
+<img src="teamfred_simple_logo.png" />
+Lego mindstorm missions
+<table width="868" border="0" cellpadding="0" cellspacing="0"
+	bgcolor="#DDDDDD" class="compleet_border">
+	<tr>
+		<td width="864">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0"
+			class="border_buttom">
+			<tr>
+				<td width="200"><a href="home.php">Home</a></td>
+				<td width="200"><a href="control.php">Mission control</a></td>
+				<td width="200" bgcolor="#999999"><a href="pre_program.php">pre-program</a></td>
+				<td width="200"><a href="rover_program.php">Rover Program(not
+				working)</a></td>
+				<td width="*">&nbsp;</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="240" rowspan="1" valign="top" class="border_right">
+				<table>
+					<tr>
+						<td>
+						<div id="who_online"></div>
+						Set Your nick Name:<br />
+						<input type="text" id="nickname"
+							value="<?php
             if(isset($_SESSION['nickname'])){echo $_SESSION['nickname']; } ?>" />
-            <input type="button" value="Set" onclick="set_nickname();" />
-           </td>
-        </tr>
-        </table>
-        </td>
-        
-        <td>
-        <input type="button" onclick="new_pre_program();" value="Create new pre Program" /><br />
-        Enter ID: <input id="pre_program_id" /><input type="button" value="Load" onclick="pre_program_id();" /><br />
-		<div id="pre_program">
-        
-    </div>
-    <iframe id="hiddenframe" name="hiddenframe" src="about:blank" height="200" width="200" frameborder="0"></iframe></td>
-  </tr>
-  
+						<input type="button" value="Set" onclick="set_nickname();" /></td>
+					</tr>
+				</table>
+				</td>
+
+				<td><input type="button" onclick="new_pre_program();"
+					value="Create new pre Program" /><br />
+				Enter ID: <input id="pre_program_id" /><input type="button"
+					value="Load" onclick="pre_program_id();" /><br />
+				<div id="pre_program"></div>
+				<iframe id="hiddenframe" name="hiddenframe" src="about:blank"
+					height="200" width="200" frameborder="0"></iframe></td>
+			</tr>
+
+		</table>
+		</td>
+	</tr>
 </table>
-</td>
-</tr>
-</table>
-<center>
-&copy; 2009 Frednet Group
-</center>
+<center>&copy; 2009 Frednet Group</center>
 </body>
 </html>
