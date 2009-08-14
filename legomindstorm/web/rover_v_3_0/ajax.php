@@ -137,18 +137,13 @@ echo "This user will be in control in ".(($row['start_control']-date("U"))/60)."
             </table>
 <?php
 }
-if(isset($_GET['nickname'],$_GET['pass'])){
-if(login($_GET['nickname'],$_GET['pass'])){
+if(isset($_GET['nickname'])){
 $sql = "INSERT `users` SET `nickname`='{$_GET['nickname']}', `last`=".time()."";
 mysql_query($sql);
 $_SESSION['user_ID'] = mysql_insert_id();
 ?>
-Hello <?php echo $user_info['name']; ?>,
-<a onclick="logout">Logout</a>
+Hello <?php echo $user_info['name']; ?>
 <?php
-}else{
-echo "Your password/nickname is not good!!!<br />\n";
-}
 }
 // TODO this!
 if(isset($_GET['logout'])){

@@ -55,7 +55,7 @@ include("content.php");
 	Set Your nick Name:<br />
             nickname:<input type="text" id="nickname" value="<?php
             if(isset($_SESSION['nickname'])){echo $_SESSION['nickname']; } ?>"   /><br />
-			password:<input type="password" id="pass" value=""   />
+			
             <input type="button" value="Login" id="nickname_button" onclick="set_nickname();" />
 			</div>
 	<div class="rankBox"> 
