@@ -330,11 +330,12 @@ namespace Lego_MindStorm_Control_Api
                 }
 
             }
-
+            
             reader.Close();
             for (j = 0; j < i; j++)
             {
                 QueryCommand(list[j].sql);
+                
             }
             return res;
         }
@@ -599,6 +600,14 @@ namespace Lego_MindStorm_Control_Api
         public static nxt_result command_translation(string text_command)
         {
             nxt_result result = new nxt_result();
+            arg_command = text_command.Split(' ');
+            if (arg_command.Length == 4)
+            {
+                if (arg_command[1] == "run" && arg_command[2] == "program")
+                {
+                    return run_program_mysql(arg_command[3]);
+                }
+            }
             //check if NXT is connect
             if (!nxt.IsConnected)
             {
@@ -607,7 +616,7 @@ namespace Lego_MindStorm_Control_Api
                 return result;
             }
             //check type
-            arg_command = text_command.Split(' ');
+            
             if (arg_command.Length == 4)
             {
                 if (arg_command[1] == "motor" && arg_command[3] == "on")
@@ -644,13 +653,7 @@ namespace Lego_MindStorm_Control_Api
                     return run_program(arg_command[4]);
                 }
             }
-            if (arg_command.Length == 4)
-            {
-                if (arg_command[1] == "run" && arg_command[2] == "program")
-                {
-                    return run_program_mysql(arg_command[3]);
-                }
-            }
+            
             if (arg_command.Length == 4)
             {
                 if (arg_command[1] == "stop" && arg_command[2] == "rover" && arg_command[2] == "program")
@@ -1000,15 +1003,17 @@ namespace Lego_MindStorm_Control_Api
             mysql_results result_mysql = new mysql_results();
             
             result_mysql = mysql.pre_program(Convert.ToString(name));
-            
+           
             if (result_mysql.result == true)
             {
                 result.result = true;
+                result.value = "succed";
                 
             }
             else
             {
                 result.result = false;
+                result.value = "Faild";
             }
             return result;
         }
